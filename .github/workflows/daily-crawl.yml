@@ -1,0 +1,44 @@
+name: 每日抓取鳜鱼鲈鱼批发价
+
+on:
+  schedule:
+    # 每天 UTC 09:00 ≈ 北京时间 17:00 抓取（农业农村部当日行情一般已更新）
+    - cron: "0 9 * * *"
+  workflow_dispatch: {}      # 允许在 Actions 页面手动触发
+
+permissions:
+  contents: write            # 允许工作流把抓取结果提交回仓库
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true   # 保留 GITHUB_TOKEN 以便推送
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装依赖
+        run: pip install --quiet pycryptodome
+
+      - name: 运行爬虫（写快照 + 追加历史）
+        run: python moa_fish_crawler.py
+
+      - name: 提交变化（仅在有更新时）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fish_prices.csv fish_prices.json fish_prices_history.csv fish_prices_history.json fish_prices_history.js
+          # 仅当历史有新增才提交（接口当日快照会刷新，故通常每天都有变化）
+          if git diff --cached --quiet; then
+            echo "无变化，跳过提交"
+          else
+            git commit -m "chore: 每日批发价快照 $(date +'%Y-%m-%d')"
+            git push
+          fi

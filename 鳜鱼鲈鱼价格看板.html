@@ -343,6 +343,21 @@
     </div>
   </section>
 
+  <!-- 历史序列（逐日累积） -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:var(--brand)"></span>
+      <h2>六、历史价格序列（逐日累积中）</h2>
+      <span class="note">来源：fish_prices_history.js（每日爬虫追加）</span>
+    </div>
+    <div class="card">
+      <h3>江浙沪皖主要市场 批发价走势（元/公斤）</h3>
+      <div class="csub">农业农村部该接口仅提供<b>当日快照、无历史接口</b>，故由 GitHub Actions 每日定时抓取并追加到历史文件；约 30 天后即形成完整 30 天序列。下图随每日运行自动增长。</div>
+      <div class="chart-box" style="height:340px"><canvas id="histChart"></canvas></div>
+      <div class="csub" id="histNote" style="margin-top:10px"></div>
+    </div>
+  </section>
+
   <footer>
     数据整理：WorkBuddy · 塘头价源自水产前沿/腾氏水产周报；批发价升级为 moa_fish_crawler.py 直连农业农村部 ncpscxx.moa.gov.cn 官方接口（AES 解密）爬虫实测<br>
     统计周期 2026-06-22 ~ 2026-07-22 · 批发价爬虫抓取日期 2026-07-22（当日快照）· 价格随行就市，仅供参考
@@ -350,6 +365,7 @@
 
 </div>
 
+<script src="fish_prices_history.js"></script>
 <script>
 const brandFont={family:'-apple-system,"PingFang SC",sans-serif'};
 Chart.defaults.font.family=brandFont.family;
@@ -390,6 +406,41 @@ new Chart(document.getElementById('luChart'),{
     scales:{y:{beginAtZero:true,suggestedMax:16,title:{display:true,text:'元/斤'},grid:{color:'#eef1f5'}},x:{grid:{display:false}}}
   }
 });
+
+// 历史序列（fish_prices_history.js 提供 window.FISH_HISTORY）
+(function(){
+  const hist = (typeof window.FISH_HISTORY!=='undefined' && window.FISH_HISTORY) ? window.FISH_HISTORY : [];
+  const note = document.getElementById('histNote');
+  const box = document.getElementById('histChart');
+  if(!hist.length){ if(note) note.textContent='暂无历史数据，待每日爬虫运行后累积。'; if(box) box.style.display='none'; return; }
+  const dates = [...new Set(hist.map(r=>r['日期']))].sort();
+  // 聚焦：江苏及周边 + 几个全国代表性市场，避免线条过多
+  const refKW = ['乌鲁木齐北园春','青岛市城阳','山东威海水产品'];
+  const focus = (r)=> r['是否江苏周边'] || refKW.some(k=>k.includes(r['市场']));
+  const seriesMap = {};
+  hist.filter(focus).forEach(r=>{
+    const key = r['品种']+' · '+r['市场'];
+    (seriesMap[key] = seriesMap[key]||{})[r['日期']] = r['批发价_元公斤'];
+  });
+  const palette = ['#7c3aed','#0284c7','#0ea5a4','#e5484d','#f59e0b','#12a150','#111'];
+  const datasets = Object.entries(seriesMap).map(([k,map],i)=>({
+    label:k, data: dates.map(d=> (d in map)? map[d] : null),
+    borderColor:palette[i%palette.length], backgroundColor:palette[i%palette.length],
+    tension:.25, spanGaps:true, pointRadius:3, borderWidth:2
+  }));
+  if(note) note.textContent = `已累积 ${dates.length} 天（${dates[0]} ~ ${dates[dates.length-1]}），共 ${hist.length} 条；每日爬虫追加后自动增长。`;
+  if(box) new Chart(box,{
+    type:'line',
+    data:{labels:dates, datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{boxWidth:10,font:{size:11}}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+'：'+(c.parsed.y==null?'—':c.parsed.y+' 元/公斤')}}},
+      scales:{y:{title:{display:true,text:'元/公斤'},grid:{color:'#eef1f5'}},
+              x:{grid:{display:false},title:{display:true,text:'日期'}}}
+    }
+  });
+})();
 </script>
 </body>
 </html>

@@ -14,16 +14,17 @@
 ## 目录结构
 
 ```
-moa_fish_crawler.py       # 农业农村部批发价爬虫（含 AES 解密、三品种抓取、江苏周边筛选）
-fish_prices.csv           # 抓取结果（UTF-8-sig，含品种/编码/日期/市场/价格/是否江苏周边）
-fish_prices.json          # 同上，JSON 格式
-鳜鱼鲈鱼价格看板.html      # 价格数据看板（含爬虫当日批发价 + 周报塘头价 + 可视化）
+moa_fish_crawler.py                 # 农业农村部批发价爬虫（AES 解密、三品种抓取、历史累积）
+fish_prices.csv / fish_prices.json # 当日快照（覆盖写）
+fish_prices_history.csv/.json/.js  # 历史累积（追加写，.js 供看板读取）
+.github/workflows/daily-crawl.yml  # GitHub Actions 每日定时抓取并提交
+鳜鱼鲈鱼价格看板.html              # 价格数据看板（爬虫当日批发价 + 周报塘头价 + 历史序列图）
 ```
 
 ## 使用方法
 
 ```bash
-# 抓取全部市场，写出 fish_prices.csv / fish_prices.json
+# 抓取全部市场，写出当日快照 + 追加到历史
 python moa_fish_crawler.py
 
 # 仅输出江苏及周边（江浙沪皖）市场
@@ -32,14 +33,31 @@ python moa_fish_crawler.py --region
 
 依赖：`pycryptodome`（`urllib`/`ssl` 为标准库）。脚本会自动安装缺失依赖。
 
+## 产出文件
+
+| 文件 | 作用 |
+|------|------|
+| `fish_prices.csv` / `fish_prices.json` | 当日快照（覆盖写），看板「批发价」板块数据源 |
+| `fish_prices_history.csv` / `.json` / `.js` | **历史累积**（追加写，按日期去重）。`.js` 供看板 `<script src>` 直接读取，兼容 `file://` 与 GitHub Pages |
+
+## 历史 30 天序列怎么来
+
+农业农村部该接口**只返当日快照、无历史日期参数**；而能查历史的 `FarmDaily`/`common-price-avg` 接口只覆盖「重点监测 46 品种」，**不含鳜鱼、鲈鱼**。
+因此**唯一稳妥路径是逐日累积**：每天定时跑一次爬虫，把当日快照追加到 `fish_prices_history.*`，约 30 天后即得完整 30 天逐日序列。看板「六、历史价格序列」板块会自动读取并绘图。
+
+## 定时更新（GitHub Actions 已就绪）
+
+仓库已包含 `.github/workflows/daily-crawl.yml`：
+
+- 触发：`cron` 每天 UTC 09:00（≈北京时间 17:00）+ 手动 `workflow_dispatch`
+- 流程：检出 → 装 `pycryptodome` → 跑爬虫 → 有变化则提交 `fish_prices_*` 回仓库
+- 推送用内置 `GITHUB_TOKEN`，**无需你额外提供令牌**（仅首次把本仓库 push 上去后 Actions 才会运行）
+
+如需本地定时，也可 `crontab -e` 加一行每日执行 `python /path/moa_fish_crawler.py`。
+
 ## 重要说明（数据边界）
 
-1. 农业农村部该接口**仅返回「当日」最新快照**，无历史日期参数，无法自动回溯近 30 天序列。
-   「近 30 天」维度由周报塘头价 + 爬虫当日批发价组合呈现。
-2. 接口报价为**统货价、不分 500g 内/外规格**；分规格需求以水产前沿周报塘头价为准。
-3. 品种编码：活鳜鱼 `AM01013003`、淡水鲈鱼 `AM01009`、海水鲈鱼 `AM02005`。
-4. 价格随行就市，仅供参考。
+1. 接口报价为**统货价、不分 500g 内/外规格**；分规格需求以水产前沿周报塘头价为准。
+2. 品种编码：活鳜鱼 `AM01013003`、淡水鲈鱼 `AM01009`、海水鲈鱼 `AM02005`。
+3. 价格随行就市，仅供参考。
 
-## 定时更新（可选）
-
-可用系统 cron / GitHub Actions 周期运行 `python moa_fish_crawler.py` 实现自动刷新数据。
