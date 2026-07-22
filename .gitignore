@@ -1,0 +1,9 @@
+# 项目内部数据目录（非看板产出），不纳入仓库
+.workbuddy/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 系统文件
+.DS_Store

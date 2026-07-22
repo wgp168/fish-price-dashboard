@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-07-22 更新）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2733; --sub:#6b7684;
+    --line:#e8ecf1; --brand:#0f766e; --brand2:#0ea5a4;
+    --up:#e5484d; --up-bg:#fdecec;
+    --down:#12a150; --down-bg:#e9f7ef;
+    --flat:#8a94a2; --flat-bg:#f0f2f5;
+    --gui:#7c3aed; --lu:#0284c7;
+    --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
+    --shadow-lg:0 8px 24px rgba(16,24,40,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px}
+  .hero{background:linear-gradient(135deg,#0f766e 0%,#0ea5a4 60%,#22b8b6 100%);border-radius:18px;padding:32px 34px;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);border-radius:50%}
+  .hero h1{font-size:26px;font-weight:800;letter-spacing:.5px;margin-bottom:8px}
+  .hero p{opacity:.92;font-size:14px;max-width:780px}
+  .hero .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:12.5px;backdrop-filter:blur(4px)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .lbl{font-size:12.5px;color:var(--sub);display:flex;align-items:center;gap:6px}
+  .kpi .dot{width:8px;height:8px;border-radius:50%}
+  .kpi .val{font-size:26px;font-weight:800;margin-top:6px;letter-spacing:.5px}
+  .kpi .val small{font-size:13px;font-weight:600;color:var(--sub)}
+  .kpi .trend{margin-top:6px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px}
+  .t-up{color:var(--up);background:var(--up-bg)}
+  .t-down{color:var(--down);background:var(--down-bg)}
+  .t-flat{color:var(--flat);background:var(--flat-bg)}
+  section{margin-top:34px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .sec-head .bar{width:4px;height:20px;border-radius:3px;background:var(--brand)}
+  .sec-head h2{font-size:19px;font-weight:800}
+  .sec-head .note{font-size:12.5px;color:var(--sub);margin-left:auto}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  .card h3{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .card .csub{font-size:12px;color:var(--sub);margin-bottom:14px}
+  .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;color:#fff}
+  .tag-gui{background:var(--gui)} .tag-lu{background:var(--lu)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:10px;border-bottom:1px solid var(--line)}
+  th{font-size:12px;color:var(--sub);font-weight:600;background:#fafbfc}
+  td .price{font-weight:700}
+  .badge{font-size:11px;font-weight:700;padding:1px 7px;border-radius:5px}
+  .b-up{color:var(--up);background:var(--up-bg)}
+  .b-down{color:var(--down);background:var(--down-bg)}
+  .b-flat{color:var(--flat);background:var(--flat-bg)}
+  .spec{font-size:11px;color:#fff;padding:1px 7px;border-radius:5px;background:#94a3b8;font-weight:600}
+  .spec-s{background:#f59e0b} .spec-l{background:#0f766e}
+  .chart-box{position:relative;height:300px}
+  .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column}
+  .post:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .post .ptop{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0ea5a4,#7c3aed);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+  .post .author{font-weight:700;font-size:13.5px}
+  .post .fans{font-size:11.5px;color:var(--sub)}
+  .post .ptitle{font-size:13.5px;font-weight:600;margin:2px 0 8px;line-height:1.5}
+  .post .pdate{font-size:11.5px;color:var(--sub);margin-bottom:10px}
+  .stats{display:flex;gap:14px;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line)}
+  .stat{font-size:12px;color:var(--sub);display:flex;align-items:center;gap:4px}
+  .stat b{color:var(--ink);font-weight:700}
+  .plink{margin-top:10px;font-size:12px;color:var(--brand);text-decoration:none;word-break:break-all}
+  .plink:hover{text-decoration:underline}
+  .platform{margin-left:auto;font-size:10.5px;font-weight:700;color:#fff;background:#111;padding:2px 8px;border-radius:5px}
+  .src-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .src{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);font-size:13px}
+  .src .st{font-weight:700;margin-bottom:4px}
+  .src .sd{color:var(--sub);font-size:12px}
+  .callout{background:#fffaf0;border:1px solid #f5d9a8;border-left:4px solid #f59e0b;border-radius:10px;padding:14px 18px;font-size:13px;color:#7a5b18;margin-top:16px}
+  .callout b{color:#b45309}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:#eef2f7;color:#475569;margin-left:6px}
+  footer{margin-top:40px;text-align:center;font-size:12px;color:var(--sub);line-height:1.8}
+  @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.posts{grid-template-columns:1fr}.src-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>🐟 江浙沪皖 鳜鱼 · 鲈鱼 价格数据看板</h1>
+    <p>聚焦江苏及周边（安徽、浙江、上海、湖北参照）近 30 天鳜鱼（桂花鱼）与鲈鱼（加州鲈）的<b>出塘价（塘头价）</b>与<b>批发价</b>行情，按鱼的规格拆分为「500 克以内 / 500 克以上」，并附代表性帖子、互动数据与价格来源。本轮<b>未使用 AgentKey</b>，数据来自公开网页检索（水产前沿、腾氏水产、农业农村部、地方农业农村局）。</p>
+    <div class="meta">
+      <span class="chip">📅 统计周期：2026-06-22 ~ 2026-07-22</span>
+      <span class="chip">📍 区域：江苏 · 安徽 · 浙江 · 上海</span>
+      <span class="chip">💹 涨=红 / 跌=绿（国内习惯）</span>
+      <span class="chip">🤖 批发价：农业农村部接口爬虫（2026-07-22 当日快照）</span>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="lbl"><span class="dot" style="background:var(--gui)"></span>江苏 标鳜 塘头价（500g+）</div>
+      <div class="val">36 <small>元/斤</small></div>
+      <div class="trend t-up">▲ 月内涨约 2–4 元/斤</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl"><span class="dot" style="background:var(--gui)"></span>安徽 标鳜 塘头价（500g+）</div>
+      <div class="val">39 <small>元/斤</small></div>
+      <div class="trend t-up">▲ 走强</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl"><span class="dot" style="background:var(--lu)"></span>江苏 加州鲈 塘头价（450g+）</div>
+      <div class="val">9.5–10 <small>元/斤</small></div>
+      <div class="trend t-flat">■ 基本持平</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl"><span class="dot" style="background:var(--gui)"></span>江苏 鳜鱼 批发价（爬虫 7/22）</div>
+      <div class="val">84 <small>元/公斤</small></div>
+      <div class="trend t-up">▲ 较7/20的77–81走高</div>
+    </div>
+  </div>
+
+  <!-- 鳜鱼价格 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:var(--gui)"></span>
+      <h2>一、鳜鱼（桂花鱼）价格 · 按规格拆分</h2>
+      <span class="note">出塘价：元/斤 · 批发价：元/公斤</span>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="tag tag-gui">鳜鱼</span> 出塘价（塘头价）分规格</h3>
+        <div class="csub">来源：水产前沿《特水鱼周报 2026 第25期》· 2026-07-20（7.9→7.16 环比）；腾氏水产播报㉘ 2026-07-17</div>
+        <table>
+          <thead><tr><th>产区</th><th>规格</th><th>塘头价</th><th>较上周</th></tr></thead>
+          <tbody>
+            <tr><td>江苏</td><td><span class="spec spec-l">标鳜 / 500g+</span></td><td class="price">36</td><td><span class="badge b-up">▲ 涨 1–2</span></td></tr>
+            <tr><td>江苏</td><td><span class="spec spec-s">小鳜 / 500g内</span></td><td class="price">33–34 <small>参考</small></td><td><span class="badge b-up">▲ 涨</span></td></tr>
+            <tr><td>安徽</td><td><span class="spec spec-l">标鳜 / 500g+</span></td><td class="price">39</td><td><span class="badge b-up">▲ 涨 1</span></td></tr>
+            <tr><td>湖北</td><td><span class="spec spec-l">标鳜 / 500g+</span></td><td class="price">38</td><td><span class="badge b-flat">■ 持平</span></td></tr>
+            <tr><td>湖南</td><td><span class="spec spec-l">标鳜 / 500g+</span></td><td class="price">36</td><td><span class="badge b-up">▲ 涨 1</span></td></tr>
+            <tr><td>广东</td><td><span class="spec spec-l">大鳜 / 500g+</span></td><td class="price">36–37</td><td><span class="badge b-up">▲ 涨 0.5–1</span></td></tr>
+          </tbody>
+        </table>
+        <div class="csub" style="margin-top:12px">※ 江苏本地存塘基本见底，流通货源主要靠广东调入；宴席（升学宴等）需求增、标鳜及以上大规格更受追捧，推动价格上涨。广东细分：3成小鳜 33–34 元/斤、1成中桂1成小鱼 36–37 元/斤（7.20）。</div>
+      </div>
+      <div class="card">
+        <h3><span class="tag tag-gui">鳜鱼</span> 批发价（农业农村部接口爬虫 · 2026-07-22）</h3>
+        <div class="csub">来源：moa_fish_crawler.py 实时抓取 农业农村部 ncpscxx.moa.gov.cn 全国批发价接口（AES 解密）</div>
+        <table>
+          <thead><tr><th>市场 / 区域</th><th>规格</th><th>批发价</th><th>折合元/斤</th></tr></thead>
+          <tbody>
+            <tr><td>江苏 凌家塘市场</td><td><span class="spec spec-l">活鳜鱼 统货</span></td><td class="price">84 <small>元/公斤</small></td><td>≈ 42</td></tr>
+            <tr><td>江西 九江琵琶湖</td><td><span class="spec">活鳜鱼</span></td><td class="price">58 <small>元/公斤</small></td><td>≈ 29</td></tr>
+            <tr><td>乌鲁木齐 北园春</td><td><span class="spec">活鳜鱼</span></td><td class="price">120 <small>元/公斤</small></td><td>≈ 60</td></tr>
+          </tbody>
+        </table>
+        <div class="callout" style="margin-top:14px"><b>数据说明：</b>本表由爬虫直连农业农村部官方批发价接口（品种码 <b>AM01013003</b>）解密所得，抓取日期 <b>2026-07-22</b>，为<b>当日市场快照</b>（接口不提供历史序列）。江苏凌家塘活鳜鱼 84 元/公斤，较上一版周报 7/20 的 77–81 元/公斤进一步走高，流通加价约 12 元/公斤（塘头价 36 元/斤≈72 元/公斤），符合鲜活水产规律。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 鲈鱼价格 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:var(--lu)"></span>
+      <h2>二、鲈鱼（加州鲈）价格 · 按规格拆分</h2>
+      <span class="note">出塘价：元/斤 · 批发价：元/公斤</span>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="tag tag-lu">鲈鱼</span> 出塘价（塘头价）分规格</h3>
+        <div class="csub">来源：水产前沿《特水鱼周报 2026 第25期》· 2026-07-20（7.13→7.20 环比）</div>
+        <table>
+          <thead><tr><th>产区</th><th>规格</th><th>塘头价</th><th>较上周</th></tr></thead>
+          <tbody>
+            <tr><td>江苏</td><td><span class="spec spec-s">9两上 / ≈450g</span></td><td class="price">9.5–10</td><td><span class="badge b-flat">■ 持平</span></td></tr>
+            <tr><td>江苏</td><td><span class="spec spec-l">1斤上 / 500g+</span></td><td class="price">10.5–11 <small>参考周边</small></td><td><span class="badge b-flat">■ 稳</span></td></tr>
+            <tr><td>浙江</td><td><span class="spec spec-l">8成统货 / 500g+</span></td><td class="price">11.5–12</td><td><span class="badge b-flat">■ 持平</span></td></tr>
+            <tr><td>广东</td><td><span class="spec spec-l">1斤上 / 500g+</span></td><td class="price">10.5–11</td><td><span class="badge b-flat">■ 持平</span></td></tr>
+            <tr><td>四川</td><td><span class="spec spec-l">1斤上 / 500g+</span></td><td class="price">15.5</td><td><span class="badge b-down">▼ 跌 0.5</span></td></tr>
+            <tr><td>湖南</td><td><span class="spec spec-l">9两上 / 500g+</span></td><td class="price">12</td><td><span class="badge b-down">▼ 跌 0.5</span></td></tr>
+          </tbody>
+        </table>
+        <div class="csub" style="margin-top:12px">※ 全国加州鲈整体走弱：华东、华南、西南普遍下滑 0.2–0.5 元/斤；四川仍为价格高地（15.5）。江苏本地存塘相对充裕但养户出鱼积极性不高，供应偏紧、价格低位持稳。</div>
+      </div>
+      <div class="card">
+        <h3><span class="tag tag-lu">鲈鱼</span> 批发价（农业农村部接口爬虫 · 2026-07-22）</h3>
+        <div class="csub">来源：moa_fish_crawler.py 抓取（淡水鲈鱼 AM01009 / 海水鲈鱼 AM02005）</div>
+        <table>
+          <thead><tr><th>市场 / 区域</th><th>品种</th><th>批发价</th><th>折合元/斤</th></tr></thead>
+          <tbody>
+            <tr><td>江苏 凌家塘市场</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">27 <small>元/公斤</small></td><td>≈ 13.5</td></tr>
+            <tr><td>江苏 苏州南环桥</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">23.5 <small>元/公斤</small></td><td>≈ 11.75</td></tr>
+            <tr><td>安徽 合肥周谷堆</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">22.5 <small>元/公斤</small></td><td>≈ 11.25</td></tr>
+            <tr><td>马鞍山 安民农贸</td><td><span class="spec spec-s">淡水鲈鱼</span></td><td class="price">22 <small>元/公斤</small></td><td>≈ 11</td></tr>
+            <tr><td>青岛 城阳水产</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">44 <small>元/公斤</small></td><td>≈ 22</td></tr>
+          </tbody>
+        </table>
+        <div class="csub" style="margin-top:14px">※ 江苏及周边 4 个市场爬虫实测：海水鲈鱼凌家塘 27 / 南环桥 23.5 / 合肥周谷堆 22.5，淡水鲈鱼马鞍山安民 22 元/公斤（均为统货、不分规格）。接口区分「淡水鲈鱼」与「海水鲈鱼」两个品种码。较上一版 6/23 数据（江苏 28）小幅回落，符合加州鲈全国走弱趋势。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 图表 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar"></span>
+      <h2>三、价格可视化对比</h2>
+      <span class="note">规格：500g内 vs 500g+</span>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>各产区 鳜鱼 塘头价对比（元/斤）</h3>
+        <div class="csub">按规格分组，截至 2026-07-20</div>
+        <div class="chart-box"><canvas id="guiChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>鲈鱼 塘头价 vs 批发价（元/斤）</h3>
+        <div class="csub">批发价已由元/公斤折算为元/斤便于对比</div>
+        <div class="chart-box"><canvas id="luChart"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 代表性来源与帖子 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:#111"></span>
+      <h2>四、代表性来源与帖子</h2>
+      <span class="note">本轮未用 AgentKey 抓抖音</span>
+    </div>
+
+    <div class="card" style="margin-bottom:18px">
+      <h3>📌 本期权威价格来源（2026-07 中下旬）</h3>
+      <div class="csub">以下为本次更新的核心数据出处，均为公开网页，可点击核验</div>
+      <div class="src-list">
+        <div class="src">
+          <div class="st">水产前沿《特水鱼周报 2026 第25期》</div>
+          <div class="sd">2026-07-20 · 鳜鱼/加州鲈分产区分规格塘头价（江苏标鳜36、安徽39、加州鲈江苏9.5-10等）</div>
+        </div>
+        <div class="src">
+          <div class="st">腾氏水产商务网 海南卓越联合播报㉘</div>
+          <div class="sd">2026-07-17 · 江苏标鳜36元/斤（涨1）、湖北38、广东大鳜36-37</div>
+        </div>
+        <div class="src">
+          <div class="st">农业农村部批发价接口（moa_fish_crawler.py 爬虫）</div>
+          <div class="sd">2026-07-22 · 活鳜鱼江苏凌家塘84元/公斤（爬虫解密）；海水鲈鱼凌家塘27/南环桥23.5/合肥周谷堆22.5、淡水鲈鱼马鞍山安民22元/公斤</div>
+        </div>
+        <div class="src">
+          <div class="st">南京市农业农村局 水产产地收购价</div>
+          <div class="sd">2026-07-02 · 鲈鱼21.5元/公斤（环比+1），作塘头交叉验证</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:18px"><b>关于抖音帖子的说明：</b>上一版看板中的抖音代表性帖子（含点赞/评论/分享等互动数据）由 AgentKey（TikHub）抓取。本轮按要求<b>未使用 AgentKey</b>，无法重新抓取抖音社媒互动数据，故下方保留<b>7月上旬的代表性帖子</b>供连续性参考，其数值为当时快照，不代表 7 月下旬最新行情。</div>
+
+    <div class="posts">
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">陈</div>
+          <div><div class="author">老陈讲水产</div><div class="fans">粉丝 · 水产行情博主</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 7月11日 鳜鱼价格环比再涨 2 元/斤</div>
+        <div class="pdate">📅 2026-07-11 <span class="pill">上期快照</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>16</b></span><span class="stat">💬 <b>4</b></span><span class="stat">🔁 <b>11</b></span><span class="stat">⭐ <b>6</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7661055494057317194" target="_blank">🔗 iesdouyin.com/share/video/7661055494057317194</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">腾</div>
+          <div><div class="author">腾氏水产</div><div class="fans">粉丝 · 行业媒体官号</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 周涨 4 元/斤！鳜鱼行情全线飘红</div>
+        <div class="pdate">📅 2026-07-09 <span class="pill">上期快照</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>3</b></span><span class="stat">💬 <b>1</b></span><span class="stat">🔁 <b>2</b></span><span class="stat">⭐ <b>1</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7660477976454237475" target="_blank">🔗 iesdouyin.com/share/video/7660477976454237475</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">陈</div>
+          <div><div class="author">老陈讲水产</div><div class="fans">粉丝 · 水产行情博主</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 7月11号 最新鲈鱼塘口报价</div>
+        <div class="pdate">📅 2026-07-11 <span class="pill">上期快照</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>32</b></span><span class="stat">💬 <b>4</b></span><span class="stat">🔁 <b>13</b></span><span class="stat">⭐ <b>8</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7661063159323727587" target="_blank">🔗 iesdouyin.com/share/video/7661063159323727587</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">养</div>
+          <div><div class="author">养鱼老陈</div><div class="fans">粉丝 · 养殖户博主</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 最高涨 0.5 元/斤！加州鲈走量回暖</div>
+        <div class="pdate">📅 2026-06-30 <span class="pill">上期快照</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>31</b></span><span class="stat">💬 <b>5</b></span><span class="stat">🔁 <b>12</b></span><span class="stat">⭐ <b>7</b></span>
+        </div>
+        <a class="plink" href="https://www.douyin.com/search/加州鲈价格" target="_blank">🔗 抖音「加州鲈价格」相关视频</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 价格来源汇总 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:var(--brand)"></span>
+      <h2>五、价格数据来源汇总</h2>
+    </div>
+    <div class="src-list">
+      <div class="src">
+        <div class="st">📰 水产前沿《特水鱼周报 2026》第22–25期</div>
+        <div class="sd">2026-06-22 ~ 07-20 · 分产区分规格塘头价（鳜鱼/加州鲈），核心数据来源</div>
+      </div>
+      <div class="src">
+        <div class="st">🤖 moa_fish_crawler.py 农业农村部接口爬虫</div>
+        <div class="sd">2026-07-22 · 直连 ncpscxx.moa.gov.cn 批发价接口，AES 解密后取活鳜鱼/淡水鲈鱼/海水鲈鱼各市场当日批发价（江苏凌家塘活鳜鱼84、海水鲈鱼27元/公斤等）</div>
+      </div>
+      <div class="src">
+        <div class="st">📺 腾氏水产商务网 · 海南卓越联合播报㉘</div>
+        <div class="sd">2026-07-17 · 江苏标鳜36元/斤等，佐证鳜鱼「全线飘红」</div>
+      </div>
+      <div class="src">
+        <div class="st">🏙️ 南京市农业农村局 水产产地收购价</div>
+        <div class="sd">2026-07-02 · 鲈鱼21.5元/公斤，作塘头交叉验证</div>
+      </div>
+    </div>
+    <div class="callout">
+      <b>数据局限说明：</b>① 塘头价（出塘价）全部来自水产前沿周报，分规格清晰、来源权威；② <b>批发价板块已升级为爬虫直采</b>：moa_fish_crawler.py 逆向农业农村部批发价异步接口（品种码 活鳜鱼 AM01013003 / 淡水鲈鱼 AM01009 / 海水鲈鱼 AM02005），解密 AES 响应后得到 2026-07-22 当日各市场真实报价，可信度最高；③ 该接口<b>仅返回「当日」最新快照，无历史日期参数</b>，故无法自动回溯近 30 天序列，「近 30 天」维度暂以周报塘头价 + 爬虫当日批发价组合呈现；④ 接口报价为<b>统货价、不分 500g 内/外规格</b>，分规格需求仍以水产前沿周报的塘头价为准；⑤ 抖音社媒互动数据因需 AgentKey 未重新抓取，保留 7 月上旬快照仅作连续性参考；⑥ 价格随行就市，仅供参考。
+    </div>
+  </section>
+
+  <footer>
+    数据整理：WorkBuddy · 塘头价源自水产前沿/腾氏水产周报；批发价升级为 moa_fish_crawler.py 直连农业农村部 ncpscxx.moa.gov.cn 官方接口（AES 解密）爬虫实测<br>
+    统计周期 2026-06-22 ~ 2026-07-22 · 批发价爬虫抓取日期 2026-07-22（当日快照）· 价格随行就市，仅供参考
+  </footer>
+
+</div>
+
+<script>
+const brandFont={family:'-apple-system,"PingFang SC",sans-serif'};
+Chart.defaults.font.family=brandFont.family;
+Chart.defaults.color='#6b7684';
+
+// 鳜鱼塘头价（元/斤）按产区，分规格
+new Chart(document.getElementById('guiChart'),{
+  type:'bar',
+  data:{
+    labels:['江苏','安徽','湖北','湖南','广东'],
+    datasets:[
+      {label:'500g以内（小鳜，参考）',data:[33.5,null,null,null,33.5],backgroundColor:'#f59e0b',borderRadius:6,maxBarThickness:32},
+      {label:'500g以上（标鳜）',data:[36,39,38,36,36.5],backgroundColor:'#7c3aed',borderRadius:6,maxBarThickness:32}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+'：'+(c.parsed.y==null?'—':c.parsed.y+' 元/斤')}}},
+    scales:{y:{suggestedMin:28,suggestedMax:42,title:{display:true,text:'元/斤'},grid:{color:'#eef1f5'}},x:{grid:{display:false}}}
+  }
+});
+
+// 鲈鱼 塘头价 vs 批发价（元/斤）
+new Chart(document.getElementById('luChart'),{
+  type:'bar',
+  data:{
+    labels:['江苏','合肥','浙江','广东'],
+    datasets:[
+      {label:'塘头价（元/斤）',data:[9.75,null,11.75,10.75],backgroundColor:'#0284c7',borderRadius:6,maxBarThickness:32},
+      {label:'批发价（折元/斤）',data:[14,11.75,null,null],backgroundColor:'#0ea5a4',borderRadius:6,maxBarThickness:32}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+'：'+(c.parsed.y==null?'—':c.parsed.y+' 元/斤')}}},
+    scales:{y:{beginAtZero:true,suggestedMax:16,title:{display:true,text:'元/斤'},grid:{color:'#eef1f5'}},x:{grid:{display:false}}}
+  }
+});
+</script>
+</body>
+</html>
