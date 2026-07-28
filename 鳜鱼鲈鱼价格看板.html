@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-07-27 更新）</title>
+<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-07-28 更新）</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
@@ -91,10 +91,10 @@
     <h1>🐟 江浙沪皖 鳜鱼 · 鲈鱼 价格数据看板</h1>
     <p>聚焦江苏及周边（安徽、浙江、上海、湖北参照）近 30 天鳜鱼（桂花鱼）与鲈鱼（加州鲈）的<b>出塘价（塘头价）</b>与<b>批发价</b>行情，按鱼的规格拆分为「500 克以内 / 500 克以上」，并附代表性帖子、互动数据与价格来源。本轮<b>未使用 AgentKey</b>，数据来自公开网页检索（水产前沿、腾氏水产、农业农村部、地方农业农村局）。</p>
     <div class="meta">
-      <span class="chip">📅 统计周期：2026-06-27 ~ 2026-07-27</span>
+      <span class="chip">📅 统计周期：2026-06-27 ~ 2026-07-28</span>
       <span class="chip">📍 区域：江苏 · 安徽 · 浙江 · 上海</span>
       <span class="chip">💹 涨=红 / 跌=绿（国内习惯）</span>
-      <span class="chip">🤖 批发价：农业农村部接口爬虫（2026-07-27 当日快照）</span>
+      <span class="chip">🤖 批发价：农业农村部接口爬虫（2026-07-28）+ 科学养鱼OCR（07-27）</span>
     </div>
   </div>
 
@@ -118,7 +118,7 @@
     <div class="kpi">
       <div class="lbl"><span class="dot" style="background:var(--gui)"></span>江苏 鳜鱼 批发价（爬虫 7/27）</div>
       <div class="val">78 <small>元/公斤</small></div>
-      <div class="trend t-down">▼ 较7/22的84回落</div>
+      <div class="trend t-flat">■ 7/28接口无鳜鱼报价，沿用7/27</div>
     </div>
   </div>
 
@@ -147,7 +147,7 @@
         <div class="csub" style="margin-top:12px">※ 江苏本地存塘基本见底，流通货源主要靠广东调入；宴席（升学宴等）需求增、标鳜及以上大规格更受追捧，推动价格上涨。广东细分：3成小鳜 33–34 元/斤、1成中桂1成小鱼 36–37 元/斤（7.20）。</div>
       </div>
       <div class="card">
-        <h3><span class="tag tag-gui">鳜鱼</span> 批发价（农业农村部接口爬虫 · 2026-07-27）</h3>
+        <h3><span class="tag tag-gui">鳜鱼</span> 批发价（农业农村部接口爬虫 · 最新可用 2026-07-27）</h3>
         <div class="csub">来源：moa_fish_crawler.py 实时抓取 农业农村部 ncpscxx.moa.gov.cn 全国批发价接口（AES 解密）</div>
         <table>
           <thead><tr><th>市场 / 区域</th><th>规格</th><th>批发价</th><th>折合元/斤</th></tr></thead>
@@ -157,7 +157,7 @@
             <tr><td>乌鲁木齐 北园春</td><td><span class="spec">活鳜鱼</span></td><td class="price">120 <small>元/公斤</small></td><td>≈ 60</td></tr>
           </tbody>
         </table>
-        <div class="callout" style="margin-top:14px"><b>数据说明：</b>本表由爬虫直连农业农村部官方批发价接口（品种码 <b>AM01013003</b>）解密所得，抓取日期 <b>2026-07-27</b>，为<b>当日市场快照</b>（接口不提供历史序列）。江苏凌家塘活鳜鱼 78 元/公斤，较 7/22 爬虫的 84 回落 6 元、亦低于 7/20 周报 77–81 元/公斤，显示鳜鱼高位松动；流通加价约 6 元/公斤（塘头价 36 元/斤≈72 元/公斤），符合鲜活水产规律。</div>
+        <div class="callout" style="margin-top:14px"><b>数据说明：</b>本表由爬虫直连农业农村部官方批发价接口（品种码 <b>AM01013003</b>）解密所得，<b>抓取日期 2026-07-27</b>（7/28 当日该接口对活鳜鱼返回 <b>data=null，无报价</b>，故沿用 7/27 最新可用快照）。江苏凌家塘活鳜鱼 78 元/公斤，较 7/22 的 84 回落 6 元、亦低于 7/20 周报 77–81 元/公斤，显示鳜鱼高位松动；流通加价约 6 元/公斤（塘头价 36 元/斤≈72 元/公斤）。另见「补充·科学养鱼」板块 07-27 南环桥分规格鳜鱼（250–500g 72.5 / 500–750g 85.5 元/千克）可作交叉参考。</div>
       </div>
     </div>
   </section>
@@ -187,7 +187,7 @@
         <div class="csub" style="margin-top:12px">※ 全国加州鲈整体走弱：华东、华南、西南普遍下滑 0.2–0.5 元/斤；四川仍为价格高地（15.5）。江苏本地存塘相对充裕但养户出鱼积极性不高，供应偏紧、价格低位持稳。</div>
       </div>
       <div class="card">
-        <h3><span class="tag tag-lu">鲈鱼</span> 批发价（农业农村部接口爬虫 · 2026-07-27）</h3>
+        <h3><span class="tag tag-lu">鲈鱼</span> 批发价（农业农村部接口爬虫 · 2026-07-28）</h3>
         <div class="csub">来源：moa_fish_crawler.py 抓取（淡水鲈鱼 AM01009 / 海水鲈鱼 AM02005）</div>
         <table>
           <thead><tr><th>市场 / 区域</th><th>品种</th><th>批发价</th><th>折合元/斤</th></tr></thead>
@@ -197,9 +197,13 @@
             <tr><td>安徽 合肥周谷堆</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">22.5 <small>元/公斤</small></td><td>≈ 11.25</td></tr>
             <tr><td>马鞍山 安民农贸</td><td><span class="spec spec-s">淡水鲈鱼</span></td><td class="price">20 <small>元/公斤</small></td><td>≈ 10</td></tr>
             <tr><td>青岛 城阳水产</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">50 <small>元/公斤</small></td><td>≈ 25</td></tr>
+            <tr><td>山东威海水产品</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">40 <small>元/公斤</small></td><td>≈ 20</td></tr>
+            <tr><td>河南万邦国际</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">31 <small>元/公斤</small></td><td>≈ 15.5</td></tr>
+            <tr><td>重庆西三街农副</td><td><span class="spec spec-l">海水鲈鱼</span></td><td class="price">45 <small>元/公斤</small></td><td>≈ 22.5</td></tr>
+            <tr><td>长治 紫坊农贸</td><td><span class="spec spec-s">淡水鲈鱼</span></td><td class="price">33 <small>元/公斤</small></td><td>≈ 16.5</td></tr>
           </tbody>
         </table>
-        <div class="csub" style="margin-top:14px">※ 江苏及周边 4 个市场爬虫实测：海水鲈鱼凌家塘 27 / 南环桥 23.5 / 合肥周谷堆 22.5（与 7/22 持平），淡水鲈鱼马鞍山安民由 22 降至 20 元/公斤（均为统货、不分规格）。接口区分「淡水鲈鱼」与「海水鲈鱼」两个品种码。鲈鱼整体低位运行，符合加州鲈全国走弱趋势。</div>
+        <div class="csub" style="margin-top:14px">※ 2026-07-28 爬虫实测：海水鲈鱼凌家塘 27 / 南环桥 23.5 / 合肥周谷堆 22.5（与 7/22、7/27 持平），淡水鲈鱼马鞍山安民 20、长治紫坊 33 元/公斤（均为统货、不分规格）。接口区分「淡水鲈鱼」与「海水鲈鱼」两个品种码。鲈鱼整体低位运行，符合加州鲈全国走弱趋势。</div>
       </div>
     </div>
   </section>
@@ -228,6 +232,93 @@
         </tbody>
       </table>
       <div class="csub" style="margin-top:12px">※ 武汉白沙洲提供<b>分规格</b>鳜鱼批发价（大规格溢价明显：≥750g 74 vs 250–500g 72 元/公斤）；昆明华潮、中山、南京为统货/产地价。与农业农村部爬虫（凌家塘活鳜鱼 78、海水鲈鱼 27）交叉验证：区域与规格口径不同，绝对值不可直接比较，但方向一致。</div>
+    </div>
+  </section>
+
+  <!-- 科学养鱼公众号 OCR 数据 -->
+  <section>
+    <div class="sec-head">
+      <span class="bar" style="background:#7c3aed"></span>
+      <h2>补充 · 「科学养鱼」公众号批发价（OCR 提取）</h2>
+      <span class="note">2026-07-27 · 元/千克 · 已按图片数字录入</span>
+    </div>
+    <div class="card">
+      <h3>🌟 科学养鱼公众号 淡水鱼类分品种分规格批发价</h3>
+      <div class="csub">来源：用户提供的「科学养鱼」公众号价格截图（0727.png / 0728-02~06.png），单位已确认为<b>淡水鱼类（元/千克）</b>；由 OCR 提取，发布日期 2026-07-27。鳜鱼部分可直接并入鳜鱼批发价序列。</div>
+      <div class="grid2">
+        <div>
+          <h3 style="font-size:14px;margin:6px 0 8px"><span class="tag tag-gui">鳜鱼</span> 桂花鱼 批发价（元/千克）</h3>
+          <table>
+            <thead><tr><th>市场</th><th>规格</th><th>价格</th></tr></thead>
+            <tbody>
+              <tr><td>云南华潮水产批发市场</td><td><span class="spec spec-l">条重≥750克</span></td><td class="price">90.00</td></tr>
+              <tr><td>山东临沂华东淡水鱼批发市场</td><td><span class="spec spec-l">条重≥750克</span></td><td class="price">72.00</td></tr>
+              <tr><td>江苏苏州南环桥</td><td><span class="spec spec-s">250≤条重＜500克</span></td><td class="price">72.50</td></tr>
+              <tr><td>江苏苏州南环桥</td><td><span class="spec spec-l">500≤条重＜750克</span></td><td class="price">85.50</td></tr>
+              <tr><td>上海江阳水产品批发交易市场</td><td><span class="spec spec-l">500≤条重＜750克</span></td><td class="price">92.00</td></tr>
+              <tr><td>广州黄沙水产交易市场</td><td><span class="spec spec-l">条重≥750克</span></td><td class="price">54.00</td></tr>
+              <tr><td>湖南长沙马王堆</td><td><span class="spec spec-l">条重≥750克</span></td><td class="price">（截图底部遮挡，待核）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:14px;margin:6px 0 8px">🐟 青鱼 批发价（元/千克）</h3>
+          <table>
+            <thead><tr><th>市场</th><th>规格</th><th>价格</th></tr></thead>
+            <tbody>
+              <tr><td>江苏苏州南环桥</td><td><span class="spec spec-s">条重＜2000</span></td><td class="price">16.30</td></tr>
+              <tr><td>江苏苏州南环桥</td><td><span class="spec spec-l">条重≥2000</span></td><td class="price">18.80</td></tr>
+              <tr><td>湖州菱湖乌板桥</td><td><span class="spec spec-l">条重≥2000</span></td><td class="price">17.80</td></tr>
+              <tr><td>湖北中和农产品大市场</td><td><span class="spec spec-s">条重＜2000</span></td><td class="price">8.00</td></tr>
+              <tr><td>湖北中和农产品大市场</td><td><span class="spec spec-l">条重≥2000</span></td><td class="price">12.40</td></tr>
+              <tr><td>武汉白沙洲</td><td><span class="spec spec-s">条重＜2000</span></td><td class="price">14.50</td></tr>
+              <tr><td>武汉白沙洲</td><td><span class="spec spec-l">条重≥2000</span></td><td class="price">15.50</td></tr>
+              <tr><td>江西南昌水产品综合交易批发市场</td><td><span class="spec spec-s">条重＜2000</span></td><td class="price">16.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="margin-top:16px">
+        <h3 style="font-size:14px;margin:6px 0 8px">📋 鲫鱼 / 鲤鱼 / 鲢鱼 / 鳊鱼（花鲢）批发价（元/千克）</h3>
+        <table>
+          <thead><tr><th>品种</th><th>市场</th><th>规格（克/条重）</th><th>价格</th></tr></thead>
+          <tbody>
+            <tr><td>鲫鱼</td><td>云南华潮</td><td><span class="spec spec-l">≥500</span></td><td class="price">18.00</td></tr>
+            <tr><td>鲫鱼</td><td>山东临沂华东</td><td><span class="spec spec-s">100–250</span></td><td class="price">11.80</td></tr>
+            <tr><td>鲫鱼</td><td>山东临沂华东</td><td><span class="spec">250–500</span></td><td class="price">17.60</td></tr>
+            <tr><td>鲫鱼</td><td>江苏苏州南环桥</td><td><span class="spec">250–500</span></td><td class="price">16.80</td></tr>
+            <tr><td>鲫鱼</td><td>江苏苏州南环桥</td><td><span class="spec spec-l">≥500</span></td><td class="price">24.30</td></tr>
+            <tr><td>鲫鱼</td><td>湖州菱湖乌板桥</td><td><span class="spec">250–500</span></td><td class="price">22.80</td></tr>
+            <tr><td>鲫鱼</td><td>四川内江水产</td><td><span class="spec spec-s">＜100</span></td><td class="price">18.00</td></tr>
+
+            <tr><td>鲤鱼</td><td>云南华潮</td><td><span class="spec spec-l">≥1500</span></td><td class="price">13.00</td></tr>
+            <tr><td>鲤鱼</td><td>山东临沂华东</td><td><span class="spec">1000–1500</span></td><td class="price">10.40</td></tr>
+            <tr><td>鲤鱼</td><td>山东临沂华东</td><td><span class="spec spec-l">≥1500</span></td><td class="price">10.60</td></tr>
+            <tr><td>鲤鱼</td><td>江苏苏州南环桥</td><td><span class="spec">1000–1500</span></td><td class="price">8.50</td></tr>
+            <tr><td>鲤鱼</td><td>江苏苏州南环桥</td><td><span class="spec spec-l">≥1500</span></td><td class="price">9.50</td></tr>
+            <tr><td>鲤鱼</td><td>四川内江水产</td><td><span class="spec">500–1000</span></td><td class="price">13.00</td></tr>
+            <tr><td>鲤鱼</td><td>四川内江水产</td><td><span class="spec spec-l">1250–1500</span></td><td class="price">13.00</td></tr>
+
+            <tr><td>鲢鱼</td><td>山东临沂华东</td><td><span class="spec">1000–1500</span></td><td class="price">7.00</td></tr>
+            <tr><td>鲢鱼</td><td>山东临沂华东</td><td><span class="spec spec-l">≥1500</span></td><td class="price">8.00</td></tr>
+            <tr><td>鲢鱼</td><td>江苏苏州南环桥</td><td><span class="spec">1000–1500</span></td><td class="price">6.80</td></tr>
+            <tr><td>鲢鱼</td><td>江苏苏州南环桥</td><td><span class="spec spec-l">≥1500</span></td><td class="price">8.30</td></tr>
+            <tr><td>鲢鱼</td><td>湖州菱湖乌板桥</td><td><span class="spec spec-l">≥1500</span></td><td class="price">5.80</td></tr>
+            <tr><td>鲢鱼</td><td>四川内江水产</td><td><span class="spec">500–1000</span></td><td class="price">9.00</td></tr>
+            <tr><td>鲢鱼</td><td>四川内江水产</td><td><span class="spec spec-l">≥1500</span></td><td class="price">9.00</td></tr>
+            <tr><td>鲢鱼</td><td>慈溪长三角农贸城</td><td><span class="spec spec-l">≥1500</span></td><td class="price">15.50</td></tr>
+
+            <tr><td>鳊鱼(花鲢)</td><td>山东临沂华东</td><td><span class="spec">1000–1500</span></td><td class="price">15.00</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>山东临沂华东</td><td><span class="spec spec-l">≥1500</span></td><td class="price">16.60</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>江苏苏州南环桥</td><td><span class="spec">1000–1500</span></td><td class="price">13.40</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>江苏苏州南环桥</td><td><span class="spec spec-l">≥1500</span></td><td class="price">16.20</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>湖州菱湖乌板桥</td><td><span class="spec spec-l">≥1500</span></td><td class="price">12.40</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>四川内江水产</td><td><span class="spec">500–1000</span></td><td class="price">19.00</td></tr>
+            <tr><td>鳊鱼(花鲢)</td><td>四川内江水产</td><td><span class="spec spec-l">≥1500</span></td><td class="price">19.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:14px"><b>数据说明：</b>该公众号价格以<b>图片</b>形式发布，纯文本爬虫取不到数字；本次由用户提供截图、我方 OCR 提取后录入。① 单位已确认为<b>元/千克</b>；② 鳜鱼（桂花鱼）与农业农村部爬虫（凌家塘活鳜鱼）口径不同（公众号为全国多市场分规格、农业农村部为统货当日快照），可互为补充；③ 截图个别记录底部被遮挡（如长沙马王堆），已标注「待核」；④ 数据发布日 2026-07-27，与农业农村部爬虫 07-28 快照相邻，可作交叉参考。</div>
     </div>
   </section>
 
@@ -274,7 +365,7 @@
         </div>
         <div class="src">
           <div class="st">农业农村部批发价接口（moa_fish_crawler.py 爬虫）</div>
-          <div class="sd">2026-07-27 · 活鳜鱼江苏凌家塘78元/公斤（爬虫解密）；海水鲈鱼凌家塘27/南环桥23.5/合肥周谷堆22.5、淡水鲈鱼马鞍山安民20元/公斤</div>
+          <div class="sd">2026-07-28 · 海水鲈鱼凌家塘27/南环桥23.5/合肥周谷堆22.5、淡水鲈鱼马鞍山安民20/长治紫坊33元/公斤；活鳜鱼当日接口data=null，沿用7/27凌家塘78</div>
         </div>
         <div class="src">
           <div class="st">南京市农业农村局 水产产地收购价</div>
@@ -293,7 +384,7 @@
 
     <div class="callout" style="margin-bottom:18px"><b>关于抖音帖子的说明：</b>上一版看板中的抖音代表性帖子（含点赞/评论/分享等互动数据）由 AgentKey（TikHub）抓取。本轮按要求<b>未使用 AgentKey</b>，无法重新抓取抖音社媒互动数据，故下方保留<b>7月上旬的代表性帖子</b>供连续性参考，其数值为当时快照，不代表 7 月下旬最新行情。</div>
 
-    <div class="callout" style="margin-bottom:18px"><b>关于「科学养鱼」公众号爬取：</b>经搜狗微信检索确认该号确实发布鳜鱼/鲈鱼批发价专栏（如《各地乌鳢、加州鲈、黄颡鱼、鳜鱼批发价格｜今日鱼价》）。但实测发现：① 价格以<b>图片</b>形式发布，正文仅含省份标题，纯文本爬虫取不到数字，需 OCR；② 搜狗索引到的多为 2018–2020 年历史文章，<b>2026 年近期未公开索引</b>。因此其价格本轮<b>未纳入结构化数据</b>；若你提供具体文章链接或价格图片，我可做 OCR 提取补入。</div>
+    <div class="callout" style="margin-bottom:18px"><b>关于「科学养鱼」公众号价格：</b>经搜狗微信检索确认该号确实发布鳜鱼/鲈鱼等淡水鱼批发价专栏（如《各地乌鳢、加州鲈、黄颡鱼、鳜鱼批发价格｜今日鱼价》）。其价格以<b>图片</b>形式发布，正文仅含省份标题，纯文本爬虫取不到数字；搜狗索引到的多为 2018–2020 年历史文章、2026 年近期未公开索引。本轮由<b>用户提供截图 + OCR 提取</b>，已将 2026-07-27 鳜鱼/青鱼/鲫鱼/鲤鱼/鲢鱼/鳊鱼（元/千克，分规格）结构化补入「补充·科学养鱼公众号批发价」板块，详见该节。</div>
 
     <div class="posts">
       <div class="post">
@@ -364,7 +455,7 @@
       </div>
       <div class="src">
         <div class="st">🤖 moa_fish_crawler.py 农业农村部接口爬虫</div>
-        <div class="sd">2026-07-27 · 直连 ncpscxx.moa.gov.cn 批发价接口，AES 解密后取活鳜鱼/淡水鲈鱼/海水鲈鱼各市场当日批发价（江苏凌家塘活鳜鱼78、海水鲈鱼27元/公斤等）</div>
+        <div class="sd">2026-07-28 · 直连 ncpscxx.moa.gov.cn 批发价接口，AES 解密后取淡水鲈鱼/海水鲈鱼各市场当日批发价；活鳜鱼当日接口无报价，沿用 7/27 凌家塘78元/公斤</div>
       </div>
       <div class="src">
         <div class="st">🏙️ 南京/昆明/武汉/中山 农业农村局公开价</div>
@@ -375,12 +466,12 @@
         <div class="sd">2026-07-17 · 江苏标鳜36元/斤等，佐证鳜鱼「全线飘红」</div>
       </div>
       <div class="src">
-        <div class="st">🐟「科学养鱼」公众号（爬取未成功）</div>
-        <div class="sd">价格以图片发布+近期未公开索引，纯文本爬虫取不到数字；如需可凭文章链接/图片 OCR 补入</div>
+        <div class="st">🐟「科学养鱼」公众号（用户提供截图 + OCR）</div>
+        <div class="sd">2026-07-27 · 淡水鱼类分规格批发价（元/千克）：鳜鱼/青鱼/鲫鱼/鲤鱼/鲢鱼/鳊鱼，已结构化补入「补充」板块</div>
       </div>
     </div>
     <div class="callout">
-      <b>数据局限说明：</b>① 塘头价（出塘价）全部来自水产前沿周报，分规格清晰、来源权威；② <b>批发价板块已升级为爬虫直采</b>：moa_fish_crawler.py 逆向农业农村部批发价异步接口（品种码 活鳜鱼 AM01013003 / 淡水鲈鱼 AM01009 / 海水鲈鱼 AM02005），解密 AES 响应后得到 2026-07-27 当日各市场真实报价，可信度最高；另以南京/昆明/武汉/中山农业农村局公开价补充分规格批发价；③ 该接口<b>仅返回「当日」最新快照，无历史日期参数</b>，故无法自动回溯近 30 天序列，「近 30 天」维度暂以周报塘头价 + 爬虫当日批发价组合呈现（看板「六、历史序列」已开启逐日累积）；④ 接口报价为<b>统货价、不分 500g 内/外规格</b>，分规格需求以水产前沿周报塘头价 + 武汉白沙洲分规格批发价为准；⑤ <b>「科学养鱼」公众号本轮爬取未成功</b>：其价格以图片发布且近期文章未公开索引，纯文本爬虫取不到数字（详见第四节说明），如需可凭文章链接/图片做 OCR；⑥ 抖音社媒互动数据因需 AgentKey 未重新抓取，保留 7 月上旬快照仅作连续性参考；⑦ 价格随行就市，仅供参考。
+      <b>数据局限说明：</b>① 塘头价（出塘价）全部来自水产前沿周报，分规格清晰、来源权威；② <b>批发价板块已升级为爬虫直采</b>：moa_fish_crawler.py 逆向农业农村部批发价异步接口（品种码 活鳜鱼 AM01013003 / 淡水鲈鱼 AM01009 / 海水鲈鱼 AM02005），解密 AES 响应后得到 2026-07-28 当日各市场真实报价，可信度最高；另以南京/昆明/武汉/中山农业农村局公开价补充分规格批发价；③ 该接口<b>仅返回「当日」最新快照，无历史日期参数</b>，故无法自动回溯近 30 天序列，「近 30 天」维度暂以周报塘头价 + 爬虫当日批发价组合呈现（看板「六、历史序列」已开启逐日累积）；④ 接口报价为<b>统货价、不分 500g 内/外规格</b>，分规格需求以水产前沿周报塘头价 + 武汉白沙洲分规格批发价为准；⑤ <b>「科学养鱼」公众号价格已通过 OCR 纳入</b>：其价格以图片发布、纯文本爬虫取不到数字，本轮由用户提供截图 + OCR 提取，已将 2026-07-27 鳜鱼/青鱼/鲫鱼/鲤鱼/鲢鱼/鳊鱼（元/千克，分规格）补入「补充」板块，与农业农村部爬虫互为交叉参考；⑥ <b>7/28 当日活鳜鱼接口返回 data=null（无报价）</b>，鳜鱼批发价沿用 7/27 最新可用快照；⑦ 抖音社媒互动数据因需 AgentKey 未重新抓取，保留 7 月上旬快照仅作连续性参考；⑧ 价格随行就市，仅供参考。
     </div>
   </section>
 
@@ -401,7 +492,7 @@
 
   <footer>
     数据整理：WorkBuddy · 塘头价源自水产前沿/腾氏水产周报；批发价升级为 moa_fish_crawler.py 直连农业农村部 ncpscxx.moa.gov.cn 官方接口（AES 解密）爬虫实测<br>
-    统计周期 2026-06-27 ~ 2026-07-27 · 批发价爬虫抓取日期 2026-07-27（当日快照）· 价格随行就市，仅供参考
+    统计周期 2026-06-27 ~ 2026-07-28 · 批发价爬虫抓取日期 2026-07-28（活鳜鱼当日无报价，沿用 7/27）· 科学养鱼截图 OCR 日期 2026-07-27 · 价格随行就市，仅供参考
   </footer>
 
 </div>

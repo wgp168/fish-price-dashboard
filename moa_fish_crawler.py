@@ -54,8 +54,11 @@ def fetch_decrypt(variety_code: str) -> dict:
            + urllib.parse.urlencode({"varietyCode": variety_code}))
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0", "Accept": "application/json"}, method="POST")
-    cipher_b64 = json.loads(urllib.request.urlopen(req, timeout=15, context=CTX)
-                             .read().decode())["data"]
+    o = json.loads(urllib.request.urlopen(req, timeout=15, context=CTX)
+                    .read().decode())
+    cipher_b64 = o.get("data")          # 上游偶发返回 null（当日该品种无报价）
+    if not cipher_b64:
+        return None
     iv = cipher_b64[:16].encode("utf-8")[:16]
     raw = base64.b64decode(cipher_b64[16:])
     pt = AES.new(KEY, AES.MODE_CBC, iv).decrypt(raw)
@@ -70,6 +73,9 @@ def crawl() -> list:
             o = fetch_decrypt(code)
         except Exception as e:
             print(f"[WARN] {name}({code}) 抓取失败: {e}", file=sys.stderr)
+            continue
+        if o is None:              # 当日该品种无报价（上游 data=null），跳过不影响整体
+            print(f"[SKIP] {name}({code}) 当日无报价（接口 data=null），跳过", file=sys.stderr)
             continue
         date = o.get("date")
         for m, p in zip(o.get("x", []), o.get("y", [])):
