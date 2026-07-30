@@ -18,7 +18,9 @@ moa_fish_crawler.py                 # 农业农村部批发价爬虫（AES 解�
 fish_prices.csv / fish_prices.json # 当日快照（覆盖写）
 fish_prices_history.csv/.json/.js  # 历史累积（追加写，.js 供看板读取）
 .github/workflows/daily-crawl.yml  # GitHub Actions 每日定时抓取并提交
-鳜鱼鲈鱼价格看板.html              # 价格数据看板（爬虫当日批发价 + 周报塘头价 + 历史序列图）
+鳜鱼鲈鱼价格看板.html              # 价格数据看板（爬虫当日批发价 + 周报塘头价 + 历史序列图，已内联 Chart.js 与历史数据，离线可用）
+inline_assets.py                   # 把 Chart.js 与历史数据内联进看板 HTML（离线渲染）
+chart.umd.min.js                   # 本地 Chart.js v4.4.1（inline_assets.py 的内联源）
 ```
 
 ## 使用方法
@@ -38,12 +40,24 @@ python moa_fish_crawler.py --region
 | 文件 | 作用 |
 |------|------|
 | `fish_prices.csv` / `fish_prices.json` | 当日快照（覆盖写），看板「批发价」板块数据源 |
-| `fish_prices_history.csv` / `.json` / `.js` | **历史累积**（追加写，按日期去重）。`.js` 供看板 `<script src>` 直接读取，兼容 `file://` 与 GitHub Pages |
+| `fish_prices_history.csv` / `.json` / `.js` | **历史累积**（追加写，按日期去重）。看板已通过 `inline_assets.py` 把历史数据**内联**进 HTML，不再依赖此外部文件，单文件离线打开图表也能显示 |
 
 ## 历史 30 天序列怎么来
 
 农业农村部该接口**只返当日快照、无历史日期参数**；而能查历史的 `FarmDaily`/`common-price-avg` 接口只覆盖「重点监测 46 品种」，**不含鳜鱼、鲈鱼**。
 因此**唯一稳妥路径是逐日累积**：每天定时跑一次爬虫，把当日快照追加到 `fish_prices_history.*`，约 30 天后即得完整 30 天逐日序列。看板「六、历史价格序列」板块会自动读取并绘图。
+
+## 离线渲染（图表内联）
+
+看板里的「价格可视化对比」与「历史价格序列」两张图由 Chart.js 绘制。为避免 `file://` 直接打开时因 CDN / 网络被拦截而图不显示，已将 Chart.js 源码与 `fish_prices_history.js` 的历史数据**内联**进 `鳜鱼鲈鱼价格看板.html`，使其成为完全自包含的单文件。
+
+每次更新完数据后，重跑一次即可重新内联：
+
+```bash
+python inline_assets.py
+```
+
+前置：`chart.umd.min.js`（本地 Chart.js v4.4.1）与 `fish_prices_history.js` 与本脚本同目录。（需升级 Chart.js 时，重新下载对应 UMD 覆盖 `chart.umd.min.js` 后重跑。）
 
 ## 定时更新（GitHub Actions 已就绪）
 
