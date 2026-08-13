@@ -27,14 +27,24 @@ def main():
     if "</script" in chart_src.lower():
         chart_src = chart_src.replace("</script>", "<\\/script>")
 
-    assert CDN_LINE in html, "未找到 Chart.js CDN 引用行，可能已内联或路径变化"
-    assert EXT_HIST_LINE in html, "未找到 fish_prices_history.js 引用行"
+    # 1) 内联 Chart.js（替换 CDN 行；若已内联则跳过）
+    if CDN_LINE in html:
+        html = html.replace(CDN_LINE, "<script>\n" + chart_src + "\n</script>")
+    elif "Chart.js v4.4.1" in html:
+        print("   (Chart.js 已内联，跳过)")
+    else:
+        raise AssertionError("未找到 Chart.js CDN 引用行，也未检测到已内联的 Chart.js")
 
-    # 1) 内联 Chart.js（替换 CDN 行）
-    html = html.replace(CDN_LINE, "<script>\n" + chart_src + "\n</script>")
-
-    # 2) 内联历史数据（替换外部 script 引用）
-    html = html.replace(EXT_HIST_LINE, "<script>\n" + hist_src + "\n</script>")
+    # 2) 内联历史数据：优先替换外部引用；若已内联则更新内联块
+    if EXT_HIST_LINE in html:
+        html = html.replace(EXT_HIST_LINE, "<script>\n" + hist_src + "\n</script>")
+    else:
+        import re
+        pattern = r"<script>\s*window\.FISH_HISTORY\s*=\s*\[.*?\]\s*;\s*</script>"
+        if re.search(pattern, html, re.S):
+            html = re.sub(pattern, "<script>\n" + hist_src + "\n</script>", html, count=1, flags=re.S)
+        else:
+            raise AssertionError("未找到 fish_prices_history.js 外部引用，也未找到已内联的 FISH_HISTORY 块")
 
     open(HTML, "w", encoding="utf-8").write(html)
 
