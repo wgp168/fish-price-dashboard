@@ -1,23 +1,27 @@
-name: 每日抓取鳜鱼鲈鱼批发价
+name: 每日鳜鱼鲈鱼价格看板更新
 
 on:
   schedule:
-    # 每天 UTC 09:00 ≈ 北京时间 17:00 抓取（农业农村部当日行情一般已更新）
-    - cron: "0 9 * * *"
+    # 每天 UTC 01:30 ≈ 北京时间 09:30（新发地/农业农村部当日或前一日行情已就绪）
+    - cron: "30 1 * * *"
   workflow_dispatch: {}      # 允许在 Actions 页面手动触发
 
 permissions:
-  contents: write            # 允许工作流把抓取结果提交回仓库
+  contents: write            # 允许工作流把结果提交回仓库
 
 jobs:
-  crawl:
+  update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    env:
+      OCR_API_KEY: ${{ secrets.OCR_API_KEY }}   # 可选：视觉 OCR（SiliconFlow 等）
+      OCR_API_BASE: ${{ secrets.OCR_API_BASE }}
+      OCR_MODEL: ${{ secrets.OCR_MODEL }}
     steps:
       - name: 检出仓库
         uses: actions/checkout@v4
         with:
-          persist-credentials: true   # 保留 GITHUB_TOKEN 以便推送
+          persist-credentials: true
 
       - name: 配置 Python
         uses: actions/setup-python@v5
@@ -25,20 +29,49 @@ jobs:
           python-version: "3.11"
 
       - name: 安装依赖
-        run: pip install --quiet pycryptodome
+        run: pip install --quiet pycryptodome beautifulsoup4 lxml requests pillow
 
-      - name: 运行爬虫（写快照 + 追加历史）
+      # ① 农业农村部批发价接口（AES 解密）+ 历史累积
+      - name: 运行 MOA 批发价爬虫
         run: python moa_fish_crawler.py
 
-      - name: 提交变化（仅在有更新时）
+      # ② 公开价源分规格批发价（武汉白沙洲 / 九江 / 云南华潮 / 北京新发地）
+      - name: 运行公开价源爬虫
+        run: python public_price_crawler.py
+
+      # ③ 公众号 OCR：有截图且配了密钥则自动 OCR；否则用 current.json 重建板块（幂等）
+      - name: 公众号 OCR 流水线
+        run: |
+          if [ -n "$OCR_API_KEY" ] && ls screenshots/*.png >/dev/null 2>&1; then
+            for f in screenshots/*.png; do
+              case "$f" in
+                *科学养鱼*) src=科学养鱼 ;;
+                *a渔业*)    src=a渔业行情 ;;
+                *)          continue ;;
+              esac
+              python wechat_ocr_pipeline.py --images "$f" --source "$src" --no-commit || true
+            done
+          else
+            python wechat_ocr_pipeline.py --rebuild --no-commit
+          fi
+
+      # ④ 水产前沿周报监控（best-effort：官网不可达时仅提示，不阻断）
+      - name: 水产前沿周报监控
+        run: python shuichan_qianyan_monitor.py --check || true
+
+      # ⑤ 重新内联 Chart.js 与历史数据，保证 HTML 离线可用
+      - name: 重新内联资产
+        run: python inline_assets.py || true
+
+      # ⑥ 提交并推送
+      - name: 提交变化
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add fish_prices.csv fish_prices.json fish_prices_history.csv fish_prices_history.json fish_prices_history.js
-          # 仅当历史有新增才提交（接口当日快照会刷新，故通常每天都有变化）
+          git add -A
           if git diff --cached --quiet; then
             echo "无变化，跳过提交"
           else
-            git commit -m "chore: 每日批发价快照 $(date +'%Y-%m-%d')"
+            git commit -m "chore: 每日价格看板更新 $(date +'%Y-%m-%d')"
             git push
           fi

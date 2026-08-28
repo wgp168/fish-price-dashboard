@@ -12,6 +12,9 @@
   1) 武汉市农业农村局 · 白沙洲市场    （分规格，含最高/最低价）
   2) 九江市农业农村局 · 水产品价格采集表（分规格，单值）
   3) 昆明市农业农村局 · 云南华潮水产批发市场（单值，元/千克）
+  4) 北京新发地市场 · 每日价格行情 API（分规格 低/均/高价，元/斤 → 转元/公斤）
+     ※ 上海江杨的权威实时价在上蔬云采微信小程序（无开放网页接口），
+       目前由「科学养鱼」公众号截图经 OCR 流水线覆盖（见 wechat_ocr_pipeline.py）。
 
 输出：public_fish_prices.csv / public_fish_prices.json
       字段：来源, 发布日期, 品种, 规格, 价格_元公斤, 价格区间, 备注
@@ -19,7 +22,7 @@
 用法：
   python public_price_crawler.py            # 抓取 + 写文件
 """
-import urllib.request, ssl, json, os, csv, sys, re
+import urllib.request, ssl, json, os, csv, sys, re, urllib.parse
 try:
     from bs4 import BeautifulSoup
 except ImportError:
@@ -144,6 +147,64 @@ def parse_huachao(soup) -> list:
     return out
 
 
+def post_xinfadi(data: dict) -> dict:
+    """调用新发地 /getPriceData.html 接口（form 表单，返回 JSON 列表）"""
+    url = "http://xinfadi.com.cn:8099/getPriceData.html"
+    req = urllib.request.Request(
+        url, data=urllib.parse.urlencode(data).encode("utf-8"),
+        headers={"User-Agent": "Mozilla/5.0",
+                 "Content-Type": "application/x-www-form-urlencoded"},
+        method="POST")
+    raw = urllib.request.urlopen(req, timeout=25, context=CTX).read().decode("utf-8", "ignore")
+    return json.loads(raw)
+
+
+def parse_xinfadi() -> list:
+    """北京新发地每日价格行情（水产分类 cat=1190）。
+    站点单位为「元/斤」，统一 ×2 换算为「元/公斤」以对齐看板口径。
+    鳜鱼在新发地登记为「桂鱼」；鲈鱼含「淡水鲈鱼/海鲈鱼」两类。
+    """
+    out = []
+    # query 词 -> 标准品种
+    for q, std in (("桂鱼", "鳜鱼"), ("鲈鱼", "鲈鱼")):
+        data = {"limit": "200", "current": "1", "pubDateStartTime": "",
+                "pubDateEndTime": "", "prodPcatid": "1190", "prodCatid": "",
+                "prodName": q, "selectClassId": ""}
+        try:
+            j = post_xinfadi(data)
+        except Exception as e:
+            print(f"[WARN] 新发地 {q} 接口失败: {e}", file=sys.stderr)
+            continue
+        rows = j.get("list", [])
+        if not rows:
+            continue
+        latest = rows[0]["pubDate"][:10]          # 接口按日期倒序
+        for it in rows:
+            if it["pubDate"][:10] != latest:
+                break
+            pn = it.get("prodName", "")
+            spec = it.get("specInfo", "") or "统货"
+            if "海" in pn:
+                spec2 = f"海水 {spec}"
+            elif "淡" in pn:
+                spec2 = f"淡水 {spec}"
+            else:
+                spec2 = spec
+            try:
+                lo = float(it["lowPrice"]) * 2
+                av = float(it["avgPrice"]) * 2
+                hi = float(it["highPrice"]) * 2
+            except (TypeError, ValueError):
+                continue
+            out.append({
+                "来源": "北京新发地市场", "发布日期": latest,
+                "品种": std, "规格": spec2, "价格_元公斤": round(av, 2),
+                "价格区间": f"{lo:.1f}~{hi:.1f}", "备注": "新发地每日行情(斤→公斤)",
+            })
+        print(f"[OK] 北京新发地市场（{q}）：最新 {latest}，本日 {len(out)} 条目标品种")
+    return out
+
+
 def main():
     rows = []
     parsers = {"武汉白沙洲市场": parse_wuhan, "九江市农业农村局": parse_jiujiang,
@@ -156,6 +217,12 @@ def main():
             rows.extend(got)
         except Exception as e:
             print(f"[WARN] {name} 抓取失败: {e}", file=sys.stderr)
+
+    # 北京新发地（动态 API，不走 SOURCES 静态 URL）
+    try:
+        rows.extend(parse_xinfadi())
+    except Exception as e:
+        print(f"[WARN] 北京新发地 抓取失败: {e}", file=sys.stderr)
 
     here = os.path.dirname(os.path.abspath(__file__))
     fields = ["来源", "发布日期", "品种", "规格", "价格_元公斤", "价格区间", "备注"]
@@ -170,7 +237,7 @@ def main():
     # 仅展示鳜鱼/鲈鱼
     for r in rows:
         if r["品种"] in ("鳜鱼", "鲈鱼"):
-            print(f"  {r['来源']:<12} | {r['品种']:<4} | {r['规格']:<12} | {r['价格_元公斤']} 元/公斤")
+            print(f"  {r['来源']:<14} | {r['品种']:<4} | {r['规格']:<10} | {r['价格_元公斤']} 元/公斤")
 
 
 if __name__ == "__main__":
