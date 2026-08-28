@@ -301,7 +301,7 @@ def main():
         if not args.source:
             print("[ERR] --images 需配合 --source", file=sys.stderr)
             sys.exit(1)
-        api_base = os.environ.get("OCR_API_BASE", "https://api.siliconflow.cn/v1")
+        api_base = os.environ.get("OCR_API_BASE") or "https://api.siliconflow.cn/v1"
         api_key = os.environ.get("OCR_API_KEY")
         model = os.environ.get("OCR_MODEL", "Qwen/Qwen2.5-VL-72B-Instruct")
         if api_key:
