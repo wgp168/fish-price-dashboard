@@ -7,7 +7,14 @@ douyin_search_crawler.py
 =====================================================================
 数据源（按推荐优先级，均用自然语言驱动，填 Key 即跑）
 =====================================================================
-1) 抖音开放平台官方 OpenAPI  【推荐 · 免费 · 自己可申请】
+0) TikHub（已接入 · 推荐）  【第三方聚合 API · 个人可注册 · 需小额充值】
+   - 抖音视频关键词搜索：POST {base_url}/api/v1/douyin/search/fetch_video_search_v2
+   - 接口文档：https://docs.tikhub.io  ·  国内用 https://api.tikhub.dev（绕 GFW）
+   - 字段覆盖：desc(标题) / author / digg / comment / share / collect / play / 发布时间
+   - 注意：该端点为【付费路由】，不接受免费额度，需在新账号充值后方可调用
+   - 认证：请求头 `Authorization: Bearer <api_key>` + 浏览器 UA（缺 UA 会被 WAF 拦 1010）
+
+1) 抖音开放平台官方 OpenAPI  【免费 · 需企业主体认证】
    - 关键词搜索视频 v2:  GET https://open.douyin.com/dy_open_api/v2/search/video/
    - 需企业主体认证应用 + 申请 `aweme.dy.video_search_v2` 能力（审核 2~3 工作日）
    - 返回字段与本看板完全匹配：title / author / digg / comment / share / play / share_url
@@ -27,6 +34,13 @@ douyin_search_crawler.py
 =====================================================================
 用法
 =====================================================================
+  # TikHub 真实抓取（先在 douyin_config.json 填 tikhub.api_key）
+  python3 douyin_search_crawler.py --platform tikhub \
+      --keywords "鳜鱼价格" "鲈鱼价格" --inject
+
+  # 仅校验 Key 是否可用（不消耗付费请求）
+  python3 douyin_search_crawler.py --platform tikhub --check
+
   # 官方 OpenAPI 真实抓取（先在 douyin_config.json 填 client_key / client_secret）
   python3 douyin_search_crawler.py --platform official \
       --keywords "鳜鱼价格" "鲈鱼价格" --inject
@@ -35,7 +49,7 @@ douyin_search_crawler.py
   python3 douyin_search_crawler.py --demo --inject
 
   # 仅导出 JSON / CSV（不碰看板）
-  python3 douyin_search_crawler.py --platform official \
+  python3 douyin_search_crawler.py --platform tikhub \
       --keywords "鳜鱼价格" --json fish.json --csv fish.csv
 """
 
@@ -56,6 +70,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(HERE, "douyin_config.json")
 
 DEFAULT_CONFIG = {
+    "tikhub": {"api_key": "", "base_url": "https://api.tikhub.dev"},
     "official": {"client_key": "", "client_secret": ""},
     "feigua": {"api_key": "", "endpoint": ""},
     "xindou": {"api_key": "", "endpoint": ""},
@@ -75,6 +90,10 @@ def load_config():
         except Exception as e:
             print(f"[warn] 读取 {CONFIG_PATH} 失败：{e}", file=sys.stderr)
     # 环境变量覆盖
+    if os.environ.get("TIKHUB_API_KEY"):
+        cfg["tikhub"]["api_key"] = os.environ["TIKHUB_API_KEY"]
+    if os.environ.get("TIKHUB_BASE_URL"):
+        cfg["tikhub"]["base_url"] = os.environ["TIKHUB_BASE_URL"]
     if os.environ.get("DOUYIN_CLIENT_KEY"):
         cfg["official"]["client_key"] = os.environ["DOUYIN_CLIENT_KEY"]
     if os.environ.get("DOUYIN_CLIENT_SECRET"):
@@ -216,6 +235,151 @@ class DouyinOfficialAPI:
 
 
 # ----------------------------------------------------------------------------
+# 0) TikHub 第三方聚合 API（已接入 · 个人可注册 · 需小额充值）
+#    POST {base_url}/api/v1/douyin/search/fetch_video_search_v2
+#    关键：必须带浏览器 UA，否则被 WAF 返回 1010；用 Bearer 鉴权。
+#    返回结构（防御式解析）：外层 {code,data:{data:[...],has_more,search_id,offset}}
+#      - 每个元素可能是 {business_data:{...}} 或 {aweme_info:{...}} 或直接是视频对象
+#      - 视频对象含 statistics(digg/comment/share/collect/play)、author、desc、
+#        create_time、share_url、aweme_id
+# ----------------------------------------------------------------------------
+class TikHubAPI:
+    NAME = "TikHub(抖音搜索)"
+    SEARCH_PATH = "/api/v1/douyin/search/fetch_video_search_v2"
+    # 抖音搜索需要浏览器 UA，否则 WAF 直接拦（error code: 1010）
+    UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+          "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+
+    def __init__(self, api_key, base_url="https://api.tikhub.dev"):
+        if not api_key:
+            raise RuntimeError(
+                "缺少 TikHub API Key。请在 douyin_config.json 的 tikhub.api_key "
+                "填入，或设置环境变量 TIKHUB_API_KEY。"
+            )
+        self.api_key = api_key
+        self.base_url = (base_url or "https://api.tikhub.dev").rstrip("/")
+        self._raw_last = None  # 保存最近一次原始响应，便于调试
+
+    def _post(self, body):
+        url = self.base_url + self.SEARCH_PATH
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "User-Agent": self.UA,
+        }
+        data = json.dumps(body).encode("utf-8")
+        req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                resp = json.loads(r.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError as e:
+            text = e.read().decode("utf-8", "replace")
+            try:
+                detail = json.loads(text)
+                msg = detail.get("detail", {})
+                if isinstance(msg, dict):
+                    msg = msg.get("message_zh") or msg.get("message") or text
+            except Exception:
+                msg = text
+            raise RuntimeError(f"TikHub 请求失败 HTTP {e.code}：{msg}")
+        except Exception as e:
+            raise RuntimeError(f"TikHub 请求异常：{e}")
+        self._raw_last = resp
+        # 保存原始响应到文件，便于首次联调时核对字段
+        try:
+            with open(os.path.join(HERE, "tikhub_last_response.json"), "w", encoding="utf-8") as f:
+                json.dump(resp, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+        if isinstance(resp, dict) and resp.get("code") not in (0, None):
+            raise RuntimeError(f"TikHub 返回错误：{resp.get('message') or resp}")
+        return resp
+
+    def search(self, keyword, sort_type=1, publish_time=180, page=3, count=20):
+        """
+        sort_type: 0 综合 / 1 最多点赞 / 2 最新发布
+        publish_time: 0 不限 / 1 一天内 / 7 七天 / 180 半年
+        page: 翻页次数（基于 search_id + offset 游标）
+        """
+        out = []
+        search_id = ""
+        offset = 0
+        for _ in range(max(1, page)):
+            body = {
+                "keyword": keyword,
+                "count": count,
+                "sort_type": sort_type,
+                "publish_time": publish_time,
+                "offset": offset,
+            }
+            if search_id:
+                body["search_id"] = search_id
+            resp = self._post(body)
+            data = (resp.get("data") or {}) if isinstance(resp, dict) else {}
+            vlist = data.get("data") or []
+            if not isinstance(vlist, list):
+                vlist = []
+            for item in vlist:
+                post = self._normalize(item, keyword)
+                if post:
+                    out.append(post)
+            has_more = data.get("has_more", False)
+            search_id = data.get("search_id") or search_id
+            nxt = data.get("offset")
+            if isinstance(nxt, int) and nxt > offset:
+                offset = nxt
+            if not has_more:
+                break
+            time.sleep(0.5)
+        return out
+
+    @staticmethod
+    def _normalize(item, keyword):
+        if not isinstance(item, dict):
+            return None
+        node = item.get("business_data") or item.get("aweme_info") or item
+        if not isinstance(node, dict):
+            return None
+        stats = node.get("statistics") or {}
+        author = node.get("author") or {}
+        desc = node.get("desc") or node.get("title") or ""
+        ct = node.get("create_time") or 0
+        try:
+            dt = datetime.fromtimestamp(int(ct), tz=timezone(timedelta(hours=8)))
+            date_str = dt.strftime("%Y-%m-%d")
+        except Exception:
+            date_str = str(ct)
+        aweme_id = node.get("aweme_id") or ""
+        share_url = node.get("share_url") or (
+            f"https://www.douyin.com/video/{aweme_id}" if aweme_id else ""
+        )
+        # TikHub 搜索 author 可能带 follower_count；无则记 "—"
+        fans = author.get("follower_count")
+        fans = f"{fans:,}" if isinstance(fans, (int, float)) else "—"
+        collect = stats.get("collect_count")
+        collect = f"{collect:,}" if isinstance(collect, (int, float)) else "—"
+        tag, tag_label = _classify(desc)
+        return {
+            "platform": "抖音",
+            "keyword": keyword,
+            "tag": tag,
+            "tag_label": tag_label,
+            "title": desc,
+            "author": author.get("nickname", author.get("uid", "未知")),
+            "avatar": (author.get("nickname", "抖") or "抖")[0],
+            "fans": fans,
+            "collect": collect,
+            "date": date_str,
+            "digg": stats.get("digg_count", 0) or 0,
+            "comment": stats.get("comment_count", 0) or 0,
+            "share": stats.get("share_count", 0) or 0,
+            "play": stats.get("play_count", 0) or 0,
+            "url": share_url,
+            "source": TikHubAPI.NAME,
+        }
+
+
+# ----------------------------------------------------------------------------
 # 2) 飞瓜 / 新抖 / 抖查查  —— 付费 SaaS 适配占位层
 #    三家均无公开 endpoint，需企业购买后向商务索取接口地址 + key。
 #    填入 douyin_config.json 对应字段后，按各自返回结构在 _normalize 实现映射。
@@ -252,6 +416,7 @@ class DouchachaAPI(_PaidSaaSAdapter):
 
 
 PLATFORMS = {
+    "tikhub": ("tikhub", TikHubAPI),
     "official": ("official", DouyinOfficialAPI),
     "feigua": ("feigua", FeiguaAPI),
     "xindou": ("xindou", XindouAPI),
@@ -265,7 +430,10 @@ PLATFORMS = {
 def crawl(platform, keywords, sort_type=1, publish_time=180, page=3, count=20):
     key, cls = PLATFORMS[platform]
     cfg = load_config()
-    api = cls(**(cfg[key] if platform == "official" else {"cfg": cfg[key]}))
+    if platform in ("official", "tikhub"):
+        api = cls(**cfg[key])
+    else:
+        api = cls(cfg=cfg[key])
     all_posts = []
     for kw in keywords:
         print(f"[info] 平台={api.NAME} 关键词=「{kw}」 抓取中…", file=sys.stderr)
@@ -386,10 +554,31 @@ def main():
     ap.add_argument("--html", default=os.path.join(HERE, "鳜鱼鲈鱼价格看板.html"))
     ap.add_argument("--demo", action="store_true", help="使用内置示例数据（无需 Key）")
     ap.add_argument("--reset", action="store_true", help="清空实时区块为占位（移除 demo/历史注入）")
+    ap.add_argument("--check", action="store_true",
+                    help="仅校验 TikHub Key 是否可用（发一次最小请求，不消耗付费额度）")
     args = ap.parse_args()
 
     if args.reset:
         inject_html(args.html, placeholder_html())
+        return
+
+    if args.check:
+        cfg = load_config()
+        tcfg = cfg["tikhub"]
+        if not tcfg.get("api_key"):
+            print("[fail] 未配置 tikhub.api_key（请填 douyin_config.json 或设 TIKHUB_API_KEY）", file=sys.stderr)
+            return
+        api = TikHubAPI(tcfg["api_key"], tcfg.get("base_url"))
+        try:
+            api._post({"keyword": "测试", "count": 1})
+            print("[ok] TikHub Key 有效，接口可调用。", file=sys.stderr)
+        except RuntimeError as e:
+            msg = str(e)
+            if "402" in msg or "余额" in msg or "balance" in msg:
+                print("[ok] TikHub Key 有效（鉴权通过），但抖音视频搜索为付费路由，"
+                      "需充值后才能返回数据。错误详情：" + msg, file=sys.stderr)
+            else:
+                print("[warn] TikHub 请求返回：" + msg, file=sys.stderr)
         return
 
     if args.demo:
