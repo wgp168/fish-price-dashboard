@@ -10,5 +10,6 @@ __pycache__/
 
 # 含密钥的本地配置（切勿提交）
 douyin_config.json
+bazhuayu_config.json
 tikhub_last_response.json
 tikhub_test.py

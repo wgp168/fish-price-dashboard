@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "platform": "B站(哔哩哔哩)",
+    "source": "八爪鱼云采集 templateId=2886 (B站关键词搜索视频采集)",
+    "crawled_at": "2026-08-31 16:55",
+    "keywords": ["鳜鱼价格", "鲈鱼价格"],
+    "raw_rows": 80,
+    "selected_rows": 16,
+    "filter": "保留标题/标签/简介含价格行情语义(价格/行情/多少钱/元/斤/统货/产值/降价/涨/卖鱼/养殖)且为鳜鱼或鲈鱼水产相关，剔除纯路亚装备、纯做菜、无关话题"
+  },
+  "videos": [
+    {"platform":"B站","keyword":"鳜鱼价格","title":"全网鳜鱼价格疯涨，说说看你们当地现在鳜鱼多少钱一斤！","author":"忘崽夫妇的路亚日记","play":70140,"like":1845,"comment":145,"fav":38,"date":"2025-05-31","bvid":"BV1QV7xznE3V","url":"https://www.bilibili.com/video/BV1QV7xznE3V","tags":"鱼价,鳜鱼,卖鱼,鳜鱼价格"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"鳜鱼价格越来越低，背后原因揭秘","author":"鱼儿乐智慧渔业系统","play":38921,"like":1020,"comment":180,"fav":130,"date":"2025-03-04","bvid":"BV1Hk9jYoEes","url":"https://www.bilibili.com/video/BV1Hk9jYoEes","tags":"水产养殖,鳜鱼,养鱼"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"石斑最低15一斤，鳜鱼反涨到45，广州沙园（2026.08上旬）","author":"市场博物","play":15384,"like":526,"comment":137,"fav":98,"date":"2026-08-10","bvid":"BV1xnuo6tEL8","url":"https://www.bilibili.com/video/BV1xnuo6tEL8","tags":"海鲜,海鲜价格,海鱼,广州美食,石斑鱼"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"养殖7个月的鳜鱼能赚多少钱？今天卖一塘统货价35元/斤！","author":"大渔和他的鱼塘","play":11426,"like":239,"comment":27,"fav":15,"date":"2025-05-19","bvid":"BV1f7E9zLE2C","url":"https://www.bilibili.com/video/BV1f7E9zLE2C","tags":"乡村,农村生活,三农"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"3斤的野生鳜鱼50块钱你相信嘛","author":"警示小白","play":23511,"like":614,"comment":67,"fav":14,"date":"2025-10-02","bvid":"BV1vwHtz3Erq","url":"https://www.bilibili.com/video/BV1vwHtz3Erq","tags":"街头美食,钓鱼,鳜鱼,地摊,卖鱼"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"今天遇到个好心的卖鱼奶奶，2斤野生鳜鱼只卖我90块！","author":"豆豆发疯了","play":53296,"like":314,"comment":8,"fav":329,"date":"2025-07-17","bvid":"BV1yxgczDE13","url":"https://www.bilibili.com/video/BV1yxgczDE13","tags":"原生鱼,养鱼,野生鳜鱼,买鱼,鳜鱼"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"鳜鱼卖40","author":"格小格爱钓鱼","play":68979,"like":785,"comment":90,"fav":74,"date":"2025-05-17","bvid":"BV1a2Etz8E82","url":"https://www.bilibili.com/video/BV1a2Etz8E82","tags":"鳜鱼"},
+    {"platform":"B站","keyword":"鳜鱼价格","title":"一塘鳜鱼100W+产值，我们基地今年最后一塘尾批鳜鱼出鱼","author":"大渔和他的鱼塘","play":5988,"like":132,"comment":8,"fav":23,"date":"2026-07-24","bvid":"BV1YVgv62EUh","url":"https://www.bilibili.com/video/BV1YVgv62EUh","tags":"生活记录,老板,捕鱼"},
+
+    {"platform":"B站","keyword":"鲈鱼价格","title":"鲈鱼行情价格低迷，水产人该何去何从？","author":"大渔和他的鱼塘","play":476,"like":9,"comment":3,"fav":0,"date":"2026-08-24","bvid":"BV1M5hP6MEXv","url":"https://www.bilibili.com/video/BV1M5hP6MEXv","tags":"行情,水产,价格"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"鲈鱼价格同比少约10元/斤，想等等行情有点利润能行吗？","author":"大渔和他的鱼塘","play":419,"like":4,"comment":1,"fav":0,"date":"2026-08-21","bvid":"BV1RB8z6yEjc","url":"https://www.bilibili.com/video/BV1RB8z6yEjc","tags":"生活记录,广东,记录"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"加州鲈鱼年产量超100万吨！2026中国渔业年鉴出炉，产量持续增长，价格持续走低","author":"大渔和他的鱼塘","play":562,"like":15,"comment":5,"fav":4,"date":"2026-08-03","bvid":"BV1wGM96VEWV","url":"https://www.bilibili.com/video/BV1wGM96VEWV","tags":"中国,产量,价格"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"反季节加州鲈鱼水花从日入60多万元到亏损超百万元，行业变革只有持续创新才能活下去","author":"大渔和他的鱼塘","play":563,"like":13,"comment":0,"fav":1,"date":"2026-08-16","bvid":"BV1Mqbm6sEfb","url":"https://www.bilibili.com/video/BV1Mqbm6sEfb","tags":"生活记录,记录,加油"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"60万尾鲈鱼苗竟然卖了1个月？投苗低迷时期采用订单模式才规避销售风险","author":"大渔和他的鱼塘","play":417,"like":7,"comment":1,"fav":0,"date":"2026-08-20","bvid":"BV1WS8c6XEtW","url":"https://www.bilibili.com/video/BV1WS8c6XEtW","tags":"生活记录,记录,养殖"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"鲈鱼降价9块钱一斤，看看大家会不会讲价","author":"忘崽夫妇的路亚日记","play":24713,"like":619,"comment":48,"fav":22,"date":"2026-06-11","bvid":"BV1GAEZ6wEXN","url":"https://www.bilibili.com/video/BV1GAEZ6wEXN","tags":"我的摆摊日记,卖鱼,砍价,烟火气"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"10块钱一条鲈鱼还嫌贵，那我也懒得卖了","author":"警示小白","play":90324,"like":3640,"comment":529,"fav":174,"date":"2026-01-10","bvid":"BV1XtruBJEwB","url":"https://www.bilibili.com/video/BV1XtruBJEwB","tags":"钓鱼,跟着UP主看世界,地摊,鲈鱼,记录"},
+    {"platform":"B站","keyword":"鲈鱼价格","title":"为什么同样是鲈鱼，有的地方一斤能卖到四十八，有的地方几块钱一斤都没人要？","author":"凌凌紫紫","play":1245,"like":5,"comment":0,"fav":3,"date":"2026-08-06","bvid":"BV1RDu76eEbY","url":"https://www.bilibili.com/video/BV1RDu76eEbY","tags":"鲈鱼,鱼,钓鱼"}
+  ]
+}
