@@ -291,7 +291,8 @@ class TikHubAPI:
                 json.dump(resp, f, ensure_ascii=False, indent=2)
         except Exception:
             pass
-        if isinstance(resp, dict) and resp.get("code") not in (0, None):
+        # TikHub 成功时 code=200（且 message 含 "Request successful"），需视为成功而非错误
+        if isinstance(resp, dict) and resp.get("code") not in (0, 200, None):
             raise RuntimeError(f"TikHub 返回错误：{resp.get('message') or resp}")
         return resp
 
@@ -299,36 +300,34 @@ class TikHubAPI:
         """
         sort_type: 0 综合 / 1 最多点赞 / 2 最新发布
         publish_time: 0 不限 / 1 一天内 / 7 七天 / 180 半年
-        page: 翻页次数（基于 search_id + offset 游标）
+        page: 翻页次数（基于 cursor 游标，若响应不返回 cursor 则单页即止）
         """
         out = []
-        search_id = ""
-        offset = 0
+        cursor = 0
         for _ in range(max(1, page)):
             body = {
                 "keyword": keyword,
                 "count": count,
-                "sort_type": sort_type,
-                "publish_time": publish_time,
-                "offset": offset,
+                "sort_type": str(sort_type),
+                "publish_time": str(publish_time),
+                "cursor": cursor,
             }
-            if search_id:
-                body["search_id"] = search_id
             resp = self._post(body)
             data = (resp.get("data") or {}) if isinstance(resp, dict) else {}
-            vlist = data.get("data") or []
+            vlist = data.get("business_data") or []
             if not isinstance(vlist, list):
                 vlist = []
             for item in vlist:
-                post = self._normalize(item, keyword)
+                aweme = (item.get("data") or {}).get("aweme_info") or {}
+                if not aweme:
+                    continue
+                post = self._normalize(aweme, keyword)
                 if post:
                     out.append(post)
-            has_more = data.get("has_more", False)
-            search_id = data.get("search_id") or search_id
-            nxt = data.get("offset")
-            if isinstance(nxt, int) and nxt > offset:
-                offset = nxt
-            if not has_more:
+            nxt = data.get("cursor")
+            if isinstance(nxt, int) and nxt != cursor:
+                cursor = nxt
+            else:
                 break
             time.sleep(0.5)
         return out

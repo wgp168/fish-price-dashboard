@@ -112,7 +112,7 @@
   <!-- HERO -->
   <div class="hero" data-page-node-id="BGA0nlbM9oxvra5SFgRraF">
     <h1 data-page-node-id="QRRg3zw3V2dD6NzyWIYVBV">🐟 江浙沪皖 鳜鱼 · 鲈鱼 价格数据看板</h1>
-    <p data-page-node-id="JLALO68tZNsGB6VnD7zeJD">聚焦江苏及周边（安徽、浙江、上海、湖北参照）近 30 天鳜鱼（桂花鱼）与鲈鱼（加州鲈）的<b data-page-node-id="tNwDzttBb5nhi1Bk3t0Kns">出塘价（塘头价）</b>与<b data-page-node-id="vMmpDidJnx9D662NNqigyp">批发价</b>行情，按鱼的规格拆分为「500 克以内 / 500 克以上」，并附代表性帖子、互动数据与价格来源。出塘价来自公开网页检索（水产前沿、腾氏水产、地方农业农村局）及「a渔业行情」公众号截图 OCR；批发价来自农业农村部接口爬虫、公开价源爬虫及「科学养鱼」公众号截图 OCR；抖音社媒互动数据由 <b data-page-node-id="7MsSUrAYXOW8c3B6cOL2Ej">AgentKey（TikHub）</b> 于 2026-08-31 实时抓取。</p>
+    <p data-page-node-id="JLALO68tZNsGB6VnD7zeJD">聚焦江苏及周边（安徽、浙江、上海、湖北参照）近 30 天鳜鱼（桂花鱼）与鲈鱼（加州鲈）的<b data-page-node-id="tNwDzttBb5nhi1Bk3t0Kns">出塘价（塘头价）</b>与<b data-page-node-id="vMmpDidJnx9D662NNqigyp">批发价</b>行情，按鱼的规格拆分为「500 克以内 / 500 克以上」，并附代表性帖子、互动数据与价格来源。出塘价来自公开网页检索（水产前沿、腾氏水产、地方农业农村局）及「a渔业行情」公众号截图 OCR；批发价来自农业农村部接口爬虫、公开价源爬虫及「科学养鱼」公众号截图 OCR；抖音社媒互动数据由 <b data-page-node-id="7MsSUrAYXOW8c3B6cOL2Ej">TikHub 抖音搜索接口</b> 于 2026-08-31 实时抓取。</p>
     <div class="meta" data-page-node-id="2NwdjBMrgGLwVG2Nru3s0U">
       <span class="chip" data-page-node-id="sTnENG1kszfxF6zJ1kDy3a">📅 统计周期：2026-07-13 ~ 2026-08-31</span>
       <span class="chip" data-page-node-id="uDtjiFY1wd6cLO8XIkyQEd">📍 区域：江苏 · 安徽 · 浙江 · 上海</span>
@@ -361,20 +361,191 @@
       </div>
     </div>
 
-    <div class="callout" style="margin-bottom:18px" data-page-node-id="umcCHEh9P4ID1vHWbLB5Bz"><b data-page-node-id="latUe88ZA1DPtwm3D6FKos">关于抖音帖子的说明：</b>本版看板中的抖音代表性帖子（含点赞/评论/分享/收藏等互动数据）由 <b>TikHub 抖音搜索接口（fetch_video_search_v2）</b> 提供数据支撑。用户已于 <b>2026-08-31</b> 注册 TikHub 账号并配置 API Key，经脚本校验 <b>Key 有效、鉴权通过</b>；该搜索接口为付费路由，需充值后方可返回数据，充值后运行 <code>douyin_search_crawler.py --platform tikhub --inject</code> 即可注入精确互动数据（下方 08-18 帖子为历史快照，暂作参考）。检索关键词为「鳜鱼价格」「鲈鱼价格」，按点赞量排序、覆盖近 6 个月。如实反映抖音生态：<b data-page-node-id="opDgpvaL9QEn7CazNS5yhD">鳜鱼</b>侧高互动帖子以行情/科普/地方价为主，<b data-page-node-id="qCoBhXVxlmwbG2lgLEYlAo">鲈鱼</b>侧高互动帖子以家常烹饪为主、纯行情类偏少。互动数据为抓取时点快照，非实时滚动值。检索关键词为「鳜鱼价格」「鲈鱼价格」，按点赞量排序、覆盖近 6 个月。互动数据为抓取时点快照，非实时滚动值。TikHub 充值完成后，<code>douyin_search_crawler.py --platform tikhub</code> 将抓取精确互动数据刷新本板块。</div>
+    <div class="callout" style="margin-bottom:18px" data-page-node-id="umcCHEh9P4ID1vHWbLB5Bz"><b data-page-node-id="latUe88ZA1DPtwm3D6FKos">关于抖音帖子的说明：</b>本版看板中的抖音代表性帖子（含点赞/评论/分享/收藏等互动数据）由 <b>TikHub 抖音搜索接口（fetch_video_search_v2）</b> 提供数据支撑。用户已于 <b>2026-08-31</b> 注册 TikHub 账号并配置 API Key，经脚本校验 <b>Key 有效、鉴权通过</b>；该搜索接口为付费路由，需充值后方可返回数据，充值后已成功抓取并注入下方实时数据（下方 08-18 帖子为历史快照，仅作对比参考）。检索关键词为「鳜鱼价格」「鲈鱼价格」，按点赞量排序、覆盖近 6 个月。如实反映抖音生态：<b data-page-node-id="opDgpvaL9QEn7CazNS5yhD">鳜鱼</b>侧高互动帖子以行情/科普/地方价为主，<b data-page-node-id="qCoBhXVxlmwbG2lgLEYlAo">鲈鱼</b>侧高互动帖子以家常烹饪为主、纯行情类偏少。互动数据为抓取时点快照，非实时滚动值。</div>
 
-                <!-- DOUYIN_LIVE_START -->
-<div class="card" style="margin-bottom:18px">
-  <h3>📡 抖音实时抓取数据（TikHub 已连接 · 待充值后注入）</h3>
-  <div class="csub">TikHub API Key 已配置且校验有效；抖音视频搜索为<b>付费路由</b>，需在新账号充值后运行 <code>douyin_search_crawler.py --platform tikhub --inject</code> 注入鳜鱼/鲈鱼相关视频的精确互动数据（点赞/评论/分享/收藏/播放）。当前为占位，下方保留 08-18 帖子快照作参考。</div>
-</div>
+                      <!-- DOUYIN_LIVE_START -->
+<div class="callout" style="margin:14px 0 14px"><b>实时抓取数据：</b>数据源：TikHub(抖音搜索) · 关键词 ['鳜鱼价格', '鲈鱼价格'] · 抓取时间 2026-08-31 11:27 · 共 13 条</div>
+      <div class="posts">
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">奇</div>
+          <div><div class="author">奇妙大百科</div><div class="fans">粉丝 145,899</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag">行情</span> 科普分享26种溪流鱼以及价格，你都吃过哪几种#鱼#鱼价#科普</div>
+        <div class="pdate">📅 2026-06-15 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>17,919</b></span><span class="stat">💬 <b>737</b></span><span class="stat">🔁 <b>12,283</b></span><span class="stat">⭐ <b>15,253</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7651636236453470436/?region=US&mid=7651636244220611374&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=YoxB1dXOwKUkHWeI7ij3eK3Ck3PnuxJd.3dUB.rekZI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7651636236453470436/?region=US&mid=7651636244220611374&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=YoxB1dXOwKUkHWeI7ij3eK3Ck3PnuxJd.3dUB.rekZI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">舟</div>
+          <div><div class="author">舟小九</div><div class="fans">粉丝 1,188,563</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 安徽黄山土菜刺客，巴掌大的小鳜鱼268一斤 #满级吃商通关赛#寻味烟火气#这家小店值得上烟火榜#黄山美食</div>
+        <div class="pdate">📅 2026-04-08 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>12,279</b></span><span class="stat">💬 <b>343</b></span><span class="stat">🔁 <b>502</b></span><span class="stat">⭐ <b>1,151</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7626228712442219816/?region=US&mid=7626228588211129151&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=V2Lzj9feU4oCEHhHUxg3jaPygHCoL5ScO5HzhP4nxGM-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7626228712442219816/?region=US&mid=7626228588211129151&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=V2Lzj9feU4oCEHhHUxg3jaPygHCoL5ScO5HzhP4nxGM-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">梦</div>
+          <div><div class="author">梦甜小荔枝</div><div class="fans">粉丝 17,593</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 你敢相信吗？同一条鱼，在东北下馆子叫鳌花鱼，两三百一条，结果到了南方菜市场，改名叫鳜鱼，四五十块钱一斤，摊主还得扯着嗓子叫你买，生怕卖不出去?#科普 #生物科普 #鳜鱼</div>
+        <div class="pdate">📅 2026-07-25 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>746</b></span><span class="stat">💬 <b>735</b></span><span class="stat">🔁 <b>73</b></span><span class="stat">⭐ <b>185</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7666375676413811578/?region=US&mid=7666375677180332843&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=F0GYdxjlFVT_N4FTIYj2YdDe_LkAMSrfxc129cJlRAI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7666375676413811578/?region=US&mid=7666375677180332843&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=F0GYdxjlFVT_N4FTIYj2YdDe_LkAMSrfxc129cJlRAI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">睿</div>
+          <div><div class="author">睿爸一家</div><div class="fans">粉丝 44,904</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 日常生活vlog:浙江男人下班给老婆露一手!今天给老婆做了鳜鱼河虾一锅鲜，江南的春天，就得吃点鲜掉眉毛的！#我的厨房日记 #记录真实生活  #浙江美食 #用这一口代表春天 #不负江南好春光的春日美食</div>
+        <div class="pdate">📅 2026-03-17 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>740</b></span><span class="stat">💬 <b>73</b></span><span class="stat">🔁 <b>210</b></span><span class="stat">⭐ <b>130</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7618122418406735790/?region=US&mid=7618122471807945535&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=PZmJaNUTGGUsBC_3gP4aAAXtateNPnhKlXBmsGKEIbI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7618122418406735790/?region=US&mid=7618122471807945535&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=PZmJaNUTGGUsBC_3gP4aAAXtateNPnhKlXBmsGKEIbI-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">渔</div>
+          <div><div class="author">渔满塘</div><div class="fans">粉丝 6,071</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> #鳜鱼行情#鳜鱼养殖#鲈鱼鳜鱼黄颡鱼特种鱼养殖#鲈鱼养殖</div>
+        <div class="pdate">📅 2026-07-31 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>276</b></span><span class="stat">💬 <b>7</b></span><span class="stat">🔁 <b>10</b></span><span class="stat">⭐ <b>40</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7668638759604724389/?region=US&mid=7668638678805564200&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=PzSFjWNuXqLwdjOibaNcGKegNFZtJcenfb5MPQVV3EU-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7668638759604724389/?region=US&mid=7668638678805564200&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=PzSFjWNuXqLwdjOibaNcGKegNFZtJcenfb5MPQVV3EU-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">有</div>
+          <div><div class="author">有早路亚</div><div class="fans">粉丝 985</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 论路亚鱼种鲈鱼的地位#路亚玩家指南大全 #路亚野钓#鲈鱼#路亚鳜鱼 #路亚</div>
+        <div class="pdate">📅 2026-04-30 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>64</b></span><span class="stat">💬 <b>93</b></span><span class="stat">🔁 <b>6</b></span><span class="stat">⭐ <b>6</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7634370811159724443/?region=US&mid=7634370750048144166&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=jLkCJ6jq8WUxNC48b7qKr9aNjYwrAIRsK8uwks38QHQ-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7634370811159724443/?region=US&mid=7634370750048144166&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=jLkCJ6jq8WUxNC48b7qKr9aNjYwrAIRsK8uwks38QHQ-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">水</div>
+          <div><div class="author">水产资讯</div><div class="fans">粉丝 2,930</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 鳜鱼大涨了！最高价格49元！ #鱼价行情  #水产养殖 #全国最新鱼价 #鳜鱼价格 #水产资讯</div>
+        <div class="pdate">📅 2026-07-31 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>47</b></span><span class="stat">💬 <b>3</b></span><span class="stat">🔁 <b>15</b></span><span class="stat">⭐ <b>6</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7668598358579506313/?region=US&mid=7314976193820264482&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=2QFLFWKHa0r1JF4nJihXja3TFC87BD8GX0icK_9b60A-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7668598358579506313/?region=US&mid=7314976193820264482&u_code=0&did=MS4wLjABAAAALP6rbE9u2yqXgRq98gbglmhgAILFfzeYnkSiACEGZZ3dGxkxBPksBmgx9INo8QUY&iid=MS4wLjABAAAAAVK2PS3GGIqtpCBp7bZJ9-3hkuPwsMjVFElnfRki_-27HM-UQHqWBUC7HC2Kk2zd&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=2QFLFWKHa0r1JF4nJihXja3TFC87BD8GX0icK_9b60A-&share_version=320900&ts=1788146843&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">真</div>
+          <div><div class="author">真探唐仁杰</div><div class="fans">粉丝 16,118,853</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag">行情</span> 吃之前一肚子火！吃完就默默把气憋回去了</div>
+        <div class="pdate">📅 2026-06-28 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>108,679</b></span><span class="stat">💬 <b>1,245</b></span><span class="stat">🔁 <b>8,018</b></span><span class="stat">⭐ <b>5,499</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7656247782625398050/?region=US&mid=7656247881897691930&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=xSkLpXg93W2v6i05PGqRiOJUNAEwM9ARh0ZWRTQPAfE-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7656247782625398050/?region=US&mid=7656247881897691930&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=xSkLpXg93W2v6i05PGqRiOJUNAEwM9ARh0ZWRTQPAfE-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">平</div>
+          <div><div class="author">平凡的菜</div><div class="fans">粉丝 313,109</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 广东家常菜 | 紫苏鲈鱼煲！ 鱼肉紧实鲜嫩，配上紫苏鲜香翻倍！
+#砂锅菜 #鲈鱼 #广东家常菜 #妈呀太香了</div>
+        <div class="pdate">📅 2026-07-20 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>13,603</b></span><span class="stat">💬 <b>240</b></span><span class="stat">🔁 <b>13,076</b></span><span class="stat">⭐ <b>14,945</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7664540823509372179/?region=US&mid=7664540909786712886&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=GlrTDI1tjceRfjw.SNUodVwI2Tj82ZcWQo96c6ExN3w-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7664540823509372179/?region=US&mid=7664540909786712886&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=GlrTDI1tjceRfjw.SNUodVwI2Tj82ZcWQo96c6ExN3w-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">大</div>
+          <div><div class="author">大师兄下厨房</div><div class="fans">粉丝 461,794</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 清蒸鲈鱼来喽～手把手教学 #清蒸鲈鱼 #鲈鱼 #美食 #家庭美食 #美食制作</div>
+        <div class="pdate">📅 2026-04-20 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>5,151</b></span><span class="stat">💬 <b>213</b></span><span class="stat">🔁 <b>898</b></span><span class="stat">⭐ <b>2,674</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7630707734479998242/?region=US&mid=7630707681518504714&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=4QkLAPpUAeOx8iLMiWGtE5cSrQFqbkq2VFyiW9JqS5w-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7630707734479998242/?region=US&mid=7630707681518504714&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=4QkLAPpUAeOx8iLMiWGtE5cSrQFqbkq2VFyiW9JqS5w-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">平</div>
+          <div><div class="author">平凡的菜</div><div class="fans">粉丝 313,109</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 家常菜，香菇鲈鱼煲～ 鱼肉焦香入味，香菇鲜香软嫩可好吃了！
+#香菇鲈鱼煲 #砂锅菜 #简简单单家常菜 #舌尖上的抖音</div>
+        <div class="pdate">📅 2026-08-20 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>3,479</b></span><span class="stat">💬 <b>62</b></span><span class="stat">🔁 <b>1,624</b></span><span class="stat">⭐ <b>5,081</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7676059496824786227/?region=US&mid=7676059500261575433&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=Yt3x6skRpJdwSYwIoI7l7kU7D0jw3SLdlz3QkWM94PI-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7676059496824786227/?region=US&mid=7676059500261575433&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=Yt3x6skRpJdwSYwIoI7l7kU7D0jw3SLdlz3QkWM94PI-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">晓</div>
+          <div><div class="author">晓玥</div><div class="fans">粉丝 3,382</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-gui">鳜鱼</span> 3月28最新鱼价，我是卖鱼饲料的
+#鲈鱼#鳜鱼 #四大家鱼养殖 #鮰鱼</div>
+        <div class="pdate">📅 2026-03-28 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>209</b></span><span class="stat">💬 <b>49</b></span><span class="stat">🔁 <b>48</b></span><span class="stat">⭐ <b>54</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7622080129149243343/?region=US&mid=7117530280089782309&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=tMKy4SQD4jw8WiaEmNpsQ0SSLY_5q.1Ye8gQvGOtVQg-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7622080129149243343/?region=US&mid=7117530280089782309&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=tMKy4SQD4jw8WiaEmNpsQ0SSLY_5q.1Ye8gQvGOtVQg-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      <div class="post">
+        <div class="ptop">
+          <div class="avatar">老</div>
+          <div><div class="author">老陈讲水产</div><div class="fans">粉丝 3,171</div></div>
+          <span class="platform">抖音</span>
+        </div>
+        <div class="ptitle"><span class="tag tag-lu">鲈鱼</span> 广东涨0.5元/斤！大鱼爽市，秋鱼上市规格偏小 #鲈鱼价格 #鲈鱼行情 #鲈鱼养殖 #渔有福发酵中药 #水产养殖</div>
+        <div class="pdate">📅 2026-07-02 <span class="pill">实时抓取</span></div>
+        <div class="stats">
+          <span class="stat">👍 <b>51</b></span><span class="stat">💬 <b>7</b></span><span class="stat">🔁 <b>18</b></span><span class="stat">⭐ <b>8</b></span>
+        </div>
+        <a class="plink" href="https://www.iesdouyin.com/share/video/7657827893187757914/?region=US&mid=7657827820004985663&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=WY8ZO7ojuP.zPTz1Y2Yn58567OPgzS4VWMskk5Yii5k-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D" target="_blank">🔗 https://www.iesdouyin.com/share/video/7657827893187757914/?region=US&mid=7657827820004985663&u_code=0&did=MS4wLjABAAAArb4a2fP5u6teUVffEpEZBy6xjVasBbZ3YHEXQdp7TNqUGQMpxovx0TznwoLs0s_h&iid=MS4wLjABAAAAnQUz7si6fQ3EqXWM5crEQ8KJRiLy941-6ruPYmH7yMo1sZZiPKayUSzS1QrdjPpb&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=WY8ZO7ojuP.zPTz1Y2Yn58567OPgzS4VWMskk5Yii5k-&share_version=320900&ts=1788146847&from_aid=615883&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D</a>
+      </div>
+      </div>
       <!-- DOUYIN_LIVE_END -->
 
     <div class="callout" style="margin-bottom:18px" data-page-node-id="wuUzzwMMKApDbm7ZG9OnEY"><b data-page-node-id="v0jG97CE9izsMhilUnqmEQ">关于微信公众号行情爬取：</b>用户已重新提供「科学养鱼」（2026-08-27）与「a渔业行情」（2026-08-28）公众号价格截图，我方已完成 OCR 提取并补入「补充」板块；08-21/08-18/08-11 历史截图数据仍保留于对应 CSV。经此前搜狗微信检索实测：① <b data-page-node-id="Eoj2O1U5plmUZEvnvAbNVy">「a渔业行情」</b>文章以<b data-page-node-id="8strfUct2nhlYY9KMssLZz">图片表格</b>形式发布，搜狗微信未索引，微信文章需登录/反爬，纯文本爬虫无法直接获取正文；② <b data-page-node-id="WhqJgjRNTL1thIKBvweJfb">「科学养鱼」</b>价格以<b data-page-node-id="V7tCgGxut3MBfSlFe1zLZR">图片</b>形式发布，搜狗微信同样未索引到近期文章。因此两个公众号目前<b data-page-node-id="KrGrqWIBcU9D4NWtXud49t">仍无法通过公开网络爬虫自动抓取</b>，后续更新仍需用户提供文章截图进行 OCR 提取，或提供具体微信文章链接（若有临时访问权限）。</div>
 
     <div class="card" style="margin-bottom:18px;border-left:4px solid #ef4444;background:#fff7f7" data-page-node-id="6jOhoXqzrXEeUcbKC3CdE7">
       <h3 data-page-node-id="UUPVdtVadrPPgxpdRYBFdj">🔥 近期行业热点与社媒热议（2026-08-31 联网检索综述）</h3>
-      <div class="csub" data-page-node-id="n4GmaT9fQkD7gRbmOEfeHN">数据源：腾氏水产商务网、水产前沿《特水鱼周报》第29/30期、网易财经、九江/昆明/武汉农业农村局官网等（2026-08-17 ~ 08-28）。说明：AgentKey 连接器已移除，无法再抓取抖音精确互动数；以下为<b data-page-node-id="rGMYVBHRaO7zegVpU9vF3T">行业媒体 + 短视频平台热议的话题综述</b>，用于反映市场情绪与拐点信号，不代表某条具体视频的互动量。</div>
+      <div class="csub" data-page-node-id="n4GmaT9fQkD7gRbmOEfeHN">数据源：腾氏水产商务网、水产前沿《特水鱼周报》第29/30期、网易财经、九江/昆明/武汉农业农村局官网等（2026-08-17 ~ 08-28）。说明：以下为<b data-page-node-id="rGMYVBHRaO7zegVpU9vF3T">行业媒体 + 短视频平台热议的话题综述</b>，用于反映市场情绪与拐点信号，不代表某条具体视频的互动量（抖音各视频的精确互动数见上方「实时抓取数据」区块）。</div>
       <div class="src-list" data-page-node-id="BmxajUgTkz7LDqWWt679hS">
         <div class="src" data-page-node-id="BwyDmeYUbtTje6WBpElAbU">
           <div class="st" data-page-node-id="tMx1kZZSMj9r2I50SspHjz">🐟 鳜鱼全线反弹，中大鳜领涨 3 元/斤（08-28 腾氏/网易）</div>
