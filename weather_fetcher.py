@@ -16,10 +16,11 @@ AMAP_FILE = os.path.join(WS, "amap_weather_latest.json")
 
 LAT = 31.557387
 LON = 119.723966
-LOCATION_NAME = "宜兴官林镇·数字低碳生态养殖项目"
+LOCATION_NAME = "江苏环荟·宜兴官林镇数字低碳生态养殖项目"
 ADDRESS = "江苏省无锡市宜兴市官林镇生产路"
 ADCODE = "320282"  # 宜兴市
 COORD_SOURCE = "高德地理编码 API（level=道路·生产路，2026-09-01 校准）"
+OPERATOR = "江苏环荟"
 
 
 def deg_to_compass(deg):
@@ -227,7 +228,7 @@ def fetch():
             "adcode": ADCODE,
             "lat": LAT, "lon": LON,
             "coord_source": COORD_SOURCE,
-            "operator": "无锡市环保集团 + 宜兴市官林镇",
+            "operator": OPERATOR,
             "total_area_mu": 1200,
             "phase1_village": "丰义村", "phase1_area_mu": 500,
             "phase2_village": "白茫村", "phase2_area_mu": 700,
