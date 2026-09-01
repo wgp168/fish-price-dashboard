@@ -104,6 +104,41 @@
   .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:#eef2f7;color:#475569;margin-left:6px}
   footer{margin-top:40px;text-align:center;font-size:12px;color:var(--sub);line-height:1.8}
   @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.posts{grid-template-columns:1fr}.src-list{grid-template-columns:1fr}}
+
+  /* 八、位置 + 实时气象 */
+  .location-card{border-left:4px solid #0ea5e9}
+  .mini-map-link{display:block;position:relative;border-radius:12px;overflow:hidden;margin-top:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;border:1px solid var(--line)}
+  .mini-map-link:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .mini-map{display:block;width:100%;height:280px;background:#e8f1e0}
+  .map-overlay{position:absolute;top:12px;right:12px;background:rgba(14,165,233,.92);color:#fff;font-weight:700;font-size:12px;padding:6px 12px;border-radius:8px;backdrop-filter:blur(6px);box-shadow:0 4px 12px rgba(14,165,233,.35)}
+  .nav-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  .nav-btn{display:inline-block;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--brand);text-decoration:none;transition:background .15s}
+  .nav-btn:hover{background:#f0f9ff}
+  .nav-btn-primary{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+  .nav-btn-primary:hover{background:#0284c7;color:#fff}
+  .nav-tip{font-size:11.5px;color:var(--sub);margin-left:6px}
+  .weather-card{border-left:4px solid #f59e0b}
+  .mets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+  .met{background:linear-gradient(135deg,#f8fafc,#eef2f7);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:center;transition:transform .15s}
+  .met:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .met-icon{font-size:24px;margin-bottom:4px}
+  .met-label{font-size:11.5px;color:var(--sub);font-weight:600;margin-bottom:2px}
+  .met-val{font-size:17px;font-weight:800;color:var(--ink);line-height:1.2}
+  .met-val .deg{font-size:11px;color:var(--sub);font-weight:500}
+  .alerts-row{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .alert{padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.6}
+  .alert-high{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;color:#991b1b}
+  .alert-warn{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;color:#92400e}
+  .alert-ok{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;color:#166534}
+  .alert b{font-weight:800}
+  .weather-forecast{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+  .weather-forecast th{background:#f1f5f9;color:var(--ink);font-weight:700;padding:10px 8px;border-bottom:2px solid var(--line);text-align:left;font-size:12px}
+  .weather-forecast td{padding:9px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+  .weather-forecast tr.row-warn{background:#fff7ed}
+  .weather-forecast tr.row-warn td:first-child{border-left:3px solid #f59e0b}
+  .weather-forecast .deg{font-size:11px;color:var(--sub)}
+  .legend{font-size:11.5px;color:var(--sub);margin-top:8px;text-align:center}
+  @media(max-width:860px){.mets-grid{grid-template-columns:repeat(2,1fr)}.weather-forecast{font-size:11.5px}.weather-forecast th,.weather-forecast td{padding:6px 4px}}
 </style>
 </head>
 <body data-page-node-id="L4x5866LjJ8vTeUcF1SwiR">
@@ -1063,9 +1098,248 @@
     </div>
   </section>
 
-  <footer data-page-node-id="cov1XMPvWRKh49TOhEnbjC">
+  
+  <!-- 八、养殖场位置 + 实时气象 -->
+  <section data-page-node-id="farm-loc-weather">
+    <div class="sec-head">
+      <span class="bar" style="background:#0ea5e9"></span>
+      <h2>八、宜兴官林镇数字低碳生态养殖项目 · 位置 + 实时气象</h2>
+      <span class="note">📍 高德定位 · · Open-Meteo 实时/预报 · 自动每日 09:00 刷新</span>
+    </div>
+
+    <!-- WEATHER_LIVE_START -->
+
+    <!-- A. 位置 + 导航 -->
+    <div class="card location-card">
+      <h3>📍 养殖场位置</h3>
+      <div class="csub">
+        <b>宜兴官林镇·数字低碳生态养殖项目</b><br>
+        地址：江苏省无锡市宜兴市官林镇生产路<br>
+        坐标：<code>(119.723623, 31.556726)</code>　|　海拔：5.0 m<br>
+        运营：无锡市环保集团 + 宜兴市官林镇　|　总面积：1200 亩（一期丰义村 500 亩 + 二期白茫村 700 亩）　|　养殖品种：鳜鱼 / 鲈鱼（蜂窝池养殖）
+      </div>
+
+      <!-- SVG 轻量地图（点击调起高德导航） -->
+      <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="mini-map-link" title="点击调起高德地图导航">
+        <svg class="mini-map" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice">
+          <!-- 底色：滆湖西岸农田区（淡绿） -->
+          <rect width="600" height="320" fill="#e8f1e0"/>
+          <!-- 田块纹理 -->
+          <g opacity="0.4" stroke="#a7c4a0" stroke-width="0.6" fill="none">
+            <line x1="0" y1="60" x2="600" y2="50"/>
+            <line x1="0" y1="120" x2="600" y2="125"/>
+            <line x1="0" y1="200" x2="600" y2="195"/>
+            <line x1="0" y1="260" x2="600" y2="265"/>
+            <line x1="120" y1="0" x2="125" y2="320"/>
+            <line x1="260" y1="0" x2="258" y2="320"/>
+            <line x1="400" y1="0" x2="403" y2="320"/>
+            <line x1="500" y1="0" x2="495" y2="320"/>
+          </g>
+          <!-- 河道（滆湖西岸水域） -->
+          <path d="M0,40 Q200,90 400,70 T600,100" stroke="#7eb6d4" stroke-width="14" fill="none" opacity="0.7" stroke-linecap="round"/>
+          <path d="M120,200 Q250,230 380,210 T600,250" stroke="#7eb6d4" stroke-width="8" fill="none" opacity="0.5" stroke-linecap="round"/>
+          <!-- 古庄路 -->
+          <line x1="0" y1="170" x2="600" y2="165" stroke="#d4b075" stroke-width="3" opacity="0.85"/>
+          <text x="540" y="160" font-size="11" fill="#8a7250" font-family="sans-serif">古庄路</text>
+          <!-- 大棚区域（白底+蓝边） -->
+          <rect x="260" y="140" width="80" height="40" fill="#f5f9fc" stroke="#7c9ad4" stroke-width="1.2" rx="3" opacity="0.85"/>
+          <text x="300" y="164" text-anchor="middle" font-size="10" fill="#3a5a8a" font-family="sans-serif">养殖大棚</text>
+          <!-- 周边村名 -->
+          <text x="60" y="30" font-size="11" fill="#5a6a4a" font-family="sans-serif">大如庙</text>
+          <text x="500" y="25" font-size="11" fill="#5a6a4a" font-family="sans-serif">古庄</text>
+          <text x="100" y="245" font-size="11" fill="#5a6a4a" font-family="sans-serif">小如庙</text>
+          <text x="270" y="245" font-size="11" fill="#5a6a4a" font-family="sans-serif">青年农场</text>
+          <text x="450" y="245" font-size="11" fill="#5a6a4a" font-family="sans-serif">庄西村</text>
+          <!-- 定位标记 -->
+          <circle cx="300" cy="160" r="20" fill="#0ea5e9" opacity="0.25"/>
+          <circle cx="300" cy="160" r="12" fill="#0ea5e9" opacity="0.45"/>
+          <circle cx="300" cy="160" r="6" fill="#dc2626"/>
+          <text x="300" y="200" text-anchor="middle" font-size="13" fill="#0c4a6e" font-weight="700" font-family="sans-serif">数字低碳生态养殖项目</text>
+          <text x="300" y="216" text-anchor="middle" font-size="10" fill="#0c4a6e" font-family="sans-serif">119.723623, 31.556726</text>
+        </svg>
+        <div class="map-overlay">点击调起高德地图导航 →</div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn nav-btn-primary">🚗 驾车导航</a>
+        <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=walk&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">🚶 步行导航</a>
+        <a href="https://uri.amap.com/marker?position=119.723623,31.556726&name=%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">📍 标记位置</a>
+        <span class="nav-tip">点击以上按钮可调起高德地图 APP 或网页版导航（无需 API Key）</span>
+      </div>
+    </div>
+
+    <!-- B. 实时气象 -->
+    <div class="card weather-card">
+      <h3>🌡️ 实时气象（2026-09-01T14:30 · Asia/Shanghai）</h3>
+      <div class="csub">天气：<b>⛈️ 雷暴</b>　|　数据源：Open-Meteo（WMO 标准 · 15min 更新 · 免费公开）</div>
+      <div class="mets-grid">
+<div class="met">
+          <div class="met-icon">🌡️</div>
+          <div class="met-label">气温</div>
+          <div class="met-val">29.2 °C</div>
+        </div>
+<div class="met">
+          <div class="met-icon">💨</div>
+          <div class="met-label">风速</div>
+          <div class="met-val">16.5 km/h</div>
+        </div>
+<div class="met">
+          <div class="met-icon">🧭</div>
+          <div class="met-label">风向</div>
+          <div class="met-val">北东北 <span class='deg'>(31°)</span></div>
+        </div>
+<div class="met">
+          <div class="met-icon">☀️</div>
+          <div class="met-label">太阳辐射</div>
+          <div class="met-val">726.0 W/m²</div>
+        </div>
+<div class="met">
+          <div class="met-icon">🌧️</div>
+          <div class="met-label">降水量</div>
+          <div class="met-val">0.1 mm</div>
+        </div>
+<div class="met">
+          <div class="met-icon">💧</div>
+          <div class="met-label">相对湿度</div>
+          <div class="met-val">77 %</div>
+        </div>
+<div class="met">
+          <div class="met-icon">🔵</div>
+          <div class="met-label">气压</div>
+          <div class="met-val">1,007.5 hPa</div>
+        </div>
+<div class="met">
+          <div class="met-icon">☁️</div>
+          <div class="met-label">天气</div>
+          <div class="met-val">雷暴</div>
+        </div>
+      </div>
+      <div class="alerts-row">
+        <div class="alert alert-high">⛈️ <b>[HIGH]</b> 当前雷暴(代码 95)：检查增氧机/光伏板/排水/用电安全</div>
+      </div>
+    </div>
+
+    <!-- C. 7天预报 -->
+    <div class="card">
+      <h3>📅 7天预报（养殖视角 · 关注极端天气）</h3>
+      <table class="weather-forecast">
+        <thead>
+          <tr>
+            <th>日期</th><th>天气</th><th>最高</th><th>最低</th><th>降水(mm)</th><th>概率</th>
+            <th>风速max(km/h)</th><th>主导风向</th><th>辐射(MJ/m²)</th><th>关注</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr class="row-warn">
+          <td>2026-09-01</td>
+          <td>⛈️ 雷暴</td>
+          <td><b>30.0</b>°C</td>
+          <td>24.8°C</td>
+          <td>5.8</td>
+          <td>96%</td>
+          <td>21.4</td>
+          <td>北东北 <span class="deg">(30°)</span></td>
+          <td>16.4</td>
+          <td>⛈️</td>
+        </tr>
+<tr>
+          <td>2026-09-02</td>
+          <td>🌦️ 阵雨(弱)</td>
+          <td><b>30.2</b>°C</td>
+          <td>24.6°C</td>
+          <td>12.8</td>
+          <td>92%</td>
+          <td>20.1</td>
+          <td>东北 <span class="deg">(43°)</span></td>
+          <td>12.9</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-03</td>
+          <td>🌦️ 阵雨(弱)</td>
+          <td><b>27.5</b>°C</td>
+          <td>23.5°C</td>
+          <td>7.5</td>
+          <td>68%</td>
+          <td>25.2</td>
+          <td>北东北 <span class="deg">(32°)</span></td>
+          <td>10.9</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-04</td>
+          <td>☁️ 阴</td>
+          <td><b>27.7</b>°C</td>
+          <td>21.9°C</td>
+          <td>0.0</td>
+          <td>8%</td>
+          <td>21.5</td>
+          <td>北 <span class="deg">(3°)</span></td>
+          <td>19.6</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-05</td>
+          <td>🌦️ 毛毛雨(弱)</td>
+          <td><b>29.4</b>°C</td>
+          <td>21.8°C</td>
+          <td>0.3</td>
+          <td>25%</td>
+          <td>13.9</td>
+          <td>北 <span class="deg">(350°)</span></td>
+          <td>20.1</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-06</td>
+          <td>🌦️ 毛毛雨(弱)</td>
+          <td><b>28.3</b>°C</td>
+          <td>21.1°C</td>
+          <td>0.3</td>
+          <td>25%</td>
+          <td>18.6</td>
+          <td>北西北 <span class="deg">(348°)</span></td>
+          <td>20.4</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-07</td>
+          <td>⛅ 多云</td>
+          <td><b>27.2</b>°C</td>
+          <td>21.5°C</td>
+          <td>0.0</td>
+          <td>14%</td>
+          <td>12.7</td>
+          <td>北 <span class="deg">(4°)</span></td>
+          <td>18.1</td>
+          <td>—</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="legend">图例：⛈️雷暴 💨大风（≥38km/h） 🌧️≥25mm大雨 🔥≥33°C高温 ❄️≤8°C低温</div>
+    </div>
+
+    <!-- D. 关注阈值说明 -->
+    <div class="callout">
+      <b>⚙️ 养殖关注阈值（鳜鱼/鲈鱼 · 无锡市环保集团数字低碳生态养殖项目）：</b><br>
+      • <b>气温</b>：28–30°C 最适 · <b style="color:#dc2626">≥33°C 警戒</b>（增氧/加深水位）· ≥35°C 危险 · ≤8°C 冬季警戒<br>
+      • <b>风速</b>：≤25 km/h 正常 · 25–38 km/h 关注 · <b style="color:#dc2626">≥38 km/h（6 级）警戒</b>（薄膜/光伏板/围网检查）· ≥50 km/h 危险<br>
+      • <b>24h 降水</b>：≤10mm 正常 · 10–25mm 关注 · <b style="color:#dc2626">≥25mm 警戒</b> · ≥50mm 危险<br>
+      • <b>气压</b>：≥1005 hPa 正常 · <b style="color:#dc2626">&lt;1005 hPa 警戒</b>（可能风暴前兆）<br>
+      • <b>雷暴</b>（weather_code ≥ 95）：<b style="color:#dc2626">随时警戒</b>（增氧机/光伏/排水/用电）<br>
+      • <b>太阳辐射</b>：>900 W/m² 时需关注水温上升（夏季中午可>1000），配合气温阈值判断
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      ⏱️ 本次抓取时间：<code>2026-09-01 14:41:10</code>　|　数据许可：Open-Meteo CC BY 4.0; data from national weather services
+    </div>
+
+    <!-- WEATHER_LIVE_END -->
+  </section>
+
+<footer data-page-node-id="cov1XMPvWRKh49TOhEnbjC">
     数据整理：WorkBuddy · 塘头价源自水产前沿/腾氏水产周报 + a渔业行情公众号 OCR；批发价 = moa_fish_crawler.py（农业农村部官方接口 AES 解密）+ public_price_crawler.py（武汉白沙洲/九江/云南华潮分规格）+ 科学养鱼公众号 OCR（用户截图）<br data-page-node-id="jmeOC7Ubh9La6ZZnGj5RPG">
-    看板更新 2026-08-31 · 统计周期 2026-07-13 ~ 2026-08-31 · 农业农村部爬虫抓取日期 2026-08-31（活鳜鱼当日无报价，保留凌家塘78元/公斤；鲈鱼6条样本）· 公开价源爬虫 07-03~08-28（含北京新发地）· 科学养鱼 OCR 08-27 · a渔业行情 OCR 08-28 · 抖音 08-31 · 价格随行就市，仅供参考
+    看板更新 2026-09-01 · 统计周期 2026-07-13 ~ 2026-08-31 · 农业农村部爬虫抓取日期 2026-08-31（活鳜鱼当日无报价，保留凌家塘78元/公斤；鲈鱼6条样本）· 公开价源爬虫 07-03~08-28（含北京新发地）· 科学养鱼 OCR 08-27 · a渔业行情 OCR 08-28 · 抖音 08-31 · 养殖场实时气象+7天预报 09-01 14:30（Open-Meteo · 宜兴官林镇数字低碳生态养殖项目 119.723623,31.556726）· 自动每日 09:00 刷新 · 价格随行就市，仅供参考
   </footer>
 
 </div>

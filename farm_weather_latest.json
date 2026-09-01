@@ -1,0 +1,143 @@
+{
+  "site": {
+    "name": "宜兴官林镇·数字低碳生态养殖项目",
+    "address": "江苏省无锡市宜兴市官林镇生产路",
+    "lat": 31.556726,
+    "lon": 119.723623,
+    "operator": "无锡市环保集团 + 宜兴市官林镇",
+    "total_area_mu": 1200,
+    "phase1_village": "丰义村",
+    "phase1_area_mu": 500,
+    "phase2_village": "白茫村",
+    "phase2_area_mu": 700,
+    "product": "鳜鱼 / 鲈鱼（蜂窝池养殖）"
+  },
+  "current": {
+    "time": "2026-09-01T14:30",
+    "temperature_c": 29.2,
+    "wind_speed_kmh": 16.5,
+    "wind_dir_deg": 31,
+    "wind_dir_text": "北东北",
+    "humidity_pct": 77,
+    "precipitation_mm": 0.1,
+    "pressure_hpa": 1007.5,
+    "weather_code": 95,
+    "weather_icon": "⛈️",
+    "weather_text": "雷暴",
+    "solar_radiation_wm2": 726.0,
+    "elevation_m": 5.0,
+    "timezone": "Asia/Shanghai"
+  },
+  "daily": [
+    {
+      "date": "2026-09-01",
+      "weather_code": 95,
+      "weather_icon": "⛈️",
+      "weather_text": "雷暴",
+      "temp_max_c": 30.0,
+      "temp_min_c": 24.8,
+      "precip_mm": 5.8,
+      "precip_prob_pct": 96,
+      "wind_max_kmh": 21.4,
+      "wind_dir_deg": 30,
+      "wind_dir_text": "北东北",
+      "solar_mjm2": 16.4
+    },
+    {
+      "date": "2026-09-02",
+      "weather_code": 80,
+      "weather_icon": "🌦️",
+      "weather_text": "阵雨(弱)",
+      "temp_max_c": 30.2,
+      "temp_min_c": 24.6,
+      "precip_mm": 12.8,
+      "precip_prob_pct": 92,
+      "wind_max_kmh": 20.1,
+      "wind_dir_deg": 43,
+      "wind_dir_text": "东北",
+      "solar_mjm2": 12.94
+    },
+    {
+      "date": "2026-09-03",
+      "weather_code": 80,
+      "weather_icon": "🌦️",
+      "weather_text": "阵雨(弱)",
+      "temp_max_c": 27.5,
+      "temp_min_c": 23.5,
+      "precip_mm": 7.5,
+      "precip_prob_pct": 68,
+      "wind_max_kmh": 25.2,
+      "wind_dir_deg": 32,
+      "wind_dir_text": "北东北",
+      "solar_mjm2": 10.93
+    },
+    {
+      "date": "2026-09-04",
+      "weather_code": 3,
+      "weather_icon": "☁️",
+      "weather_text": "阴",
+      "temp_max_c": 27.7,
+      "temp_min_c": 21.9,
+      "precip_mm": 0.0,
+      "precip_prob_pct": 8,
+      "wind_max_kmh": 21.5,
+      "wind_dir_deg": 3,
+      "wind_dir_text": "北",
+      "solar_mjm2": 19.56
+    },
+    {
+      "date": "2026-09-05",
+      "weather_code": 51,
+      "weather_icon": "🌦️",
+      "weather_text": "毛毛雨(弱)",
+      "temp_max_c": 29.4,
+      "temp_min_c": 21.8,
+      "precip_mm": 0.3,
+      "precip_prob_pct": 25,
+      "wind_max_kmh": 13.9,
+      "wind_dir_deg": 350,
+      "wind_dir_text": "北",
+      "solar_mjm2": 20.15
+    },
+    {
+      "date": "2026-09-06",
+      "weather_code": 51,
+      "weather_icon": "🌦️",
+      "weather_text": "毛毛雨(弱)",
+      "temp_max_c": 28.3,
+      "temp_min_c": 21.1,
+      "precip_mm": 0.3,
+      "precip_prob_pct": 25,
+      "wind_max_kmh": 18.6,
+      "wind_dir_deg": 348,
+      "wind_dir_text": "北西北",
+      "solar_mjm2": 20.38
+    },
+    {
+      "date": "2026-09-07",
+      "weather_code": 2,
+      "weather_icon": "⛅",
+      "weather_text": "多云",
+      "temp_max_c": 27.2,
+      "temp_min_c": 21.5,
+      "precip_mm": 0.0,
+      "precip_prob_pct": 14,
+      "wind_max_kmh": 12.7,
+      "wind_dir_deg": 4,
+      "wind_dir_text": "北",
+      "solar_mjm2": 18.14
+    }
+  ],
+  "alerts": [
+    {
+      "level": "high",
+      "icon": "⛈️",
+      "msg": "当前雷暴(代码 95)：检查增氧机/光伏板/排水/用电安全"
+    }
+  ],
+  "meta": {
+    "fetched_at_cst": "2026-09-01 14:41:10",
+    "source": "Open-Meteo API (https://api.open-meteo.com)",
+    "license": "Open-Meteo CC BY 4.0; data from national weather services"
+  }
+}
