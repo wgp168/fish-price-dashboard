@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """宜兴官林镇数字低碳生态养殖项目 · 实时气象抓取脚本
-数据源：Open-Meteo API（免费、无需 Key、WMO 标准、15min 更新）
-坐标：(119.723623, 31.556726)  江苏省无锡市宜兴市官林镇生产路
-输出：farm_weather_latest.json（含 current + 7d daily + hourly shortwave_radiation + 异常告警列表）
+主数据源：Open-Meteo API（免费、无需 Key、WMO 标准、15min 更新）— 提供全部 8 项指标
+校验源：高德天气 API（中国气象局数据）— 提供官方中文预报，用于交叉校验
+坐标：(119.723966, 31.557387)  江苏省无锡市宜兴市官林镇生产路（高德地理编码权威值）
+输出：farm_weather_latest.json（含 current + 7d daily + hourly shortwave_radiation
+      + amap 官方预报 + 异常告警列表）
 """
 import json, urllib.request, urllib.parse, os, sys
 from datetime import datetime, timezone, timedelta
 
 WS = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(WS, "farm_weather_latest.json")
+AMAP_FILE = os.path.join(WS, "amap_weather_latest.json")
 
-LAT = 31.556726
-LON = 119.723623
+LAT = 31.557387
+LON = 119.723966
 LOCATION_NAME = "宜兴官林镇·数字低碳生态养殖项目"
 ADDRESS = "江苏省无锡市宜兴市官林镇生产路"
+ADCODE = "320282"  # 宜兴市
+COORD_SOURCE = "高德地理编码 API（level=道路·生产路，2026-09-01 校准）"
 
 
 def deg_to_compass(deg):
@@ -104,6 +109,48 @@ def derive_alerts(c, daily):
     return alerts
 
 
+def load_amap():
+    """读取高德官方天气（中国气象局数据），用于交叉校验。
+    该文件由 MCP amap-maps / maps_weather 工具（city=320282 宜兴市）每日更新。
+    文件不存在时返回 None，看板自动降级为纯 Open-Meteo 单源。"""
+    if not os.path.exists(AMAP_FILE):
+        return None
+    try:
+        return json.load(open(AMAP_FILE, encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def cross_check(days, amap):
+    """Open-Meteo（WMO 模型）vs 高德（中国气象局）最高温交叉校验。
+    偏差 ≥2°C 标记 mismatch，提示人工复核。"""
+    if not amap or not amap.get("forecasts"):
+        return []
+    rows = []
+    for f in amap["forecasts"]:
+        date = f["date"]
+        om = next((d for d in days if d["date"] == date), None)
+        if not om:
+            continue
+        amap_max = float(f["daytemp_float"])
+        om_max = float(om["temp_max_c"])
+        delta = round(amap_max - om_max, 1)
+        rows.append({
+            "date": date,
+            "amap_day": f["dayweather"],
+            "amap_night": f["nightweather"],
+            "amap_max": amap_max,
+            "amap_min": float(f["nighttemp_float"]),
+            "amap_wind": f["daywind"],
+            "amap_power": f["daypower"],
+            "openmeteo_max": om_max,
+            "openmeteo_min": float(om["temp_min_c"]),
+            "delta_max": delta,
+            "status": "mismatch" if abs(delta) >= 2.0 else "ok",
+        })
+    return rows
+
+
 def fetch():
     params = {
         "latitude": LAT, "longitude": LON,
@@ -170,11 +217,16 @@ def fetch():
             "solar_mjm2": d.get("shortwave_radiation_sum", [None]*7)[i],
         })
 
+    amap = load_amap()
+    xcheck = cross_check(days, amap)
+
     out = {
         "site": {
             "name": LOCATION_NAME,
             "address": ADDRESS,
+            "adcode": ADCODE,
             "lat": LAT, "lon": LON,
+            "coord_source": COORD_SOURCE,
             "operator": "无锡市环保集团 + 宜兴市官林镇",
             "total_area_mu": 1200,
             "phase1_village": "丰义村", "phase1_area_mu": 500,
@@ -183,11 +235,14 @@ def fetch():
         },
         "current": current,
         "daily": days,
+        "amap": amap,
+        "cross_check": xcheck,
         "alerts": derive_alerts(cur, days),
         "meta": {
             "fetched_at_cst": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
             "source": "Open-Meteo API (https://api.open-meteo.com)",
             "license": "Open-Meteo CC BY 4.0; data from national weather services",
+            "secondary_source": "高德天气 API（中国气象局）" if amap else None,
         },
     }
     json.dump(out, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=2)

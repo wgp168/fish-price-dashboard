@@ -82,6 +82,47 @@ def build_daily(days):
     return "\n".join(rows)
 
 
+def build_xcheck(rows):
+    """高德（中国气象局）vs Open-Meteo 最高温交叉校验表"""
+    if not rows:
+        return ""
+    body = []
+    for x in rows:
+        bad = x["status"] == "mismatch"
+        cls = " class=\"row-warn\"" if bad else ""
+        verdict = f"⚠️ 偏差 {x['delta_max']:+.1f}°C" if bad else f"✅ 一致 (Δ{x['delta_max']:+.1f}°C)"
+        body.append(f'''<tr{cls}>
+          <td>{x["date"]}</td>
+          <td>{html.escape(x["amap_day"])} / {html.escape(x["amap_night"])}</td>
+          <td>{x["amap_min"]:.1f} ~ <b>{x["amap_max"]:.1f}</b>°C</td>
+          <td>{html.escape(x["amap_wind"])}风 {html.escape(x["amap_power"])} 级</td>
+          <td>{x["openmeteo_min"]:.1f} ~ <b>{x["openmeteo_max"]:.1f}</b>°C</td>
+          <td>{verdict}</td>
+        </tr>''')
+    return f'''
+    <!-- D. 双源交叉校验（高德官方 vs Open-Meteo） -->
+    <div class="card xcheck-card">
+      <h3>🔄 双源交叉校验 · 高德天气（中国气象局） vs Open-Meteo（WMO 模型）</h3>
+      <div class="csub">
+        高德仅提供 4 天中文预报（白/夜天气、气温、风向风力），用于校验 Open-Meteo 模型输出。
+        <b>最高温偏差 ≥2°C 时高亮提示人工复核</b>；8 项完整气象指标仍以 Open-Meteo 为准。
+      </div>
+      <table class="weather-forecast xcheck-table">
+        <thead>
+          <tr>
+            <th>日期</th><th>高德·白天/夜间</th><th>高德气温</th><th>高德风力</th>
+            <th>Open-Meteo 气温</th><th>校验结果</th>
+          </tr>
+        </thead>
+        <tbody>
+{chr(10).join(body)}
+        </tbody>
+      </table>
+      <div class="legend">数据源：高德天气 API（adcode 320282 宜兴市 · 中国气象局数据） × Open-Meteo（CC BY 4.0）</div>
+    </div>
+'''
+
+
 def build_block(d):
     site = d["site"]
     cur = d["current"]
@@ -89,6 +130,7 @@ def build_block(d):
     alerts_html = build_alerts(d["alerts"])
     metrics_html = build_metrics(cur)
     daily_html = build_daily(days)
+    xcheck_html = build_xcheck(d.get("cross_check", []))
     nav_url = f"https://uri.amap.com/navigation?to={site['lon']},{site['lat']},{urllib_quote(site['name'])}&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1"
     walk_url = f"https://uri.amap.com/navigation?to={site['lon']},{site['lat']},{urllib_quote(site['name'])}&mode=walk&src=WorkBuddy&coordinate=gaode&callnative=1"
     mark_url = f"https://uri.amap.com/marker?position={site['lon']},{site['lat']}&name={urllib_quote(site['name'])}&src=WorkBuddy&coordinate=gaode&callnative=1"
@@ -99,7 +141,7 @@ def build_block(d):
     <div class="sec-head">
       <span class="bar" style="background:#0ea5e9"></span>
       <h2>八、宜兴官林镇数字低碳生态养殖项目 · 位置 + 实时气象</h2>
-      <span class="note">📍 高德定位 · · Open-Meteo 实时/预报 · 自动每日 09:00 刷新</span>
+      <span class="note">📍 高德定位 · 🌡️ Open-Meteo 实时/预报 · 🔄 高德官方交叉校验 · 每日 09:00 自动刷新</span>
     </div>
 
     {A_START}
@@ -111,6 +153,7 @@ def build_block(d):
         <b>{html.escape(site['name'])}</b><br>
         地址：{html.escape(site['address'])}<br>
         坐标：<code>({site['lon']}, {site['lat']})</code>　|　海拔：{fmt_num(cur.get('elevation_m'),' m')}<br>
+        <span class="coord-src">📌 坐标来源：{html.escape(site.get('coord_source', '高德地理编码 API'))}　|　行政区 adcode：{site.get('adcode','—')}</span><br>
         运营：{html.escape(site['operator'])}　|　总面积：{site['total_area_mu']} 亩（一期丰义村 {site['phase1_area_mu']} 亩 + 二期白茫村 {site['phase2_area_mu']} 亩）　|　养殖品种：{html.escape(site['product'])}
       </div>
 
@@ -191,8 +234,8 @@ def build_block(d):
       </table>
       <div class="legend">图例：⛈️雷暴 💨大风（≥38km/h） 🌧️≥25mm大雨 🔥≥33°C高温 ❄️≤8°C低温</div>
     </div>
-
-    <!-- D. 关注阈值说明 -->
+{xcheck_html}
+    <!-- E. 关注阈值说明 -->
     <div class="callout">
       <b>⚙️ 养殖关注阈值（鳜鱼/鲈鱼 · 无锡市环保集团数字低碳生态养殖项目）：</b><br>
       • <b>气温</b>：28–30°C 最适 · <b style="color:#dc2626">≥33°C 警戒</b>（增氧/加深水位）· ≥35°C 危险 · ≤8°C 冬季警戒<br>

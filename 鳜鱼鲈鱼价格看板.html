@@ -138,6 +138,11 @@
   .weather-forecast tr.row-warn td:first-child{border-left:3px solid #f59e0b}
   .weather-forecast .deg{font-size:11px;color:var(--sub)}
   .legend{font-size:11.5px;color:var(--sub);margin-top:8px;text-align:center}
+  .coord-src{font-size:11.5px;color:var(--sub);font-style:normal}
+  .xcheck-card{border-left:4px solid #8b5cf6}
+  .xcheck-card h3{color:#5b21b6}
+  .xcheck-table th{background:#f5f3ff}
+  .xcheck-table tr.row-warn td:first-child{border-left:3px solid #8b5cf6}
   @media(max-width:860px){.mets-grid{grid-template-columns:repeat(2,1fr)}.weather-forecast{font-size:11.5px}.weather-forecast th,.weather-forecast td{padding:6px 4px}}
 </style>
 </head>
@@ -1107,6 +1112,17 @@
       <span class="note">📍 高德定位 · · Open-Meteo 实时/预报 · 自动每日 09:00 刷新</span>
     </div>
 
+    </section>
+
+
+  <!-- 八、养殖场位置 + 实时气象 -->
+  <section data-page-node-id="farm-loc-weather">
+    <div class="sec-head">
+      <span class="bar" style="background:#0ea5e9"></span>
+      <h2>八、宜兴官林镇数字低碳生态养殖项目 · 位置 + 实时气象</h2>
+      <span class="note">📍 高德定位 · 🌡️ Open-Meteo 实时/预报 · 🔄 高德官方交叉校验 · 每日 09:00 自动刷新</span>
+    </div>
+
     <!-- WEATHER_LIVE_START -->
 
     <!-- A. 位置 + 导航 -->
@@ -1115,12 +1131,13 @@
       <div class="csub">
         <b>宜兴官林镇·数字低碳生态养殖项目</b><br>
         地址：江苏省无锡市宜兴市官林镇生产路<br>
-        坐标：<code>(119.723623, 31.556726)</code>　|　海拔：5.0 m<br>
+        坐标：<code>(119.723966, 31.557387)</code>　|　海拔：5.0 m<br>
+        <span class="coord-src">📌 坐标来源：高德地理编码 API（level=道路·生产路，2026-09-01 校准）　|　行政区 adcode：320282</span><br>
         运营：无锡市环保集团 + 宜兴市官林镇　|　总面积：1200 亩（一期丰义村 500 亩 + 二期白茫村 700 亩）　|　养殖品种：鳜鱼 / 鲈鱼（蜂窝池养殖）
       </div>
 
       <!-- SVG 轻量地图（点击调起高德导航） -->
-      <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="mini-map-link" title="点击调起高德地图导航">
+      <a href="https://uri.amap.com/navigation?to=119.723966,31.557387,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="mini-map-link" title="点击调起高德地图导航">
         <svg class="mini-map" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid slice">
           <!-- 底色：滆湖西岸农田区（淡绿） -->
           <rect width="600" height="320" fill="#e8f1e0"/>
@@ -1155,43 +1172,43 @@
           <circle cx="300" cy="160" r="12" fill="#0ea5e9" opacity="0.45"/>
           <circle cx="300" cy="160" r="6" fill="#dc2626"/>
           <text x="300" y="200" text-anchor="middle" font-size="13" fill="#0c4a6e" font-weight="700" font-family="sans-serif">数字低碳生态养殖项目</text>
-          <text x="300" y="216" text-anchor="middle" font-size="10" fill="#0c4a6e" font-family="sans-serif">119.723623, 31.556726</text>
+          <text x="300" y="216" text-anchor="middle" font-size="10" fill="#0c4a6e" font-family="sans-serif">119.723966, 31.557387</text>
         </svg>
         <div class="map-overlay">点击调起高德地图导航 →</div>
       </a>
 
       <div class="nav-actions">
-        <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn nav-btn-primary">🚗 驾车导航</a>
-        <a href="https://uri.amap.com/navigation?to=119.723623,31.556726,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=walk&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">🚶 步行导航</a>
-        <a href="https://uri.amap.com/marker?position=119.723623,31.556726&name=%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">📍 标记位置</a>
+        <a href="https://uri.amap.com/navigation?to=119.723966,31.557387,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn nav-btn-primary">🚗 驾车导航</a>
+        <a href="https://uri.amap.com/navigation?to=119.723966,31.557387,%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&mode=walk&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">🚶 步行导航</a>
+        <a href="https://uri.amap.com/marker?position=119.723966,31.557387&name=%E5%AE%9C%E5%85%B4%E5%AE%98%E6%9E%97%E9%95%87%C2%B7%E6%95%B0%E5%AD%97%E4%BD%8E%E7%A2%B3%E7%94%9F%E6%80%81%E5%85%BB%E6%AE%96%E9%A1%B9%E7%9B%AE&src=WorkBuddy&coordinate=gaode&callnative=1" target="_blank" class="nav-btn">📍 标记位置</a>
         <span class="nav-tip">点击以上按钮可调起高德地图 APP 或网页版导航（无需 API Key）</span>
       </div>
     </div>
 
     <!-- B. 实时气象 -->
     <div class="card weather-card">
-      <h3>🌡️ 实时气象（2026-09-01T14:30 · Asia/Shanghai）</h3>
-      <div class="csub">天气：<b>⛈️ 雷暴</b>　|　数据源：Open-Meteo（WMO 标准 · 15min 更新 · 免费公开）</div>
+      <h3>🌡️ 实时气象（2026-09-01T14:45 · Asia/Shanghai）</h3>
+      <div class="csub">天气：<b>🌦️ 毛毛雨(弱)</b>　|　数据源：Open-Meteo（WMO 标准 · 15min 更新 · 免费公开）</div>
       <div class="mets-grid">
 <div class="met">
           <div class="met-icon">🌡️</div>
           <div class="met-label">气温</div>
-          <div class="met-val">29.2 °C</div>
+          <div class="met-val">28.8 °C</div>
         </div>
 <div class="met">
           <div class="met-icon">💨</div>
           <div class="met-label">风速</div>
-          <div class="met-val">16.5 km/h</div>
+          <div class="met-val">17.1 km/h</div>
         </div>
 <div class="met">
           <div class="met-icon">🧭</div>
           <div class="met-label">风向</div>
-          <div class="met-val">北东北 <span class='deg'>(31°)</span></div>
+          <div class="met-val">东北 <span class='deg'>(36°)</span></div>
         </div>
 <div class="met">
           <div class="met-icon">☀️</div>
           <div class="met-label">太阳辐射</div>
-          <div class="met-val">726.0 W/m²</div>
+          <div class="met-val">568.0 W/m²</div>
         </div>
 <div class="met">
           <div class="met-icon">🌧️</div>
@@ -1201,21 +1218,21 @@
 <div class="met">
           <div class="met-icon">💧</div>
           <div class="met-label">相对湿度</div>
-          <div class="met-val">77 %</div>
+          <div class="met-val">78 %</div>
         </div>
 <div class="met">
           <div class="met-icon">🔵</div>
           <div class="met-label">气压</div>
-          <div class="met-val">1,007.5 hPa</div>
+          <div class="met-val">1,007.4 hPa</div>
         </div>
 <div class="met">
           <div class="met-icon">☁️</div>
           <div class="met-label">天气</div>
-          <div class="met-val">雷暴</div>
+          <div class="met-val">毛毛雨(弱)</div>
         </div>
       </div>
       <div class="alerts-row">
-        <div class="alert alert-high">⛈️ <b>[HIGH]</b> 当前雷暴(代码 95)：检查增氧机/光伏板/排水/用电安全</div>
+        <div class="alert alert-ok">✅ 当前所有指标均在正常范围内，安心作业</div>
       </div>
     </div>
 
@@ -1230,88 +1247,88 @@
           </tr>
         </thead>
         <tbody>
-<tr class="row-warn">
+<tr>
           <td>2026-09-01</td>
-          <td>⛈️ 雷暴</td>
-          <td><b>30.0</b>°C</td>
+          <td>🌦️ 毛毛雨(中)</td>
+          <td><b>30.2</b>°C</td>
           <td>24.8°C</td>
-          <td>5.8</td>
+          <td>4.9</td>
           <td>96%</td>
-          <td>21.4</td>
-          <td>北东北 <span class="deg">(30°)</span></td>
-          <td>16.4</td>
-          <td>⛈️</td>
+          <td>22.0</td>
+          <td>北东北 <span class="deg">(29°)</span></td>
+          <td>17.7</td>
+          <td>—</td>
         </tr>
 <tr>
           <td>2026-09-02</td>
           <td>🌦️ 阵雨(弱)</td>
-          <td><b>30.2</b>°C</td>
-          <td>24.6°C</td>
-          <td>12.8</td>
+          <td><b>27.4</b>°C</td>
+          <td>24.4°C</td>
+          <td>9.3</td>
           <td>92%</td>
-          <td>20.1</td>
-          <td>东北 <span class="deg">(43°)</span></td>
-          <td>12.9</td>
+          <td>19.7</td>
+          <td>东北 <span class="deg">(37°)</span></td>
+          <td>6.7</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-03</td>
-          <td>🌦️ 阵雨(弱)</td>
-          <td><b>27.5</b>°C</td>
-          <td>23.5°C</td>
-          <td>7.5</td>
+          <td>🌦️ 毛毛雨(弱)</td>
+          <td><b>27.6</b>°C</td>
+          <td>23.6°C</td>
+          <td>0.6</td>
           <td>68%</td>
-          <td>25.2</td>
-          <td>北东北 <span class="deg">(32°)</span></td>
-          <td>10.9</td>
+          <td>24.7</td>
+          <td>北东北 <span class="deg">(30°)</span></td>
+          <td>13.5</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-04</td>
           <td>☁️ 阴</td>
-          <td><b>27.7</b>°C</td>
-          <td>21.9°C</td>
+          <td><b>28.5</b>°C</td>
+          <td>21.8°C</td>
           <td>0.0</td>
           <td>8%</td>
-          <td>21.5</td>
-          <td>北 <span class="deg">(3°)</span></td>
+          <td>20.3</td>
+          <td>北 <span class="deg">(2°)</span></td>
           <td>19.6</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-05</td>
           <td>🌦️ 毛毛雨(弱)</td>
-          <td><b>29.4</b>°C</td>
-          <td>21.8°C</td>
-          <td>0.3</td>
+          <td><b>27.7</b>°C</td>
+          <td>21.9°C</td>
+          <td>1.5</td>
           <td>25%</td>
-          <td>13.9</td>
-          <td>北 <span class="deg">(350°)</span></td>
-          <td>20.1</td>
+          <td>17.7</td>
+          <td>北 <span class="deg">(0°)</span></td>
+          <td>19.7</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-06</td>
-          <td>🌦️ 毛毛雨(弱)</td>
-          <td><b>28.3</b>°C</td>
+          <td>☁️ 阴</td>
+          <td><b>28.4</b>°C</td>
           <td>21.1°C</td>
-          <td>0.3</td>
+          <td>0.0</td>
           <td>25%</td>
-          <td>18.6</td>
-          <td>北西北 <span class="deg">(348°)</span></td>
+          <td>16.8</td>
+          <td>北 <span class="deg">(351°)</span></td>
           <td>20.4</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-07</td>
-          <td>⛅ 多云</td>
-          <td><b>27.2</b>°C</td>
-          <td>21.5°C</td>
-          <td>0.0</td>
+          <td>🌦️ 毛毛雨(弱)</td>
+          <td><b>29.0</b>°C</td>
+          <td>21.3°C</td>
+          <td>0.9</td>
           <td>14%</td>
-          <td>12.7</td>
-          <td>北 <span class="deg">(4°)</span></td>
-          <td>18.1</td>
+          <td>12.5</td>
+          <td>北 <span class="deg">(353°)</span></td>
+          <td>19.3</td>
           <td>—</td>
         </tr>
         </tbody>
@@ -1319,7 +1336,59 @@
       <div class="legend">图例：⛈️雷暴 💨大风（≥38km/h） 🌧️≥25mm大雨 🔥≥33°C高温 ❄️≤8°C低温</div>
     </div>
 
-    <!-- D. 关注阈值说明 -->
+    <!-- D. 双源交叉校验（高德官方 vs Open-Meteo） -->
+    <div class="card xcheck-card">
+      <h3>🔄 双源交叉校验 · 高德天气（中国气象局） vs Open-Meteo（WMO 模型）</h3>
+      <div class="csub">
+        高德仅提供 4 天中文预报（白/夜天气、气温、风向风力），用于校验 Open-Meteo 模型输出。
+        <b>最高温偏差 ≥2°C 时高亮提示人工复核</b>；8 项完整气象指标仍以 Open-Meteo 为准。
+      </div>
+      <table class="weather-forecast xcheck-table">
+        <thead>
+          <tr>
+            <th>日期</th><th>高德·白天/夜间</th><th>高德气温</th><th>高德风力</th>
+            <th>Open-Meteo 气温</th><th>校验结果</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr>
+          <td>2026-09-01</td>
+          <td>多云 / 小雨</td>
+          <td>25.0 ~ <b>31.0</b>°C</td>
+          <td>东北风 1-3 级</td>
+          <td>24.8 ~ <b>30.2</b>°C</td>
+          <td>✅ 一致 (Δ+0.8°C)</td>
+        </tr>
+<tr class="row-warn">
+          <td>2026-09-02</td>
+          <td>小雨 / 小雨</td>
+          <td>24.0 ~ <b>30.0</b>°C</td>
+          <td>东北风 1-3 级</td>
+          <td>24.4 ~ <b>27.4</b>°C</td>
+          <td>⚠️ 偏差 +2.6°C</td>
+        </tr>
+<tr>
+          <td>2026-09-03</td>
+          <td>多云 / 晴</td>
+          <td>21.0 ~ <b>28.0</b>°C</td>
+          <td>东北风 1-3 级</td>
+          <td>23.6 ~ <b>27.6</b>°C</td>
+          <td>✅ 一致 (Δ+0.4°C)</td>
+        </tr>
+<tr>
+          <td>2026-09-04</td>
+          <td>晴 / 多云</td>
+          <td>22.0 ~ <b>28.0</b>°C</td>
+          <td>北风 1-3 级</td>
+          <td>21.8 ~ <b>28.5</b>°C</td>
+          <td>✅ 一致 (Δ-0.5°C)</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="legend">数据源：高德天气 API（adcode 320282 宜兴市 · 中国气象局数据） × Open-Meteo（CC BY 4.0）</div>
+    </div>
+
+    <!-- E. 关注阈值说明 -->
     <div class="callout">
       <b>⚙️ 养殖关注阈值（鳜鱼/鲈鱼 · 无锡市环保集团数字低碳生态养殖项目）：</b><br>
       • <b>气温</b>：28–30°C 最适 · <b style="color:#dc2626">≥33°C 警戒</b>（增氧/加深水位）· ≥35°C 危险 · ≤8°C 冬季警戒<br>
@@ -1331,7 +1400,7 @@
     </div>
 
     <div class="csub" style="margin-top:10px">
-      ⏱️ 本次抓取时间：<code>2026-09-01 14:41:10</code>　|　数据许可：Open-Meteo CC BY 4.0; data from national weather services
+      ⏱️ 本次抓取时间：<code>2026-09-01 14:54:56</code>　|　数据许可：Open-Meteo CC BY 4.0; data from national weather services
     </div>
 
     <!-- WEATHER_LIVE_END -->
