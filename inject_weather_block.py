@@ -2,8 +2,17 @@
 # -*- coding: utf-8 -*-
 """读 farm_weather_latest.json → 渲染"位置 + 实时气象 + 7天预报 + 双源校验"区块 → 注入看板 footer 之前
 锚点：WEATHER_LIVE_START / WEATHER_LIVE_END 包裹整个 <section>（幂等可重跑，杜绝 sec-head 残留）
-地图：Leaflet + CartoDB Dark Matter tile（无需 Key） + WGS84/GCJ-02 坐标自动转换
-     支持滚轮缩放、按钮缩放、点击地图任意点 → 该点为起点 → 跳高德 URI Scheme 驾车导航
+
+地图架构（2026-09-01 修复 — 改用高德矢量 tile，无 Key、国内稳）：
+- Leaflet 1.9.4 框架（CDN: unpkg）
+- 底图：高德矢量 tile `https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8`
+  · 无需 API Key、HTTP 200 < 100ms、CartoCDN/OSM 均被 GFW 墙
+- 反相 CSS filter: invert + hue-rotate + brightness/contrast → 把白底矢量变成"高德蓝科技感"深色主题
+- 因底图本身就是 GCJ-02（中国火星坐标），marker 直接用 GCJ-02 坐标，
+  Leaflet 不感知坐标系差异、忠实画到对应位置，无需偏移转换
+- click 任意点 → e.latlng（WGS84）→ wgs84togcj02 → 高德 URI Scheme 导航（带 mode=car&coordinate=gaode&callnative=1）
+
+外部资源一次注入：用占位符 LEAFLET_CSS_HERE/LEAFLET_JS_HERE/CN_TILE_FILTER_HERE 防止重渲染重复插入
 """
 import json, os, re, html
 from urllib.parse import quote
@@ -12,12 +21,32 @@ WS = os.path.dirname(os.path.abspath(__file__))
 HTML = os.path.join(WS, "鳜鱼鲈鱼价格看板.html")
 JSON = os.path.join(WS, "farm_weather_latest.json")
 
+# Leaflet CDN（Unpkg） + WGS84/GCJ-02 转换（仅在 click 起点时使用，把屏幕 WGS84 转回 GCJ-02 给高德导航 URI Scheme）
+LEAFLET_CSS = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">'
+LEAFLET_JS = '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>'
+
+# 高德矢量 tile 反相 CSS filter（把浅米黄+灰底变成"高德蓝科技感"深色主题）
+CN_TILE_FILTER_CSS = r"""
+  <style id="cn-tile-filter">
+  /* 高德矢量 tile → 高德蓝科技感（白底反相为深蓝底，橙国道变青绿，水系变亮色） */
+  .farm-map .leaflet-tile-pane {
+    filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.35) saturate(1.4);
+  }
+  /* 反相后 tile 边缘暗藏白边、移除 */
+  .farm-map .leaflet-tile { border: none !important; outline: none !important; }
+  /* 调整 popup 内文字在深色下可读 */
+  .farm-map .leaflet-popup-content-wrapper, .farm-map .leaflet-popup-tip {
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  }
+  .farm-map .leaflet-popup-content { color: #e2e8f0; }
+  .farm-map .leaflet-popup-content b { color: #22d3ee; }
+  </style>"""
+
 A_START = "<!-- WEATHER_LIVE_START -->"
 A_END = "<!-- WEATHER_LIVE_END -->"
-
-# Leaflet CDN（Unpkg，可换 jsDelivr / cdnjs）
-LEAFLET_CSS = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">'
-LEAFLET_JS = '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>'
+LEAFLET_CSS_HERE = "<!-- LEAFLET_CSS_HERE -->"
+LEAFLET_JS_HERE = "<!-- LEAFLET_JS_HERE -->"
+CN_TILE_FILTER_HERE = "<!-- CN_TILE_FILTER_HERE -->"
 
 # WGS84 ↔ GCJ-02 转换（中国坐标系，公开算法）
 # 高德坐标系 = GCJ-02，OSM/Leaflet 用 WGS84，差几百米必须转换
@@ -157,16 +186,19 @@ def build_xcheck(rows):
 
 
 def build_map_block(site):
-    """Leaflet + CartoDB Dark Matter + 缩放 + 点击 → 驾车导航
-    养殖场坐标是 GCJ-02（高德），显示时需先转 WGS84 才能和 OSM tile 对齐
+    """Leaflet + 高德矢量 tile（公开，无 Key、国内 100ms） + CSS 反相成"高德蓝科技感"深色主题
+    养殖场坐标是 GCJ-02（高德）；因底图本身也是 GCJ-02，marker 直接用 GCJ-02 坐标、
+    无需转 WGS84（Leaflet 不感知坐标系，忠实投影到对应 tile 位置）。
+
+    click 任意点：e.latlng 是 WGS84 → wgs84togcj02 转回 GCJ-02 → 高德 URI Scheme 导航
     """
     site_lon_gcj = site["lon"]
     site_lat_gcj = site["lat"]
     site_name = html.escape(site["name"])
+    site_LL = [site_lat_gcj, site_lon_gcj]
+    # tile URL 模板（在 f-string 外定义，避免大括号嵌套问题）
+    TILE_URL = "https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}"
     return f'''
-    {LEAFLET_CSS}
-    {LEAFLET_JS}
-    {COORDTRANS_JS}
     <div class="map-wrap">
       <div id="farm-map" class="farm-map" data-site-lon="{site_lon_gcj}" data-site-lat="{site_lat_gcj}" data-site-name="{site_name}"></div>
       <div class="map-hint">
@@ -183,54 +215,54 @@ def build_map_block(site):
     (function(){{
       const el = document.getElementById('farm-map');
       if (!el) return;
-      const siteLon = parseFloat(el.dataset.siteLon);
-      const siteLat = parseFloat(el.dataset.siteLat);
+      const siteLon = parseFloat(el.dataset.siteLon);  // GCJ-02 经度
+      const siteLat = parseFloat(el.dataset.siteLat);  // GCJ-02 纬度
       const siteName = el.dataset.siteName;
-      // GCJ-02 (高德) → WGS84 (Leaflet/OSM) 供显示
-      const wgs = gcj02towgs84(siteLon, siteLat);
-      const siteLL = [wgs[1], wgs[0]];
+      // 高德矢量底图本身就是 GCJ-02，Leaflet 不感知坐标系，marker 直接 GCJ-02 显示
+      const siteLL = [siteLat, siteLon];
       farmMap = L.map('farm-map', {{zoomControl: false, attributionControl: true}}).setView(siteLL, 15);
       farmMap._siteLL = siteLL;
       farmMap._siteName = siteName;
       farmMap._siteLonGcj = siteLon;
       farmMap._siteLatGcj = siteLat;
-      // CartoDB Dark Matter（深蓝科技感，无需 Key）
-      L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
-        subdomains: 'abcd', maxZoom: 19,
-        attribution: '© OpenStreetMap · © CARTO · 坐标已从高德 GCJ-02 转换'
+      // 高德矢量 tile（公开、无 Key、国内 < 100ms）+ CSS 反相（见 cn-tile-filter style）
+      L.tileLayer("{TILE_URL}", {{
+        subdomains: ['1','2','3','4'], maxZoom: 19,
+        attribution: '© 高德地图 AutoNavi · 坐标 GCJ-02'
       }}).addTo(farmMap);
-      // 自定义 marker（蓝发光+红心，模拟高德定位标）
+      // 自定义 marker（蓝脉冲+红心，模拟高德定位标）
       const destIcon = L.divIcon({{
         className: 'dest-marker',
         html: '<div class="dest-marker-pulse"></div><div class="dest-marker-dot"></div>',
         iconSize: [32, 32], iconAnchor: [16, 16]
       }});
       L.marker(siteLL, {{icon: destIcon}}).addTo(farmMap)
-        .bindPopup(`<b>🎯 ${{siteName}}</b><br>高德坐标 ${{siteLon}}, ${{siteLat}}<br>WGS84 ${{wgs[1].toFixed(6)}}, ${{wgs[0].toFixed(6)}}`);
+        .bindPopup(`<b>🎯 ${{siteName}}</b><br>高德坐标 ${{siteLon}}, ${{siteLat}}<br>（GCJ-02 国内标准）`);
       // 起点 marker
       farmMap._startMarker = null;
       farmMap.on('click', function(e){{
-        const clickLL = e.latlng;  // WGS84
-        // 转回 GCJ-02 供高德导航
-        const gcj = wgs84togcj02(clickLL.lng, clickLL.lat);
+        // Leaflet 返回 WGS84，要转回 GCJ-02 喂高德 URI Scheme
+        const clickLat = e.latlng.lat, clickLng = e.latlng.lng;
+        const gcj = wgs84togcj02(clickLng, clickLat);  // [lng, lat]
         if (farmMap._startMarker) farmMap.removeLayer(farmMap._startMarker);
         const startIcon = L.divIcon({{
           className: 'start-marker',
           html: '<div class="start-marker-dot"></div>',
           iconSize: [22, 22], iconAnchor: [11, 11]
         }});
-        farmMap._startMarker = L.marker(clickLL, {{icon: startIcon}}).addTo(farmMap);
-        // 画一条直线预览
+        farmMap._startMarker = L.marker(e.latlng, {{icon: startIcon}}).addTo(farmMap);
+        // 画一条直线预览（终点用 WGS84 转换，避免与 Leaflet 默认坐标系一致）
+        const siteWgs = gcj02towgs84(siteLon, siteLat);
         if (farmMap._routeLine) farmMap.removeLayer(farmMap._routeLine);
-        farmMap._routeLine = L.polyline([clickLL, siteLL], {{color: '#22d3ee', weight: 4, opacity: 0.7, dashArray: '6,8'}}).addTo(farmMap);
-        // 弹窗
+        farmMap._routeLine = L.polyline([e.latlng, [siteWgs[1], siteWgs[0]]], {{color: '#22d3ee', weight: 4, opacity: 0.85, dashArray: '6,8'}}).addTo(farmMap);
+        // 弹窗 + 跳高德驾车导航
         const navUrl = `https://uri.amap.com/navigation?from=${{gcj[0].toFixed(6)}},${{gcj[1].toFixed(6)}},起点&to=${{siteLon}},${{siteLat}},${{encodeURIComponent(siteName)}}&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1`;
         L.popup()
-          .setLatLng(clickLL)
+          .setLatLng(e.latlng)
           .setContent(`
             <div style="min-width:240px;font-size:13px;line-height:1.6">
               <b>📍 已设置起点</b><br>
-              WGS84: ${{clickLL.lat.toFixed(5)}}, ${{clickLL.lng.toFixed(5)}}<br>
+              WGS84: ${{clickLat.toFixed(5)}}, ${{clickLng.toFixed(5)}}<br>
               GCJ-02: ${{gcj[1].toFixed(5)}}, ${{gcj[0].toFixed(5)}}<br>
               <a href="${{navUrl}}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#0ea5e9;color:#fff;border-radius:6px;text-decoration:none;font-weight:700">🚗 在高德地图中驾车导航 →</a>
             </div>
@@ -338,15 +370,46 @@ def build_block(d):
 '''
 
 
+def inject_external_assets(html_content):
+    """一次性注入 Leaflet CDN + WGS84↔GCJ-02 转换脚本 + 高德矢量反相 CSS。
+    已注入（占位符存在）则跳过，可幂等重跑。
+    """
+    changed = False
+
+    # 1. Leaflet CSS + 反相 filter CSS → 注入到 </head> 之前
+    if LEAFLET_CSS_HERE not in html_content and "</head>" in html_content:
+        block = f"{LEAFLET_CSS}\n  {CN_TILE_FILTER_CSS}\n  {LEAFLET_CSS_HERE}\n"
+        html_content = html_content.replace("</head>", block + "</head>", 1)
+        changed = True
+        print("[OK] 注入 Leaflet CSS + dark filter CSS 到 <head>")
+
+    # 2. Leaflet JS + WGS84↔GCJ-02 转换 → 注入到 <body> 顶部（确保地图 init 之前函数已定义）
+    if LEAFLET_JS_HERE not in html_content and "<body" in html_content:
+        # 在 <body 之后立刻插入（保留原有 body 属性）
+        m = re.search(r"<body([^>]*)>", html_content)
+        if not m:
+            raise SystemExit("ERROR: 未找到 <body> 标签")
+        block = f"\n  {LEAFLET_JS}\n  {COORDTRANS_JS}\n  {LEAFLET_JS_HERE}\n"
+        html_content = html_content[:m.end()] + block + html_content[m.end():]
+        changed = True
+        print("[OK] 注入 Leaflet JS + WGS84↔GCJ-02 转换到 <body> 顶部")
+
+    return html_content, changed
+
+
 def main():
     d = json.load(open(JSON, encoding="utf-8"))
     html_content = open(HTML, encoding="utf-8").read()
 
+    # 1. 一次性注入外部资产（Leaflet CDN + 转换 + dark filter CSS）
+    html_content, _ = inject_external_assets(html_content)
+
+    # 2. 移除旧 A_START..A_END 区间
     if A_START in html_content:
-        # 删除 A_START..A_END 区间（含整段 <section>），并去掉前后多余空白
         html_content = re.sub(re.escape(A_START) + r".*?" + re.escape(A_END), "", html_content, flags=re.S)
         print("[OK] 移除旧 WEATHER 区块")
 
+    # 3. 渲染新区块
     block = build_block(d)
 
     marker = '<footer '
@@ -360,6 +423,9 @@ def main():
     assert A_START in html_content and A_END in html_content
     assert html_content.count("<!-- WEATHER_LIVE_START -->") == 1
     assert html_content.count("<!-- WEATHER_LIVE_END -->") == 1
+    # 外部资产也应在
+    assert LEAFLET_CSS_HERE in html_content and LEAFLET_JS_HERE in html_content
+    print(f"[OK] 外部资产：Leaflet CDN + dark filter CSS 已就绪")
 
 
 if __name__ == "__main__":

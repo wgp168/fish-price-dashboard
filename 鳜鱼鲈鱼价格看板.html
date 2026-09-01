@@ -169,8 +169,60 @@
   .xcheck-table tr.row-warn td:first-child{border-left:3px solid #8b5cf6}
   @media(max-width:860px){.mets-grid{grid-template-columns:repeat(2,1fr)}.weather-forecast{font-size:11.5px}.weather-forecast th,.weather-forecast td{padding:6px 4px}}
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
+  
+  <style id="cn-tile-filter">
+  /* 高德矢量 tile → 高德蓝科技感（白底反相为深蓝底，橙国道变青绿，水系变亮色） */
+  .farm-map .leaflet-tile-pane {
+    filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.35) saturate(1.4);
+  }
+  /* 反相后 tile 边缘暗藏白边、移除 */
+  .farm-map .leaflet-tile { border: none !important; outline: none !important; }
+  /* 调整 popup 内文字在深色下可读 */
+  .farm-map .leaflet-popup-content-wrapper, .farm-map .leaflet-popup-tip {
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  }
+  .farm-map .leaflet-popup-content { color: #e2e8f0; }
+  .farm-map .leaflet-popup-content b { color: #22d3ee; }
+  </style>
+  <!-- LEAFLET_CSS_HERE -->
 </head>
 <body data-page-node-id="L4x5866LjJ8vTeUcF1SwiR">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+  
+<script>
+// WGS84 (Leaflet/OSM) <-> GCJ-02 (高德/腾讯) 转换
+// 标准公开算法；a=6378245.0, ee=0.00669342162296594323
+const PI = Math.PI, A = 6378245.0, EE = 0.00669342162296594323;
+function outOfChina(lng, lat){return lng<72.004||lng>137.8347||lat<0.8293||lat>55.8271;}
+function _t(lng, lat){let t=Math.sqrt(lng*lng+lat*lat)+0.00002*Math.sin(lat*PI*3000/180);
+  t+=0.000003*Math.cos(lng*PI*3000/180);return t;}
+function _dlng(lng, lat){let r=300+s+2*l+3*lng+0.2*lng*lng+0.1*lng*lat+0.2*Math.sqrt(Math.abs(lng));
+  r+=(20*Math.sin(6*lng*PI)+20*Math.sin(2*lng*PI))*2/3;r+=(20*Math.sin(lng*PI)+40*Math.sin(lng/3*PI))*2/3;
+  r+=(150*Math.sin(lng/12*PI)+300*Math.sin(lng/30*PI))*2/3;return r;}
+function _dlat(lng, lat){let r=-100+2*l+3*lat+0.2*lat*lat+0.1*lng*lat+0.2*Math.sqrt(Math.abs(lng));
+  r+=(20*Math.sin(6*lat*PI)+20*Math.sin(2*lat*PI))*2/3;r+=(20*Math.sin(lat*PI)+40*Math.sin(lat/3*PI))*2/3;
+  r+=(160*Math.sin(lat/12*PI)+320*Math.sin(lat*30*PI))*2/3;return r;}
+let s = 0; // dummy
+var s; function _s(){s = Math.sin(2*PI);} _s();
+function gcj02towgs84(lng, lat){
+  if(outOfChina(lng,lat)) return [lng,lat];
+  let dlat=_dlat(lng-105,lat-35), dlng=_dlng(lng-105,lat-35);
+  const radlat=lat/180*PI; let magic=Math.sin(radlat); magic=1-EE*magic*magic;
+  const sqrtmagic=Math.sqrt(magic); dlat=(dlat*180)/((A*(1-EE))/magic*sqrtmagic)*PI;
+  dlng=(dlng*180)/(A/sqrtmagic*Math.cos(radlat)*PI); return [lng-dlng*2, lat-dlat*2];
+}
+function wgs84togcj02(lng, lat){
+  if(outOfChina(lng,lat)) return [lng,lat];
+  let dlat=_dlat(lng-105,lat-35), dlng=_dlng(lng-105,lat-35);
+  const radlat=lat/180*PI; let magic=Math.sin(radlat); magic=1-EE*magic*magic;
+  const sqrtmagic=Math.sqrt(magic); dlat=(dlat*180)/((A*(1-EE))/magic*sqrtmagic)*PI;
+  dlng=(dlng*180)/(A/sqrtmagic*Math.cos(radlat)*PI); return [lng+dlng*2, lat+dlat*2];
+}
+</script>
+
+  <!-- LEAFLET_JS_HERE -->
+
 <div class="wrap" data-page-node-id="MHHSVYFHmbzDVeCH36VY49">
 
   <!-- HERO -->
@@ -1137,6 +1189,9 @@
   </section>
 
 
+  
+
+
   <!-- WEATHER_LIVE_START -->
   <!-- 八、江苏环荟·宜兴官林镇数字低碳生态养殖项目 · 位置 + 实时气象 -->
   <section data-page-node-id="farm-loc-weather">
@@ -1159,40 +1214,6 @@
 
       <!-- 地图：Leaflet + CartoDB Dark Matter（高德蓝科技感） -->
       
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
-    
-<script>
-// WGS84 (Leaflet/OSM) <-> GCJ-02 (高德/腾讯) 转换
-// 标准公开算法；a=6378245.0, ee=0.00669342162296594323
-const PI = Math.PI, A = 6378245.0, EE = 0.00669342162296594323;
-function outOfChina(lng, lat){return lng<72.004||lng>137.8347||lat<0.8293||lat>55.8271;}
-function _t(lng, lat){let t=Math.sqrt(lng*lng+lat*lat)+0.00002*Math.sin(lat*PI*3000/180);
-  t+=0.000003*Math.cos(lng*PI*3000/180);return t;}
-function _dlng(lng, lat){let r=300+s+2*l+3*lng+0.2*lng*lng+0.1*lng*lat+0.2*Math.sqrt(Math.abs(lng));
-  r+=(20*Math.sin(6*lng*PI)+20*Math.sin(2*lng*PI))*2/3;r+=(20*Math.sin(lng*PI)+40*Math.sin(lng/3*PI))*2/3;
-  r+=(150*Math.sin(lng/12*PI)+300*Math.sin(lng/30*PI))*2/3;return r;}
-function _dlat(lng, lat){let r=-100+2*l+3*lat+0.2*lat*lat+0.1*lng*lat+0.2*Math.sqrt(Math.abs(lng));
-  r+=(20*Math.sin(6*lat*PI)+20*Math.sin(2*lat*PI))*2/3;r+=(20*Math.sin(lat*PI)+40*Math.sin(lat/3*PI))*2/3;
-  r+=(160*Math.sin(lat/12*PI)+320*Math.sin(lat*30*PI))*2/3;return r;}
-let s = 0; // dummy
-var s; function _s(){s = Math.sin(2*PI);} _s();
-function gcj02towgs84(lng, lat){
-  if(outOfChina(lng,lat)) return [lng,lat];
-  let dlat=_dlat(lng-105,lat-35), dlng=_dlng(lng-105,lat-35);
-  const radlat=lat/180*PI; let magic=Math.sin(radlat); magic=1-EE*magic*magic;
-  const sqrtmagic=Math.sqrt(magic); dlat=(dlat*180)/((A*(1-EE))/magic*sqrtmagic)*PI;
-  dlng=(dlng*180)/(A/sqrtmagic*Math.cos(radlat)*PI); return [lng-dlng*2, lat-dlat*2];
-}
-function wgs84togcj02(lng, lat){
-  if(outOfChina(lng,lat)) return [lng,lat];
-  let dlat=_dlat(lng-105,lat-35), dlng=_dlng(lng-105,lat-35);
-  const radlat=lat/180*PI; let magic=Math.sin(radlat); magic=1-EE*magic*magic;
-  const sqrtmagic=Math.sqrt(magic); dlat=(dlat*180)/((A*(1-EE))/magic*sqrtmagic)*PI;
-  dlng=(dlng*180)/(A/sqrtmagic*Math.cos(radlat)*PI); return [lng+dlng*2, lat+dlat*2];
-}
-</script>
-
     <div class="map-wrap">
       <div id="farm-map" class="farm-map" data-site-lon="119.723966" data-site-lat="31.557387" data-site-name="江苏环荟·宜兴官林镇数字低碳生态养殖项目"></div>
       <div class="map-hint">
@@ -1209,54 +1230,54 @@ function wgs84togcj02(lng, lat){
     (function(){
       const el = document.getElementById('farm-map');
       if (!el) return;
-      const siteLon = parseFloat(el.dataset.siteLon);
-      const siteLat = parseFloat(el.dataset.siteLat);
+      const siteLon = parseFloat(el.dataset.siteLon);  // GCJ-02 经度
+      const siteLat = parseFloat(el.dataset.siteLat);  // GCJ-02 纬度
       const siteName = el.dataset.siteName;
-      // GCJ-02 (高德) → WGS84 (Leaflet/OSM) 供显示
-      const wgs = gcj02towgs84(siteLon, siteLat);
-      const siteLL = [wgs[1], wgs[0]];
+      // 高德矢量底图本身就是 GCJ-02，Leaflet 不感知坐标系，marker 直接 GCJ-02 显示
+      const siteLL = [siteLat, siteLon];
       farmMap = L.map('farm-map', {zoomControl: false, attributionControl: true}).setView(siteLL, 15);
       farmMap._siteLL = siteLL;
       farmMap._siteName = siteName;
       farmMap._siteLonGcj = siteLon;
       farmMap._siteLatGcj = siteLat;
-      // CartoDB Dark Matter（深蓝科技感，无需 Key）
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        subdomains: 'abcd', maxZoom: 19,
-        attribution: '© OpenStreetMap · © CARTO · 坐标已从高德 GCJ-02 转换'
+      // 高德矢量 tile（公开、无 Key、国内 < 100ms）+ CSS 反相（见 cn-tile-filter style）
+      L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
+        subdomains: ['1','2','3','4'], maxZoom: 19,
+        attribution: '© 高德地图 AutoNavi · 坐标 GCJ-02'
       }).addTo(farmMap);
-      // 自定义 marker（蓝发光+红心，模拟高德定位标）
+      // 自定义 marker（蓝脉冲+红心，模拟高德定位标）
       const destIcon = L.divIcon({
         className: 'dest-marker',
         html: '<div class="dest-marker-pulse"></div><div class="dest-marker-dot"></div>',
         iconSize: [32, 32], iconAnchor: [16, 16]
       });
       L.marker(siteLL, {icon: destIcon}).addTo(farmMap)
-        .bindPopup(`<b>🎯 ${siteName}</b><br>高德坐标 ${siteLon}, ${siteLat}<br>WGS84 ${wgs[1].toFixed(6)}, ${wgs[0].toFixed(6)}`);
+        .bindPopup(`<b>🎯 ${siteName}</b><br>高德坐标 ${siteLon}, ${siteLat}<br>（GCJ-02 国内标准）`);
       // 起点 marker
       farmMap._startMarker = null;
       farmMap.on('click', function(e){
-        const clickLL = e.latlng;  // WGS84
-        // 转回 GCJ-02 供高德导航
-        const gcj = wgs84togcj02(clickLL.lng, clickLL.lat);
+        // Leaflet 返回 WGS84，要转回 GCJ-02 喂高德 URI Scheme
+        const clickLat = e.latlng.lat, clickLng = e.latlng.lng;
+        const gcj = wgs84togcj02(clickLng, clickLat);  // [lng, lat]
         if (farmMap._startMarker) farmMap.removeLayer(farmMap._startMarker);
         const startIcon = L.divIcon({
           className: 'start-marker',
           html: '<div class="start-marker-dot"></div>',
           iconSize: [22, 22], iconAnchor: [11, 11]
         });
-        farmMap._startMarker = L.marker(clickLL, {icon: startIcon}).addTo(farmMap);
-        // 画一条直线预览
+        farmMap._startMarker = L.marker(e.latlng, {icon: startIcon}).addTo(farmMap);
+        // 画一条直线预览（终点用 WGS84 转换，避免与 Leaflet 默认坐标系一致）
+        const siteWgs = gcj02towgs84(siteLon, siteLat);
         if (farmMap._routeLine) farmMap.removeLayer(farmMap._routeLine);
-        farmMap._routeLine = L.polyline([clickLL, siteLL], {color: '#22d3ee', weight: 4, opacity: 0.7, dashArray: '6,8'}).addTo(farmMap);
-        // 弹窗
+        farmMap._routeLine = L.polyline([e.latlng, [siteWgs[1], siteWgs[0]]], {color: '#22d3ee', weight: 4, opacity: 0.85, dashArray: '6,8'}).addTo(farmMap);
+        // 弹窗 + 跳高德驾车导航
         const navUrl = `https://uri.amap.com/navigation?from=${gcj[0].toFixed(6)},${gcj[1].toFixed(6)},起点&to=${siteLon},${siteLat},${encodeURIComponent(siteName)}&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1`;
         L.popup()
-          .setLatLng(clickLL)
+          .setLatLng(e.latlng)
           .setContent(`
             <div style="min-width:240px;font-size:13px;line-height:1.6">
               <b>📍 已设置起点</b><br>
-              WGS84: ${clickLL.lat.toFixed(5)}, ${clickLL.lng.toFixed(5)}<br>
+              WGS84: ${clickLat.toFixed(5)}, ${clickLng.toFixed(5)}<br>
               GCJ-02: ${gcj[1].toFixed(5)}, ${gcj[0].toFixed(5)}<br>
               <a href="${navUrl}" target="_blank" style="display:inline-block;margin-top:8px;padding:6px 12px;background:#0ea5e9;color:#fff;border-radius:6px;text-decoration:none;font-weight:700">🚗 在高德地图中驾车导航 →</a>
             </div>
