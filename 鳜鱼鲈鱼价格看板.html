@@ -3,10 +3,10 @@
 <head data-page-node-id="BWPqHflDNNA98uUwgMDG2y">
 <meta charset="UTF-8" data-page-node-id="brMbjGoytqtDzaGQGs0ywx">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="mXilABDyOtLC6ajMyuuT3T">
-<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-09-01 更新 · v1.0.2）</title>
-<meta name="dashboard-version" content="v1.0.2">
+<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-09-01 更新 · v1.0.3）</title>
+<meta name="dashboard-version" content="v1.0.3">
 <meta name="dashboard-version-date" content="2026-09-01">
-<!-- Dashboard v1.0.2 · 2026-09-01 · 变更摘要见 VERSION.md -->
+<!-- Dashboard v1.0.3 · 2026-09-01 · 变更摘要见 VERSION.md -->
 <script>
 /**
  * Skipped minification because the original files appears to be already minified.
@@ -37,7 +37,7 @@
     --up:#e5484d; --up-bg:#fdecec;
     --down:#12a150; --down-bg:#e9f7ef;
     --flat:#8a94a2; --flat-bg:#f0f2f5;
-    --gui:#7c3aed; --lu:#0284c7;
+    --gui:#7c3aed; --lu:#0284c7; --other:#0891b2;
     --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
     --shadow-lg:0 8px 24px rgba(16,24,40,.08);
   }
@@ -71,7 +71,7 @@
   .card h3{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .card .csub{font-size:12px;color:var(--sub);margin-bottom:14px}
   .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;color:#fff}
-  .tag-gui{background:var(--gui)} .tag-lu{background:var(--lu)}
+  .tag-gui{background:var(--gui)} .tag-lu{background:var(--lu)} .tag-other{background:var(--other)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:10px;border-bottom:1px solid var(--line)}
   th{font-size:12px;color:var(--sub);font-weight:600;background:#fafbfc}
@@ -240,7 +240,7 @@ function wgs84togcj02(lng, lat){
       <span class="chip" data-page-node-id="sTnENG1kszfxF6zJ1kDy3a">📅 统计周期：2026-07-13 ~ 2026-08-31</span>
       <span class="chip" data-page-node-id="uDtjiFY1wd6cLO8XIkyQEd">📍 区域：江苏 · 安徽 · 浙江 · 上海</span>
       <span class="chip" data-page-node-id="sz9lakUAtmcvai5DeZy3jC">💹 涨=红 / 跌=绿（国内习惯）</span>
-      <span class="chip chip-version" data-page-node-id="VER01CHIP0001" title="看板版本号 · 完整历史见 VERSION.md">🏷️ 版本 v1.0.2 · 2026-09-01</span>
+      <span class="chip chip-version" data-page-node-id="VER01CHIP0001" title="看板版本号 · 完整历史见 VERSION.md">🏷️ 版本 v1.0.3 · 2026-09-01</span>
       <span class="chip" data-page-node-id="4HGb9s5gzmgXv3QvdK82PP">🤖 批发价：农业农村部接口爬虫 + 公开价源爬虫 + 科学养鱼OCR（08-27）+ a渔业行情OCR（08-28）</span>
     </div>
   </div>
@@ -401,13 +401,52 @@ function wgs84togcj02(lng, lat){
     <div class="sec-head" data-page-node-id="UErvEvegSTonyhhWnpF3XJ">
       <span class="bar" style="background:#7c3aed" data-page-node-id="p7yO1BOTXu7IjPJv7xj9xD"></span>
       <h2 data-page-node-id="dObq6MJiufxvwAevnGpiuh">补充 · 「科学养鱼」公众号批发价（OCR 提取）</h2>
-      <span class="note" data-page-node-id="M7SAhDo92sQrKX75Dnw2bZ">2026-08-27 · 元/千克 · 已按图片数字录入</span>
+      <span class="note" data-page-node-id="M7SAhDo92sQrKX75Dnw2bZ">2026-08-31 · 元/千克 · 已按图片数字录入（v1.0.3 PATCH 替换原 08-27 数据）</span>
     </div>
     <div class="card" data-page-node-id="FpKNtzZ7h67lnpWAxMwiz5">
-      <h3 data-page-node-id="ZwNH1zWVV5O34t5wcOxhA5">🌟 科学养鱼公众号 全国水产品批发价</h3>
-      <div class="csub" data-page-node-id="7QQEzVvvC5g2SPL7FcVab6">来源：公众号价格截图，单位<b data-page-node-id="oxlRjKBZk76tea6PROBGf2">元/千克</b>；由 OCR 提取，报价日期 2026-08-27。本次含 <b data-page-node-id="iJN78phiCSdCSxgnU0T9FT">加州鲈鱼、鳜鱼（桂花鱼）</b> 条目。</div>
-      <div class="grid2" data-page-node-id="5F7T6qioaxj1QCSN2wEIs1"><div data-page-node-id="WlZiXBEgtGIXY27NDOwOsz"><h3 style="font-size:14px;margin:6px 0 8px" data-page-node-id="F3ImbdzZ3XDLx4OK3HMqh8"><span class="tag tag-gui" data-page-node-id="YL4aTDHK37odNApcNBW75T">鳜鱼（桂花鱼）</span> 批发价（元/千克）</h3><table data-page-node-id="21lO3QtuFNQFoIj3VVQzBE"><thead data-page-node-id="jCG4mpdH7Yt9nVAFZaStJV"><tr data-page-node-id="MCe4PnTmqrEMz3FMeA50il"><th data-page-node-id="ErGa7R7QtDqMsDCZU9sSoV">市场</th><th data-page-node-id="YGkjQGT5rHNrJeoy9ddJl1">规格</th><th data-page-node-id="gNhbeRgoqJTCcst7t81u4l">价格</th></tr></thead><tbody data-page-node-id="SkWwx3UBh5FpHy3gJkDLmA"><tr data-page-node-id="H1042iq3K4GnmWkXbPU2fM"><td data-page-node-id="kqXQEAvR55fEs1S1YvjshE">北京大红门京深海鲜批发市场有限公司</td><td data-page-node-id="9fWg5HGZIfUDXeYlEIjWpk"><span class="spec spec-s" data-page-node-id="zoIyD1iGM7ZAGOjkA4bX5y">条重≥750g</span></td><td class="price" data-page-node-id="6bHhdy30F0vRzmFZ4d6oWn">72.00</td></tr><tr data-page-node-id="MGFLyt7VReRgXcxOjXSpQS"><td data-page-node-id="S78QAFrlbaVaQWBlFepLYL">江苏省苏州市南环桥农副产品批发市场</td><td data-page-node-id="ktLoAXJyzi1CtXzraSAgvi"><span class="spec spec-s" data-page-node-id="TywCofumg63yvNC6TylcS7">250≤条重<500g</span></td><td class="price" data-page-node-id="oqVr84221oRDIpmtvjac4s">78.00</td></tr><tr data-page-node-id="nlCIe1BN4WLQ4Xb1kEiD5N"><td data-page-node-id="XcJGI3ad6CFKu6MUFBj2z4">江苏省苏州市南环桥农副产品批发市场</td><td data-page-node-id="YiyBLo3AJgtUsnXVywHcPF"><span class="spec spec-s" data-page-node-id="KtzYsDsGyGtGOiftHn1w9C">500≤条重<750g</span></td><td class="price" data-page-node-id="7klh1fy6XBVQxvhEPgeBS8">94.00</td></tr><tr data-page-node-id="PB2YhumHsj2ZNCYa4TESr7"><td data-page-node-id="5vp4IxLqT97ogcStRqyJ30">湖北宜昌三峡物流园有限公司水产市场</td><td data-page-node-id="t4DPsouvSdwAMhZF7CpBtO"><span class="spec spec-s" data-page-node-id="yO0W5mwhxkMHMMrgtyheHs">250≤条重<500g</span></td><td class="price" data-page-node-id="tXZgFgO1BCoDGbngGVDL3u">76.00</td></tr><tr data-page-node-id="7fGRuleXVsAXKi3Jl7eZX2"><td data-page-node-id="QMhe8qTyZod8jfPL3pKZe3">湖北宜昌三峡物流园有限公司水产市场</td><td data-page-node-id="EV7eHyfxHK1lwXGUjWTlLN"><span class="spec spec-s" data-page-node-id="0az1SXFVUvrApA2te6Scje">500≤条重<750g</span></td><td class="price" data-page-node-id="P3iMBUVCoogHhIrPxAoSBK">100.00</td></tr></tbody></table></div><div data-page-node-id="MFd2Lba4yZIsz7Bc9cEvPx"><h3 style="font-size:14px;margin:6px 0 8px" data-page-node-id="474dBTC0yVCYMwhkdj9dP5"><span class="tag tag-lu" data-page-node-id="GRPVNlKlFRJm9ghl16G6kX">加州鲈鱼</span> 批发价（元/千克）</h3><table data-page-node-id="vF0S5CtMfmrR3xk1CFjFtU"><thead data-page-node-id="RPaSDaDUm7mtbzv5OqCxoq"><tr data-page-node-id="j9NRoOeIT8F2tzJMgV4zUG"><th data-page-node-id="yGJhr4WXMKNFBdSdrqdCsk">市场</th><th data-page-node-id="1meNkBuzQm7FvuEiJ9Hxot">规格</th><th data-page-node-id="vcXwWYuKxwVmxhSQJ1OwX9">价格</th></tr></thead><tbody data-page-node-id="vje3CvRxHfIMyDEMFlwZ0V"><tr data-page-node-id="o5rpBiO9GaZDG8JE6ONRCO"><td data-page-node-id="KooOxO588cIC0mRu5Efn0m">湖州菱湖乌板桥水产品批发市场</td><td data-page-node-id="UqRKrZyz1RFH9j7j98b2J9"><span class="spec spec-s" data-page-node-id="7zqKqDKWXzH0YC3h2d8QuS">条重≥500g</span></td><td class="price" data-page-node-id="aqHyqjawNbAPXGm3T2bG81">25.00</td></tr><tr data-page-node-id="PRL3lOkCS6AjgfOYS0rwT6"><td data-page-node-id="yO8OyAMPEFxGULKCmZxnHJ">湖州菱湖乌板桥水产品批发市场</td><td data-page-node-id="ftIFtLP7NTKHGOcfTfXrBp"><span class="spec spec-s" data-page-node-id="PSfmDaCeP9zfisgaB5h9V1">条重<500g</span></td><td class="price" data-page-node-id="F5lLrQW3AynV70wW8G7H5N">22.40</td></tr><tr data-page-node-id="SfQ9ALhofaTLQZ9b6uqe1Q"><td data-page-node-id="OWnmERCST2DYLLUHnFnomt">广州黄沙水产交易市场有限公司</td><td data-page-node-id="4xl2AC6vNKGNvYFHAnuskF"><span class="spec spec-s" data-page-node-id="W7VHF0XxJOJX5TD3f0qknN">条重≥500g</span></td><td class="price" data-page-node-id="sA2HuImEypb31pTZCI4SYu">26.00</td></tr><tr data-page-node-id="Bkjg4Po2JXTT59FxP9mLpG"><td data-page-node-id="jPQ49hRhL5N6HTXU8BEMpH">江西省萍乡市城南水产批发市场</td><td data-page-node-id="Rc5bwG0qocx3qIGXWfpW4f"><span class="spec spec-s" data-page-node-id="CaE9NjtE8NijLJmgX3MRRK">条重≥500g</span></td><td class="price" data-page-node-id="469QK7jFQj5OhdqxzDR1cO">31.00</td></tr><tr data-page-node-id="Jlns5DcNhMTwPLsuQ9BpUH"><td data-page-node-id="7EFz2nAcxMhMsmHRq8NHoI">北京京丰岳各庄农副产品批发市场中心</td><td data-page-node-id="3mKP9pfEMiNsxySnewC6DV"><span class="spec spec-s" data-page-node-id="NAx9z8FbMYkUeQadBVCk2q">条重≥500g</span></td><td class="price" data-page-node-id="P5TbCuHGQBu0FkEWtfZCTH">28.40</td></tr></tbody></table></div></div>
-      <div class="callout" style="margin-top:14px" data-page-node-id="lMUL3VK2psaCqbWusnP9f7"><b data-page-node-id="jwOusuyO36fJhCiIDrzjxj">数据说明：</b>该公众号价格以<b data-page-node-id="ARMWfcB3SKG84ifpZF08Ly">图片</b>形式发布，纯文本爬虫取不到数字；由截图 + OCR 提取录入。① 单位已确认为<b data-page-node-id="oWxGTcOk0SBxjqDYHWBgIX">元/千克</b>；② 属批发价，可与农业农村部统货口径互补；③ 历史截图数据保留于 <code data-page-node-id="IFK3IAgnV1Y3vzSwyChRpW">wechat_ocr_prices_*.json</code> 历史快照。</div>
+      <h3 data-page-node-id="ZwNH1zWVV5O34t5wcOxhA5">🌟 科学养鱼公众号 全国水产品批发价（8-31）</h3>
+      <div class="csub" data-page-node-id="7QQEzVvvC5g2SPL7FcVab6">来源：公众号「科学养鱼」2026-08-31 推送价格截图，单位<b>元/千克</b>；由 OCR 提取。<b>本次更新 2026-08-31 报价</b>，覆盖鳜鱼（桂花鱼）×5、加州鲈鱼×5、团头鲂×1、泥鳅×2、海水鱼类（首页大黄鱼）×1，共计 <b>14 个市场分规格报价</b>（原 08-27 数据已替换）。</div>
+      <div class="grid2">
+        <!-- 鳜鱼（桂花鱼）批发价 -->
+        <div>
+          <h3 style="font-size:14px;margin:6px 0 8px"><span class="tag tag-gui">鳜鱼（桂花鱼）</span> 批发价（元/千克）</h3>
+          <table><thead><tr><th>市场</th><th>规格</th><th>价格</th></tr></thead><tbody>
+            <tr><td>山西太原五龙口海鲜市场</td><td><span class="spec spec-s">500≤条重&lt;750g</span></td><td class="price">65.00</td></tr>
+            <tr><td>福建省莆田市闽中水产品批发市场</td><td><span class="spec spec-s">250≤条重&lt;500g</span></td><td class="price">74.00</td></tr>
+            <tr><td>上海江阳水产品批发交易市场经营管理有限公司</td><td><span class="spec spec-s">500≤条重&lt;750g</span></td><td class="price">103.00</td></tr>
+            <tr><td>云南华潮水产品批发市场</td><td><span class="spec spec-s">条重≥750g</span></td><td class="price">100.00</td></tr>
+            <tr><td>乌鲁木齐北园春果业经营有限责任公司</td><td><span class="spec spec-s">500≤条重&lt;750g</span></td><td class="price">130.00</td></tr>
+          </tbody></table>
+        </div>
+        <!-- 加州鲈鱼批发价 -->
+        <div>
+          <h3 style="font-size:14px;margin:6px 0 8px"><span class="tag tag-lu">加州鲈鱼</span> 批发价（元/千克）</h3>
+          <table><thead><tr><th>市场</th><th>规格</th><th>价格</th></tr></thead><tbody>
+            <tr><td>上海江阳水产品批发交易市场经营管理有限公司</td><td><span class="spec spec-s">条重≥500g</span></td><td class="price">22.50</td></tr>
+            <tr><td>湖州菱湖乌板桥水产品批发市场</td><td><span class="spec spec-s">条重≥500g</span></td><td class="price">25.00</td></tr>
+            <tr><td>湖州菱湖乌板桥水产品批发市场</td><td><span class="spec spec-s">条重&lt;500g</span></td><td class="price">22.40</td></tr>
+            <tr><td>广州黄沙水产交易市场有限公司</td><td><span class="spec spec-s">条重≥500g</span></td><td class="price">26.00</td></tr>
+            <tr><td>两湖绿谷淡水鱼市场</td><td><span class="spec spec-s">条重≥500g</span></td><td class="price">20.40</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <!-- 其他鱼种：团头鲂 / 泥鳅 / 大黄鱼 -->
+      <div style="margin-top:14px">
+        <h3 style="font-size:14px;margin:6px 0 8px">🌊 同图其他品类：团头鲂·泥鳅·海水鱼类</h3>
+        <table><thead><tr><th>品类</th><th>市场</th><th>规格</th><th>价格（元/千克）</th></tr></thead><tbody>
+          <tr><td><b>团头鲂</b></td><td>吉林省长春市光复路水产批发市场</td><td><span class="spec spec-s">条重≥250g</span></td><td class="price">22.40</td></tr>
+          <tr><td><b>泥鳅</b></td><td>云南华潮水产品批发市场</td><td><span class="spec spec-s">/</span></td><td class="price">20.00</td></tr>
+          <tr><td><b>泥鳅</b></td><td>两湖绿谷淡水鱼市场</td><td><span class="spec spec-s">/</span></td><td class="price">14.40</td></tr>
+          <tr><td><b>海水鱼类（大黄鱼）</b></td><td>大黄鱼首页行情（部分截图）</td><td><span class="spec spec-s">300≤冻条重&lt;600g</span></td><td class="price">34.00</td></tr>
+        </tbody></table>
+      </div>
+      <div class="callout" style="margin-top:14px"><b>数据说明：</b>该公众号价格以<b>图片</b>形式发布，纯文本爬虫取不到数字；由截图 + OCR 提取录入。① 单位已确认为<b>元/千克</b>；② 属批发价，可与农业农村部统货口径互补；③ 历史截图数据保留于 <code>wechat_ocr_prices_*.json</code> 历史快照。<br><b>v1.0.3 更新：</b>本次 14 条数据全部来源于 2026-08-31 当日推送，与 08-27 老批对比可看出：
+        <ul style="margin:6px 0 0 18px;line-height:1.7">
+          <li>鳜鱼 500g+ 出现 130 元/千克（乌鲁木齐北园春）、103 元/千克（上海江阳）等新高价，反映西北/华东消费地批发价保持高位</li>
+          <li>加州鲈 5 个市场 20.4~26 元/千克，与 08-27 持平偏低 — 反映节后供给宽松</li>
+          <li>泥鳅云南 20 元/千克 vs 两湖绿谷 14.4 元/千克 — 同品类/同日期价差 38.9%，提示跨区调运机会</li>
+        </ul>
+      </div>
     </div>
   </section>
   <!-- /科学养鱼公众号 OCR 数据 --><!-- a渔业行情公众号 OCR 数据 -->
@@ -421,6 +460,35 @@ function wgs84togcj02(lng, lat){
       <h3 data-page-node-id="5q0DUPazUygungHw5pGBUj">🎣 a渔业行情公众号 分产区塘口价</h3>
       <div class="csub" data-page-node-id="OHgh0LuV5nxtOzDtrNGF6y">来源：公众号文章截图，由 OCR 提取。报价日期 <b data-page-node-id="WpKUBNvYNR5ifvNmmVqJCX">2026-08-28</b>；<b data-page-node-id="Pb36Ht4IFcP8pcktuYpJlP">单位元/斤</b>，属塘口（出塘）价，与批发价不可直接比较。含 <b data-page-node-id="Q6AVXFug77EY2tzdAQ5BYu">加州鲈、鳜鱼</b>。</div>
       <div class="grid2" data-page-node-id="c2HyWVNskdWtJ5zGAcWxk0"><div data-page-node-id="MMezRFk5xQYaNS7AC72pVP"><h3 style="font-size:14px;margin:6px 0 8px" data-page-node-id="dF0bsX0uaIBotASRrQI1Bd"><span class="tag tag-gui" data-page-node-id="q4KdGbsoLFrDZHywwixl4P">鳜鱼</span> 报价（元/斤）</h3><table data-page-node-id="QkRBM31ePvKvktAqUJVG6a"><thead data-page-node-id="4JakqXPK4GPfzxqrntBXxV"><tr data-page-node-id="HquBQy5FmJjiSccPNTp5nJ"><th data-page-node-id="ktnPWxd5saE0TN188hBplD">地区</th><th data-page-node-id="W9mgCdLaxKu8ggmNrCOn2g">规格</th><th data-page-node-id="IessAs7srepWD113nnpCPA">塘口价</th></tr></thead><tbody data-page-node-id="2371unFziOG7QulU7ufgee"><tr data-page-node-id="8iZkl8FveWHpa4uNUjyNIp"><td data-page-node-id="Dkfge497M951T9MBQcFyIp">广东地区</td><td data-page-node-id="JB7AgmSWM0z52ovvM5BJN9"><span class="spec spec-s" data-page-node-id="CHtV1ATN0AR6jHrLdZU4VO">小鳜（0.8斤以下）</span></td><td class="price" data-page-node-id="fAdLDOEhJu0uxejmwMQ6pi">26.50</td></tr><tr data-page-node-id="zmHoFL6b7UU7CBktZK7C5u"><td data-page-node-id="iH9KZ1290TsfxnNefalmKu">广东地区</td><td data-page-node-id="U9goTm7gcHZqUVQWxGNHqP"><span class="spec spec-s" data-page-node-id="7NJuS0BF3R8Rq6fjyUZ33F">标鳜（0.8-1.5斤）</span></td><td class="price" data-page-node-id="ZdCipICLhkf4LUXZ5h4chd">42.00</td></tr><tr data-page-node-id="ZZZp5PrRBA7A7LuQSAVVJd"><td data-page-node-id="HHHDmQJhcPHVv5JipBv5Yg">广东地区</td><td data-page-node-id="DI3i8acj8S4YkRizsjtMfl"><span class="spec spec-s" data-page-node-id="s1K217bjIEBqip9sb0dSbd">中鳜（1.5斤以上）</span></td><td class="price" data-page-node-id="7AD9kxZDmlcea4FIicLE10">41.50</td></tr><tr data-page-node-id="bWMHDK4CC1xWplY7vvEMD7"><td data-page-node-id="HHYLUN2I6nRb0EOGkaekOB">湖北地区</td><td data-page-node-id="ePdnZwHpvaox76GidbLiJX"><span class="spec spec-s" data-page-node-id="5CCFFBBkJBi1GXjNPgmnMM">标鳜</span></td><td class="price" data-page-node-id="NiQYtEeBp2gFGLmGtHG1rs">40.50</td></tr><tr data-page-node-id="qPHo4JOBwO7CwzqC7a6NeK"><td data-page-node-id="G2w2Ibusg9o7wcrfOLrRDT">安徽地区</td><td data-page-node-id="lhCa4EAhTzgB7TEkCqe6ot"><span class="spec spec-s" data-page-node-id="RbpeO00nT4lsbAEneyNyuv">标鳜</span></td><td class="price" data-page-node-id="JdPKgDissuRnMFvtPZYeSe">40.00</td></tr><tr data-page-node-id="Gdvkm0hjIJvpY6N9ZiQKFq"><td data-page-node-id="ZRiT4qRCaFX8k0CQpmE5Co">江西地区</td><td data-page-node-id="IJUctR1c8BJmU7D6vcGku8"><span class="spec spec-s" data-page-node-id="ZkBOpxiEhLMAimaHfW3ez4">标鳜</span></td><td class="price" data-page-node-id="KFYTrvzsjyrbGHdo1U8HOU">37.50</td></tr><tr data-page-node-id="xYcVeq6taCEBOXGorwV9s6"><td data-page-node-id="Ed45jto8yaaVeJBddUmer6">湖南地区</td><td data-page-node-id="HE1LVAamJOYEOIdbWvVkLc"><span class="spec spec-s" data-page-node-id="GzRem1Wl6IhDPRafM9DC71">标鳜</span></td><td class="price" data-page-node-id="1dYUFTOPeUtZKO4Dl5m4SC">37.00</td></tr><tr data-page-node-id="mxbQB7PiUIBuAlbYjktOgY"><td data-page-node-id="JeNtcnh3ouFqM3fAv1FG3w">江苏地区</td><td data-page-node-id="ME5YM25Jyj4LdSQD0tsnqb"><span class="spec spec-s" data-page-node-id="fp67M5j7DGv7zlXHpGmfvZ">标鳜</span></td><td class="price" data-page-node-id="LtSWTpUfi9aHy22loqVhCy">38.50</td></tr></tbody></table></div><div data-page-node-id="VtpQVHAlGBVy0CjqwS4xEr"><h3 style="font-size:14px;margin:6px 0 8px" data-page-node-id="tbRhYLwkNaLGCZfYGg6ftI"><span class="tag tag-lu" data-page-node-id="M7DIiDGjijNO0Kn1BwBLEA">加州鲈</span> 报价（元/斤）</h3><table data-page-node-id="91dqJnA3B0HnVTFVcraLP4"><thead data-page-node-id="v1ZSvbRaHS6UJm72oMtRoD"><tr data-page-node-id="1eUPQ7CIHA4XlAzVChuXdb"><th data-page-node-id="q6wai8SwY6AqtV2nLVgtTR">地区</th><th data-page-node-id="n9qjbtcRDbhl5vWHlX5iY0">规格</th><th data-page-node-id="k8L9hdI4Jji8IwNtTHUXB6">塘口价</th></tr></thead><tbody data-page-node-id="j7brfDvYsHA6k4FAS6xxAB"><tr data-page-node-id="5ktGTJ4yn2SVeOrxtI8ZMw"><td data-page-node-id="hCedBCUIT01LocbTBOBw9v">南海九江</td><td data-page-node-id="APmaRukxPZYKukDOGiceNd"><span class="spec spec-s" data-page-node-id="HuEHmtR7H8fogv0XaScSt1">1斤以上</span></td><td class="price" data-page-node-id="WMw1BfIWSTWTFq9sjYbLqD">9.20</td></tr><tr data-page-node-id="A96RQSbH5yPlklBaptOuoA"><td data-page-node-id="PGHwTA4WZOh7BsZfEoEsGd">珠海金湾</td><td data-page-node-id="YW5FCYF7qQVkU4XnVDZsh3"><span class="spec spec-s" data-page-node-id="18wcFQjCc8DROEMZ81BCEy">1斤</span></td><td class="price" data-page-node-id="Nj8QRpVQHvMGcVUprq5WdJ">8.80</td></tr><tr data-page-node-id="VHuczplyMErI3fQWTXrmg4"><td data-page-node-id="exYHBMX86KnUJybw4U2o4g">珠海金湾</td><td data-page-node-id="mhgGjRaaPWPJ3mIg2f6eHw"><span class="spec spec-s" data-page-node-id="EcNoZZorODO1aphPRfjlSd">1.3斤</span></td><td class="price" data-page-node-id="U6kKdBFDMbNPJV3mt2LtX8">9.20</td></tr><tr data-page-node-id="6Qe6rcIMU9auDtlpzFbiM9"><td data-page-node-id="DmjDFmOtHyIvBYBV0I5hYK">福建漳州</td><td data-page-node-id="lKbQdBlvdAnKtQWv1fks71"><span class="spec spec-s" data-page-node-id="k4RT7qPkJojodbdig0EgQV">0.8-1.5斤</span></td><td class="price" data-page-node-id="sLklMro4fDTmsAq1RAMV2Z">10.50</td></tr><tr data-page-node-id="7tXeh4fd2WhyOAgQbbUJaq"><td data-page-node-id="YkSnFilhNHjy4fDpAKxoQf">龙岩上杭</td><td data-page-node-id="2oLWEMqY7zb4Yfpl06HOG4"><span class="spec spec-s" data-page-node-id="aE0Sp71yPIHFzP05sWgUbP">8两以上</span></td><td class="price" data-page-node-id="EoRcqmikgLOtHNgBHdj7uH">11.00</td></tr><tr data-page-node-id="CQERA2Q9RVY17S9ANBZWoV"><td data-page-node-id="CWdES1TdAj6f7SDxtE9Xro">湖南钱粮湖</td><td data-page-node-id="4NEX10ydAa0eXfbzUdMo2c"><span class="spec spec-s" data-page-node-id="JNP7v8EaCRlimhHN2gjfBu">8两上</span></td><td class="price" data-page-node-id="bpVeVRBuc64o2fUqnm8cto">10.00</td></tr><tr data-page-node-id="bopOOc5MPEecsDFlNEMkXh"><td data-page-node-id="DCqrnejDKzkvTVGJnBVqMm">湖北白沙洲</td><td data-page-node-id="02oKOHDoFnQ57DDjBgsY3f"><span class="spec spec-s" data-page-node-id="UbopUY2YfZMCwnPjigu99C">9两上</span></td><td class="price" data-page-node-id="GtQMQRyQv5dUFGQDMMEBNW">11.00</td></tr><tr data-page-node-id="3qGW9yOCUMp8Mc7VrSBei6"><td data-page-node-id="LfdFFNDjBIb8lDNO2iyT58">成都邛崃</td><td data-page-node-id="ShPTYAy1fYrdwfYV0e8bRp"><span class="spec spec-s" data-page-node-id="cLJUGIWKJt2bAEuqtJ0NVG">9两起</span></td><td class="price" data-page-node-id="6Ity1eaz1SuxEudza8Upm5">14.00</td></tr><tr data-page-node-id="9665eBUfAwGRxYc8I6hkol"><td data-page-node-id="3cSAYweQ1ShDueaNpIWxd3">成都邛崃</td><td data-page-node-id="lSpk3t2v7C6aAWkWxIvD5O"><span class="spec spec-s" data-page-node-id="9RHJGTCTJ02LEucOx61O3m">1斤</span></td><td class="price" data-page-node-id="SMpdqcGNAFGQs4GhD9Hiod">12.50</td></tr><tr data-page-node-id="MwXhvSs1C4GyAVUfIkkX4R"><td data-page-node-id="9bnJrHGElNsIv2XlIlmxpg">眉山东坡</td><td data-page-node-id="jtlQSYXEyTpeqxDIA0v5bW"><span class="spec spec-s" data-page-node-id="CteBkwB3NjcYShD71Nin6y">9两起</span></td><td class="price" data-page-node-id="EGsCB1XXTBsOICK2JxssGR">14.00</td></tr><tr data-page-node-id="S4gG0z7U0xZqLwJeSiNQPr"><td data-page-node-id="RRKuEvqxaFiOfVZx8fEjX5">江苏吴江</td><td data-page-node-id="2sTbADCq08lXGnZptqMyey"><span class="spec spec-s" data-page-node-id="265DjwI7TWFkk5UnmEGrl1">9两起</span></td><td class="price" data-page-node-id="7xjMjwukNhiruosKfxW4ss">11.50</td></tr><tr data-page-node-id="CJVVwYbnKL2Qcn9DayKakp"><td data-page-node-id="OevOEOAJfH8Rk8zeAEaOEo">江苏吴江</td><td data-page-node-id="zUtdZAOfD4DV4tGHG6ABFA"><span class="spec spec-s" data-page-node-id="RvSTaY4GCfRngItKZMHGlc">1斤</span></td><td class="price" data-page-node-id="S9alg9TzPEs0W8CWvfjY4T">10.20</td></tr><tr data-page-node-id="AZFVDhArddqOEQGdfl7LSw"><td data-page-node-id="n7KoDIcaXwZKsHqcj8B0QB">江苏高邮</td><td data-page-node-id="YBA746qwPqD9ENjfQHJUYs"><span class="spec spec-s" data-page-node-id="CFml8MorztotM0IOL30dzr">1.1斤</span></td><td class="price" data-page-node-id="9TpyxXjs5aG2WVreDUmi7B">10.60</td></tr><tr data-page-node-id="d1VAgGAO0cV6epemHWzG08"><td data-page-node-id="m4Rjqv8qmx4M8HLUCXrgRh">江苏高邮</td><td data-page-node-id="ohf7AWemDZI0hji0FeHTGW"><span class="spec spec-s" data-page-node-id="WwyFxLqlmyg1ITKE24Af92">1.2斤</span></td><td class="price" data-page-node-id="UVwGc3vHgyrW54kmGIe6Eu">10.70</td></tr><tr data-page-node-id="SnleC6WYF9QDf9umeOsANG"><td data-page-node-id="FoenvD3zmH37D2KZsb3Psr">浙江湖州</td><td data-page-node-id="FB72XrLYLw2IOWAjHN3YIf"><span class="spec spec-s" data-page-node-id="zV2BBAmLodSMLliXNDbGWx">8两起</span></td><td class="price" data-page-node-id="rWYrbQ6FezQXpURyYxeHn9">11.00</td></tr><tr data-page-node-id="Ok0CuYuHHodT8syiFRmJrr"><td data-page-node-id="euTwlc6DxESCjHkCkseEBD">浙江湖州</td><td data-page-node-id="6CwJ4pKeMDg0kLhGnekO4M"><span class="spec spec-s" data-page-node-id="LMPmZqzRlpBPqM3RNDeTFS">统货</span></td><td class="price" data-page-node-id="kcP89S0swQbRGlnmkwl5Hi">10.50</td></tr></tbody></table></div></div>
+            <!-- v1.0.3 新增：广东中山发货价/工厂收购价 + 同图鲴鱼塘口价 -->
+      <div style="margin-top:14px">
+        <h3 style="font-size:14px;margin:0 0 8px">🆕 v1.0.3 新增 · 同图延伸：广东中山「发货价/到厂价」+ 鲴鱼塘口价</h3>
+        <div class="csub" style="margin-bottom:8px">2026-08-31 截图中同一张「a渔业行情」推送，除已有的鳜鱼×8 / 加州鲈×16 塘口价外，新增 2 个口径的数据：① <b>广东中山产地发货价</b>（5 斤头大鱼 / 中鱼 1.5-2 斤头）+ 工厂到厂收购价 3 档，反映加州鲈从塘口 → 流通 → 加工厂三级的"价差带"；② <b>鲴鱼塘口价</b>×5 产区（广州白云 / 盐城大丰×2 / 益阳沅江 / 乐山犍为），作为同位次对照鱼种与鳜鱼/加州鲈鱼作横向参照。</div>
+        <div class="grid2">
+          <div>
+            <h3 style="font-size:13px;margin:6px 0 6px"><span class="tag tag-lu">加州鲈鱼 · 广东中山</span> 发货价 vs 到厂收购价（元/斤）</h3>
+            <table><thead><tr><th>来源</th><th>规格</th><th>价格</th></tr></thead><tbody>
+              <tr><td>广东中山发货价 · 大鱼档</td><td><span class="spec spec-s">5 斤头大鱼</span></td><td class="price">8.10 ~ 8.20</td></tr>
+              <tr><td>广东中山发货价 · 中鱼档</td><td><span class="spec spec-s">1.5-2 斤头（中鱼）</span></td><td class="price">7.30 ~ 7.40</td></tr>
+              <tr><td>工厂收购价（到厂）</td><td><span class="spec spec-s">到厂收购</span></td><td class="price">7.00 ~ 7.20</td></tr>
+            </tbody></table>
+            <div style="font-size:11.5px;color:#475569;margin-top:4px;line-height:1.5">⚠️ 此 3 档为<b>广东中山产地</b>当日带鱼价，含装车/到厂运费；塘口价仍以原 16 个产区为准。供应链条示意：塘口价 → 产地发货价（+ 装车 0.4~0.6）→ 工厂到厂（再 + 短驳 0.1~0.3）。</div>
+          </div>
+          <div>
+            <h3 style="font-size:13px;margin:6px 0 6px"><span class="tag tag-other">鲴鱼</span> 分产区塘口价（元/斤）</h3>
+            <table><thead><tr><th>产区</th><th>规格</th><th>塘口价</th></tr></thead><tbody>
+              <tr><td>广州白云</td><td><span class="spec spec-s">1.2 斤起</span></td><td class="price">8.20</td></tr>
+              <tr><td>盐城大丰 · 北京货</td><td><span class="spec spec-s">2-3 斤</span></td><td class="price">9.40</td></tr>
+              <tr><td>盐城大丰 · 呆子货</td><td><span class="spec spec-s">3 斤以上</span></td><td class="price">8.70</td></tr>
+              <tr><td>益阳沅江</td><td><span class="spec spec-s">1.8-2 斤</span></td><td class="price">9.00</td></tr>
+              <tr><td>乐山犍为</td><td><span class="spec spec-s">1.2-2.5 斤</span></td><td class="price">8.80</td></tr>
+            </tbody></table>
+            <div style="font-size:11.5px;color:#475569;margin-top:4px;line-height:1.5">⚠️ 鲴鱼不作鳜鱼/鲈鱼替代品，但同水位养殖环境下可作 <b>同位次对照</b>：与加州鲈主流塘口价 8.8-12 元/斤接近。</div>
+          </div>
+        </div>
+      </div>
+      <!-- /v1.0.3 新增 -->
+
       <div class="callout" style="margin-top:14px" data-page-node-id="r4riSNqD30RMHwPKAOqsDe"><b data-page-node-id="9n4OajUFWlyC8ySTERSMOV">数据说明：</b>「a渔业行情」文章以<b data-page-node-id="0XR1pZx3ROwvaVEXHUJdM1">图片表格</b>发布，搜狗微信未索引且需登录/反爬，纯文本爬虫取不到；由截图 + OCR 提取。<b data-page-node-id="6TbqmMvItKYFqGkXQyGurf">单位为元/斤</b>（塘口价），与水产前沿周报口径一致，可与批发价交叉验证。</div>
     </div>
   </section>
@@ -1524,9 +1592,10 @@ function wgs84togcj02(lng, lat){
   <section class="version-history" data-page-node-id="VER01HIST0001" style="margin-top:28px;padding:18px 22px;background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(255,126,95,.05));border:1px solid rgba(255,179,71,.25);border-radius:14px;font-size:13px;line-height:1.7">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
       <span style="font-size:18px">🏷️</span>
-      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.2（2026-09-01）</strong>
+      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.3（2026-09-01）</strong>
     </div>
     <ul style="margin:0;padding-left:22px;color:var(--ink, #1a1f2e)">
+      <li><b>v1.0.3 · 2026-09-01</b> · 科学养鱼 8-31 数据全部替换为最新批发市场报价（鳜鱼×5 / 加州鲈×5 / 团头鲂×1 / 泥鳅×2 / 大黄鱼×1 = 14 条）；a渔业行情 section 新增广东中山发货价/到厂价 + 鲴鱼塘口价 8 条延伸数据；CSS 新增 .tag-other 与 --other 颜色变量</li>
       <li><b>v1.0.2 · 2026-09-01</b> · 地图改回标准高德配色 — 取消 CSS 反相、修复文字看不清，路名/地名/POI 全部清晰可读，与高德原生观感一致</li>
       <li>新增 <b>版本号 chip + VERSION.md 变更摘要机制</b>，以后每次更新自动递增版本（v1.0.1 → v1.0.2 → …）并把摘要注入到本区块，彻底解决"本次到底改了什么"的问题。</li>
       <li>江苏环荟 · 宜兴官林镇数字低碳生态养殖项目：地图（Leaflet + 高德矢量 tile + 深蓝科技感 CSS 反相）可点击任意点作为出发点 → 高德驾车导航；8 项实时气象（气温/风速/风向/辐射/降水/湿度/气压）+ 7 天预报 + 高德 vs Open-Meteo 双源校验 + 分级告警。</li>
