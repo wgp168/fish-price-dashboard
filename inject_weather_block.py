@@ -29,28 +29,22 @@ JSON = os.path.join(WS, "farm_weather_latest.json")
 LEAFLET_CSS = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">'
 LEAFLET_JS = '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>'
 
-# 高德矢量 tile 反相 CSS filter（把浅米黄+灰底变成"高德蓝科技感"深色主题）
+# 高德矢量 tile 配色 — v1.0.2 起改为"标准地图配色"（不再反相）
+# 浅米色陆地 + 浅蓝水系 + 深灰文字 + 灰色省道/国道路网，与高德官方地图观感一致
+# 背景色 #e8f1e0（浅绿）作为 tile 加载前的占位，与底图风格无缝衔接
 CN_TILE_FILTER_CSS = r"""
   <style id="cn-tile-filter">
-  /* 高德矢量 tile → 高德蓝科技感（白底反相为深蓝底，橙国道变青绿，水系变亮色） */
-  .farm-map .leaflet-tile-pane {
-    filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.35) saturate(1.4);
-  }
-  /* 反相后 tile 边缘暗藏白边、移除 */
-  .farm-map .leaflet-tile { border: none !important; outline: none !important; }
-  /* 调整 popup 内文字在深色下可读 */
+  /* 标准配色 tile 不做任何 filter 变换；保留 popup 柔和阴影即可 */
   .farm-map .leaflet-popup-content-wrapper, .farm-map .leaflet-popup-tip {
-    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
   }
-  .farm-map .leaflet-popup-content { color: #e2e8f0; }
-  .farm-map .leaflet-popup-content b { color: #22d3ee; }
   </style>"""
 
 A_START = "<!-- WEATHER_LIVE_START -->"
 A_END = "<!-- WEATHER_LIVE_END -->"
+CN_TILE_FILTER_HERE = "<!-- CN_TILE_FILTER_HERE -->"
 LEAFLET_CSS_HERE = "<!-- LEAFLET_CSS_HERE -->"
 LEAFLET_JS_HERE = "<!-- LEAFLET_JS_HERE -->"
-CN_TILE_FILTER_HERE = "<!-- CN_TILE_FILTER_HERE -->"
 
 # WGS84 ↔ GCJ-02 转换（中国坐标系，公开算法）
 # 高德坐标系 = GCJ-02，OSM/Leaflet 用 WGS84，差几百米必须转换

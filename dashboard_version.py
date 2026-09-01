@@ -48,6 +48,19 @@ def _today_str() -> str:
     return datetime.now().strftime("%Y-%m-%d")
 
 
+def _current_version_from_html() -> str:
+    """从看板 HTML 里读当前已落地的 DASHBOARD_VERSION（避免模块常量与 HTML 漂移）"""
+    if not os.path.exists(HTML):
+        return DASHBOARD_VERSION
+    try:
+        with open(HTML, encoding="utf-8") as f:
+            text = f.read()
+    except OSError:
+        return DASHBOARD_VERSION
+    m = re.search(r'<meta name="dashboard-version" content="(v\d+\.\d+\.\d+)"', text)
+    return m.group(1) if m else DASHBOARD_VERSION
+
+
 def _bump(level: str, current: str) -> str:
     """语义化 bump：v1.2.3 + patch → v1.2.4"""
     m = re.match(r"^v(\d+)\.(\d+)\.(\d+)$", current.strip())
@@ -88,6 +101,13 @@ def _sync_html(html_text: str, version: str, date_str: str, summary_line: str) -
         r'(<meta name="dashboard-version-date" content=")\d{4}-\d{2}-\d{2}(">)',
         rf"\g<1>{date_str}\g<2>",
         html_text,
+    )
+    # 3.5) HTML 头部注释 <!-- Dashboard vX.Y.Z · YYYY-MM-DD · 变更摘要见 VERSION.md -->
+    html_text = re.sub(
+        r"<!-- Dashboard v\d+\.\d+\.\d+ · \d{4}-\d{2}-\d{2} · 变更摘要见 VERSION\.md -->",
+        f"<!-- Dashboard {version} · {date_str} · 变更摘要见 VERSION.md -->",
+        html_text,
+        count=1,
     )
     # 4) chip-version 文本
     html_text = re.sub(
@@ -164,14 +184,14 @@ def bump_dashboard(
     参数:
         reason  : 本次变更摘要（中文一句话，写入 VERSION_HISTORY 第一个 <li> 与 VERSION.md 表格）
         level   : 'patch' / 'minor' / 'major'（默认 patch）
-        version : 可选，强制指定版本号（默认自动按 level bump 当前 DASHBOARD_VERSION）
+        version : 可选，强制指定版本号（默认按 level 从 HTML 当前值自动 bump）
         date_str: 可选，强制日期（默认今天）
 
     返回: 升级后的版本号字符串，如 'v1.0.2'
     """
-    global DASHBOARD_VERSION, DASHBOARD_VERSION_DATE
-
-    target_version = version or _bump(level, DASHBOARD_VERSION)
+    # 始终从 HTML 读当前值（而非模块常量），杜绝多次 bump 后模块常量与 HTML 漂移
+    base = _current_version_from_html() or DASHBOARD_VERSION
+    target_version = version or _bump(level, base)
     target_date    = date_str or _today_str()
 
     summary_line = reason.strip()
@@ -189,7 +209,8 @@ def bump_dashboard(
     # 2) 同步 VERSION.md
     _sync_version_md(target_version, target_date, summary_line)
 
-    # 3) 更新模块常量（让调用方后续 print 用得到）
+    # 3) 更新模块常量（让调用方后续 print 用得到；下次 import 时仍以源文件为准，
+    #    但 bump_dashboard 内部总是从 HTML 重新读，所以即使常量停留也安全）
     DASHBOARD_VERSION = target_version
     DASHBOARD_VERSION_DATE = target_date
 
@@ -206,8 +227,9 @@ if __name__ == "__main__":
     args = ap.parse_args()
 
     if args.dry_run:
-        new_v = _bump(args.level, DASHBOARD_VERSION)
-        print(f"[DRY-RUN] {DASHBOARD_VERSION} → {new_v}（{_today_str()}）· {args.reason}")
+        base = _current_version_from_html()
+        new_v = _bump(args.level, base)
+        print(f"[DRY-RUN] {base} → {new_v}（{_today_str()}）· {args.reason}")
         sys.exit(0)
 
     new_v = bump_dashboard(reason=args.reason, level=args.level)

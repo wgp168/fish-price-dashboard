@@ -3,10 +3,10 @@
 <head data-page-node-id="BWPqHflDNNA98uUwgMDG2y">
 <meta charset="UTF-8" data-page-node-id="brMbjGoytqtDzaGQGs0ywx">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="mXilABDyOtLC6ajMyuuT3T">
-<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-09-01 更新 · v1.0.1）</title>
-<meta name="dashboard-version" content="v1.0.1">
+<title>江浙沪皖 鳜鱼·鲈鱼 出塘价与批发价数据看板（2026-09-01 更新 · v1.0.2）</title>
+<meta name="dashboard-version" content="v1.0.2">
 <meta name="dashboard-version-date" content="2026-09-01">
-<!-- Dashboard v1.0.1 · 2026-09-01 · 变更摘要见 VERSION.md -->
+<!-- Dashboard v1.0.2 · 2026-09-01 · 变更摘要见 VERSION.md -->
 <script>
 /**
  * Skipped minification because the original files appears to be already minified.
@@ -112,15 +112,17 @@
   /* 八、位置 + 实时气象 */
   .location-card{border-left:4px solid #0ea5e9}
   .location-card .bar{width:6px;align-self:stretch}
-  .farm-map{width:100%;height:420px;border-radius:12px;border:1px solid rgba(14,165,233,.4);box-shadow:0 0 0 1px rgba(14,165,233,.15),0 8px 24px rgba(0,0,0,.35);background:#0a0e1a}
-  .farm-map .leaflet-container{background:#0a0e1a !important;font:inherit}
-  .farm-map .leaflet-control-attribution{background:rgba(10,14,26,.7);color:#7d8aa1;font-size:10px;padding:2px 6px;border-radius:6px 0 0 0}
-  .farm-map .leaflet-control-attribution a{color:#22d3ee}
-  .farm-map .leaflet-control-zoom a{background:rgba(10,14,26,.85) !important;color:#22d3ee !important;border:1px solid rgba(14,165,233,.4) !important}
-  .farm-map .leaflet-control-zoom a:hover{background:rgba(14,165,233,.2) !important}
-  .farm-map .leaflet-popup-content-wrapper{background:#0a0e1a;color:#e2e8f0;border:1px solid rgba(14,165,233,.4);border-radius:8px}
-  .farm-map .leaflet-popup-tip{background:#0a0e1a;border:1px solid rgba(14,165,233,.4)}
-  .farm-map .leaflet-popup-close-button{color:#94a3b8 !important}
+  /* 地图标准配色（v1.0.2 改为高德原生矢量配色 — 不再反相，文字清晰可读） */
+  .farm-map{width:100%;height:420px;border-radius:12px;border:1px solid #cbd5e1;box-shadow:0 1px 4px rgba(0,0,0,.08);background:#e8f1e0}
+  .farm-map .leaflet-container{background:#e8f1e0 !important;font:inherit}
+  .farm-map .leaflet-control-attribution{background:rgba(255,255,255,.85);color:#475569;font-size:10px;padding:2px 6px;border-radius:6px 0 0 0}
+  .farm-map .leaflet-control-attribution a{color:#0ea5e9}
+  .farm-map .leaflet-control-zoom a{background:#fff !important;color:#475569 !important;border:1px solid #cbd5e1 !important}
+  .farm-map .leaflet-control-zoom a:hover{background:#f0f9ff !important}
+  .farm-map .leaflet-popup-content-wrapper{background:#fff;color:#1a1f2e;border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+  .farm-map .leaflet-popup-tip{background:#fff;border:1px solid #cbd5e1}
+  .farm-map .leaflet-popup-close-button{color:#475569 !important}
+  .farm-map .leaflet-popup-content b{color:#0ea5e9}
   .dest-marker{position:relative;width:32px;height:32px;pointer-events:none}
   .dest-marker-pulse{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#0ea5e9 0%,rgba(14,165,233,.4) 50%,transparent 75%);animation:pulse 1.8s ease-out infinite}
   .dest-marker-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#dc2626;border:3px solid #fff;box-shadow:0 2px 8px rgba(220,38,38,.6)}
@@ -175,19 +177,20 @@
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
   
+  <!-- LEAFLET_CSS_HERE -->
+  <!-- 高德矢量 tile 保持原生配色（v1.0.2 起不再做 CSS 反相），下面的 cn-tile-filter 已废弃保留锚点占位 -->
   <style id="cn-tile-filter">
-  /* 高德矢量 tile → 高德蓝科技感（白底反相为深蓝底，橙国道变青绿，水系变亮色） */
+  /* 旧反相样式已禁用 — 改为标准地图配色更利于文字可读 */
+  /*
   .farm-map .leaflet-tile-pane {
     filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.35) saturate(1.4);
   }
-  /* 反相后 tile 边缘暗藏白边、移除 */
   .farm-map .leaflet-tile { border: none !important; outline: none !important; }
-  /* 调整 popup 内文字在深色下可读 */
+  */
+  /* popup 立体感（浅底地图上需要更柔和的阴影） */
   .farm-map .leaflet-popup-content-wrapper, .farm-map .leaflet-popup-tip {
-    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
   }
-  .farm-map .leaflet-popup-content { color: #e2e8f0; }
-  .farm-map .leaflet-popup-content b { color: #22d3ee; }
   </style>
   <!-- LEAFLET_CSS_HERE -->
 </head>
@@ -237,7 +240,7 @@ function wgs84togcj02(lng, lat){
       <span class="chip" data-page-node-id="sTnENG1kszfxF6zJ1kDy3a">📅 统计周期：2026-07-13 ~ 2026-08-31</span>
       <span class="chip" data-page-node-id="uDtjiFY1wd6cLO8XIkyQEd">📍 区域：江苏 · 安徽 · 浙江 · 上海</span>
       <span class="chip" data-page-node-id="sz9lakUAtmcvai5DeZy3jC">💹 涨=红 / 跌=绿（国内习惯）</span>
-      <span class="chip chip-version" data-page-node-id="VER01CHIP0001" title="看板版本号 · 完整历史见 VERSION.md">🏷️ 版本 v1.0.1 · 2026-09-01</span>
+      <span class="chip chip-version" data-page-node-id="VER01CHIP0001" title="看板版本号 · 完整历史见 VERSION.md">🏷️ 版本 v1.0.2 · 2026-09-01</span>
       <span class="chip" data-page-node-id="4HGb9s5gzmgXv3QvdK82PP">🤖 批发价：农业农村部接口爬虫 + 公开价源爬虫 + 科学养鱼OCR（08-27）+ a渔业行情OCR（08-28）</span>
     </div>
   </div>
@@ -1521,9 +1524,10 @@ function wgs84togcj02(lng, lat){
   <section class="version-history" data-page-node-id="VER01HIST0001" style="margin-top:28px;padding:18px 22px;background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(255,126,95,.05));border:1px solid rgba(255,179,71,.25);border-radius:14px;font-size:13px;line-height:1.7">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
       <span style="font-size:18px">🏷️</span>
-      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.1（2026-09-01）</strong>
+      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.2（2026-09-01）</strong>
     </div>
     <ul style="margin:0;padding-left:22px;color:var(--ink, #1a1f2e)">
+      <li><b>v1.0.2 · 2026-09-01</b> · 地图改回标准高德配色 — 取消 CSS 反相、修复文字看不清，路名/地名/POI 全部清晰可读，与高德原生观感一致</li>
       <li>新增 <b>版本号 chip + VERSION.md 变更摘要机制</b>，以后每次更新自动递增版本（v1.0.1 → v1.0.2 → …）并把摘要注入到本区块，彻底解决"本次到底改了什么"的问题。</li>
       <li>江苏环荟 · 宜兴官林镇数字低碳生态养殖项目：地图（Leaflet + 高德矢量 tile + 深蓝科技感 CSS 反相）可点击任意点作为出发点 → 高德驾车导航；8 项实时气象（气温/风速/风向/辐射/降水/湿度/气压）+ 7 天预报 + 高德 vs Open-Meteo 双源校验 + 分级告警。</li>
       <li>看板八大板块已对齐编号（不再"两个八"），运营方显示为「江苏环荟」。</li>

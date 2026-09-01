@@ -8,13 +8,12 @@
 
 ## 当前版本
 
-- **v1.0.1** · **2026-09-01**
-  - 新增 `chip-version` + `<meta name="dashboard-version">` + `VERSION.md` 维护机制
-  - Hero 区增加醒目的版本号 chip（橙红渐变背景）+ 页面底部「本次更新」变更摘要块
-  - 为后续自动化 bump（每日任务）铺路：版本号会以"vMAJOR.MINOR.PATCH"语义化递增
-    - PATCH：数据/文案微调、社媒数据追加
-    - MINOR：新增板块（八 → 九 → 十 …）、接入新数据源、引入双源校验
-    - MAJOR：整体改版（如接入新主题、迁移到非 HTML 载体、大重构）
+- **v1.0.2** · **2026-09-01**
+  - 地图改回**标准高德原生配色** — 取消 CSS 反相 (`invert(1) hue-rotate(180deg) …`)，路名/地名/POI 全部清晰可读，与高德官方观感一致；容器背景、控件、popup 配色同步切换到浅底
+  - `dashboard_version.py` 同步增强：
+    - `_sync_html` 新增「Dashboard vX.Y.Z · ...」HTML 注释行的自动 sync（之前漏了头部注释）
+    - `_current_version_from_html()` 从 HTML `<meta>` 实时读当前版本，杜绝 bump_dashboard 调用前后模块常量与 HTML 漂移
+    - dry-run 同步从 HTML 读 base，避免反复测试时打印陈旧版本号
 
 ---
 
@@ -22,6 +21,8 @@
 
 | 版本 | 日期 | 变更摘要 |
 |------|------|---------|
+| **v1.0.2** | 2026-09-01 | 地图改回标准高德配色 — 取消 CSS 反相、修复文字看不清，路名/地名/POI 全部清晰可读，与高德原生观感一致 |
+
 | **v1.0.1** | 2026-09-01 | 🏷️ **新增版本号 chip + `<meta>` + `VERSION.md` 机制**，看板底部加「本次更新」变更摘要区；为后续每日自动化 bump 铺路。 |
 | **v1.0.0** | 2026-09-01 | 🗺️ **江苏环荟 · 宜兴官林镇**板块正式上线：Leaflet + 高德矢量 tile + CSS 反相 → 蓝科技感地图；8 项实时气象 + 7 天预报 + 高德 vs Open-Meteo 双源校验 + 分级告警；点击任意点作为出发点 → 高德驾车导航；运营方显示「江苏环荟」，八/九编号修正。 |
 | v0.9.4 | 2026-08-31 | 📈 注入抖音近 90 天热帖新区块（8 条，按热度重排），独立锚点 `DOUYIN_90D`，不覆盖 08-18 快照。 |
@@ -35,9 +36,10 @@
 ## 自动化 bump 规则（建议，写入注入脚本顶部 docstring）
 
 ```
-DASHBOARD_VERSION       = "v1.0.1"
+DASHBOARD_VERSION       = "v1.0.1"   ← 模块常量；版本真值以 HTML 为准
 DASHBOARD_VERSION_DATE  = "2026-09-01"
 ```
+> 实际 bump 时 `dashboard_version.py._current_version_from_html()` 会从 HTML `<meta name="dashboard-version">` 读真值再 +1，杜绝模块常量陈旧。
 
 - 注入脚本每次跑完，应调用公共函数 `bump_dashboard_version(reason: str)`：
   - 自动写入 HTML `<meta name="dashboard-version">`、`<title>`、`chip-version` 与底部 `VERSION_HISTORY` 摘要块
