@@ -6,6 +6,7 @@
 可重复执行：若已存在 <!-- DOUYIN_90D_START --> 区块则先移除再注入。
 """
 import json, os, re
+from dashboard_version import DASHBOARD_VERSION, DASHBOARD_VERSION_DATE
 
 WS = os.path.dirname(os.path.abspath(__file__))
 HTML = os.path.join(WS, "鳜鱼鲈鱼价格看板.html")
@@ -15,6 +16,9 @@ A_START = "<!-- DOUYIN_90D_START -->"
 A_END = "<!-- DOUYIN_90D_END -->"
 LIVE_END = "<!-- DOUYIN_LIVE_END -->"
 XP_START = "<!-- CROSSPLATFORM_LIVE_START -->"
+
+# CLI 提示：版本号需要手动 bump，本脚本不自动升版本
+# python dashboard_version.py --reason "注入抖音近90天热帖新增8条" --level patch
 
 
 def fmt(n):

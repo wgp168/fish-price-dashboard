@@ -16,10 +16,14 @@
 """
 import json, os, re, html
 from urllib.parse import quote
+from dashboard_version import DASHBOARD_VERSION, DASHBOARD_VERSION_DATE
 
 WS = os.path.dirname(os.path.abspath(__file__))
 HTML = os.path.join(WS, "鳜鱼鲈鱼价格看板.html")
 JSON = os.path.join(WS, "farm_weather_latest.json")
+
+# CLI 提示：版本号需要手动 bump，本脚本不自动升版本
+# python dashboard_version.py --reason "气象数据双源校验接入" --level patch
 
 # Leaflet CDN（Unpkg） + WGS84/GCJ-02 转换（仅在 click 起点时使用，把屏幕 WGS84 转回 GCJ-02 给高德导航 URI Scheme）
 LEAFLET_CSS = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">'

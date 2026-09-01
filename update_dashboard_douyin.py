@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
-"""用 AgentKey(TikHub) 实时抓取的抖音代表性帖子替换看板占位块。"""
+"""用 AgentKey(TikHub) 实时抓取的抖音代表性帖子替换看板占位块。
+
+CLI 提示：版本号需要手动 bump，本脚本不自动升版本：
+    python dashboard_version.py --reason "抖音13条实时更新" --level patch
+"""
 import os
+from dashboard_version import DASHBOARD_VERSION, DASHBOARD_VERSION_DATE
 
 HTML = "鳜鱼鲈鱼价格看板.html"
 
