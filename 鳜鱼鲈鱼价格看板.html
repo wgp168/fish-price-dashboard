@@ -1268,6 +1268,27 @@ function wgs84togcj02(lng, lat){
   
 
 
+  
+
+  <!-- VERSION_HISTORY_START -->
+  <section class="version-history" data-page-node-id="VER01HIST0001" style="margin-top:28px;padding:18px 22px;background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(255,126,95,.05));border:1px solid rgba(255,179,71,.25);border-radius:14px;font-size:13px;line-height:1.7">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span style="font-size:18px">🏷️</span>
+      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.3（2026-09-01）</strong>
+    </div>
+    <ul style="margin:0;padding-left:22px;color:var(--ink, #1a1f2e)">
+      <li><b>v1.0.3 · 2026-09-01</b> · 科学养鱼 8-31 数据全部替换为最新批发市场报价（鳜鱼×5 / 加州鲈×5 / 团头鲂×1 / 泥鳅×2 / 大黄鱼×1 = 14 条）；a渔业行情 section 新增广东中山发货价/到厂价 + 鲴鱼塘口价 8 条延伸数据；CSS 新增 .tag-other 与 --other 颜色变量</li>
+      <li><b>v1.0.2 · 2026-09-01</b> · 地图改回标准高德配色 — 取消 CSS 反相、修复文字看不清，路名/地名/POI 全部清晰可读，与高德原生观感一致</li>
+      <li>新增 <b>版本号 chip + VERSION.md 变更摘要机制</b>，以后每次更新自动递增版本（v1.0.1 → v1.0.2 → …）并把摘要注入到本区块，彻底解决"本次到底改了什么"的问题。</li>
+      <li>江苏环荟 · 宜兴官林镇数字低碳生态养殖项目：地图（Leaflet + 高德矢量 tile + 深蓝科技感 CSS 反相）可点击任意点作为出发点 → 高德驾车导航；8 项实时气象（气温/风速/风向/辐射/降水/湿度/气压）+ 7 天预报 + 高德 vs Open-Meteo 双源校验 + 分级告警。</li>
+      <li>看板八大板块已对齐编号（不再"两个八"），运营方显示为「江苏环荟」。</li>
+      <li>下次计划：① 版本号 bump 跑入自动化每日任务；② Leaflet 地图升级为高德 Web 端 JS（用户提供 Web 端 Key 后可启用）。</li>
+    </ul>
+    <div style="margin-top:10px;opacity:.75;font-size:12px">完整版本历史见工作区根目录 <code style="background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px">VERSION.md</code></div>
+  </section>
+  <!-- VERSION_HISTORY_END -->
+
+
   <!-- WEATHER_LIVE_START -->
   <!-- 八、江苏环荟·宜兴官林镇数字低碳生态养殖项目 · 位置 + 实时气象 -->
   <section data-page-node-id="farm-loc-weather">
@@ -1379,28 +1400,28 @@ function wgs84togcj02(lng, lat){
 
     <!-- B. 实时气象 -->
     <div class="card weather-card">
-      <h3>🌡️ 实时气象（2026-09-01T15:15 · Asia/Shanghai）</h3>
-      <div class="csub">天气：<b>🌤️ 局部多云</b>　|　数据源：Open-Meteo（WMO 标准 · 15min 更新 · 免费公开）</div>
+      <h3>🌡️ 实时气象（2026-09-02T09:00 · Asia/Shanghai）</h3>
+      <div class="csub">天气：<b>☁️ 阴</b>　|　数据源：Open-Meteo（WMO 标准 · 15min 更新 · 免费公开）</div>
       <div class="mets-grid">
 <div class="met">
           <div class="met-icon">🌡️</div>
           <div class="met-label">气温</div>
-          <div class="met-val">29.3 °C</div>
+          <div class="met-val">26.5 °C</div>
         </div>
 <div class="met">
           <div class="met-icon">💨</div>
           <div class="met-label">风速</div>
-          <div class="met-val">16.3 km/h</div>
+          <div class="met-val">23.2 km/h</div>
         </div>
 <div class="met">
           <div class="met-icon">🧭</div>
           <div class="met-label">风向</div>
-          <div class="met-val">东北 <span class='deg'>(43°)</span></div>
+          <div class="met-val">北东北 <span class='deg'>(30°)</span></div>
         </div>
 <div class="met">
           <div class="met-icon">☀️</div>
           <div class="met-label">太阳辐射</div>
-          <div class="met-val">568.0 W/m²</div>
+          <div class="met-val">414.0 W/m²</div>
         </div>
 <div class="met">
           <div class="met-icon">🌧️</div>
@@ -1410,17 +1431,17 @@ function wgs84togcj02(lng, lat){
 <div class="met">
           <div class="met-icon">💧</div>
           <div class="met-label">相对湿度</div>
-          <div class="met-val">77 %</div>
+          <div class="met-val">81 %</div>
         </div>
 <div class="met">
           <div class="met-icon">🔵</div>
           <div class="met-label">气压</div>
-          <div class="met-val">1,007.2 hPa</div>
+          <div class="met-val">1,009.3 hPa</div>
         </div>
 <div class="met">
           <div class="met-icon">☁️</div>
           <div class="met-label">天气</div>
-          <div class="met-val">局部多云</div>
+          <div class="met-val">阴</div>
         </div>
       </div>
       <div class="alerts-row">
@@ -1438,87 +1459,87 @@ function wgs84togcj02(lng, lat){
         </tr></thead>
         <tbody>
 <tr>
-          <td>2026-09-01</td>
-          <td>🌦️ 毛毛雨(中)</td>
-          <td><b>30.2</b>°C</td>
-          <td>24.8°C</td>
-          <td>4.9</td>
-          <td>96%</td>
-          <td>22.0</td>
-          <td>北东北 <span class="deg">(29°)</span></td>
-          <td>17.7</td>
-          <td>—</td>
-        </tr>
-<tr>
           <td>2026-09-02</td>
-          <td>🌦️ 阵雨(弱)</td>
-          <td><b>27.4</b>°C</td>
-          <td>24.4°C</td>
-          <td>9.3</td>
-          <td>92%</td>
-          <td>19.7</td>
-          <td>东北 <span class="deg">(37°)</span></td>
-          <td>6.7</td>
+          <td>🌦️ 毛毛雨(中)</td>
+          <td><b>27.2</b>°C</td>
+          <td>24.2°C</td>
+          <td>3.5</td>
+          <td>98%</td>
+          <td>23.2</td>
+          <td>北东北 <span class="deg">(32°)</span></td>
+          <td>8.7</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-03</td>
-          <td>🌦️ 毛毛雨(弱)</td>
-          <td><b>27.6</b>°C</td>
-          <td>23.6°C</td>
-          <td>0.6</td>
-          <td>68%</td>
-          <td>24.7</td>
-          <td>北东北 <span class="deg">(30°)</span></td>
-          <td>13.5</td>
+          <td>🌦️ 毛毛雨(中)</td>
+          <td><b>28.8</b>°C</td>
+          <td>24.2°C</td>
+          <td>2.6</td>
+          <td>63%</td>
+          <td>27.4</td>
+          <td>东北 <span class="deg">(37°)</span></td>
+          <td>17.9</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-04</td>
           <td>☁️ 阴</td>
-          <td><b>28.5</b>°C</td>
-          <td>21.8°C</td>
+          <td><b>28.4</b>°C</td>
+          <td>22.8°C</td>
           <td>0.0</td>
           <td>8%</td>
-          <td>20.3</td>
-          <td>北 <span class="deg">(2°)</span></td>
-          <td>19.6</td>
+          <td>18.1</td>
+          <td>北 <span class="deg">(9°)</span></td>
+          <td>18.6</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-05</td>
-          <td>🌦️ 毛毛雨(弱)</td>
-          <td><b>27.7</b>°C</td>
-          <td>21.9°C</td>
-          <td>1.5</td>
-          <td>25%</td>
-          <td>17.7</td>
-          <td>北 <span class="deg">(0°)</span></td>
-          <td>19.7</td>
+          <td>🌦️ 毛毛雨(中)</td>
+          <td><b>29.4</b>°C</td>
+          <td>22.6°C</td>
+          <td>2.5</td>
+          <td>24%</td>
+          <td>16.0</td>
+          <td>北 <span class="deg">(358°)</span></td>
+          <td>20.9</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-06</td>
-          <td>☁️ 阴</td>
-          <td><b>28.4</b>°C</td>
-          <td>21.1°C</td>
-          <td>0.0</td>
+          <td>🌦️ 毛毛雨(弱)</td>
+          <td><b>29.1</b>°C</td>
+          <td>21.4°C</td>
+          <td>1.2</td>
           <td>25%</td>
-          <td>16.8</td>
-          <td>北 <span class="deg">(351°)</span></td>
-          <td>20.4</td>
+          <td>15.8</td>
+          <td>北西北 <span class="deg">(346°)</span></td>
+          <td>21.7</td>
           <td>—</td>
         </tr>
 <tr>
           <td>2026-09-07</td>
           <td>🌦️ 毛毛雨(弱)</td>
-          <td><b>29.0</b>°C</td>
-          <td>21.3°C</td>
-          <td>0.9</td>
+          <td><b>28.0</b>°C</td>
+          <td>21.9°C</td>
+          <td>0.3</td>
           <td>14%</td>
-          <td>12.5</td>
-          <td>北 <span class="deg">(353°)</span></td>
-          <td>19.3</td>
+          <td>14.3</td>
+          <td>北 <span class="deg">(349°)</span></td>
+          <td>18.9</td>
+          <td>—</td>
+        </tr>
+<tr>
+          <td>2026-09-08</td>
+          <td>🌤️ 局部多云</td>
+          <td><b>27.8</b>°C</td>
+          <td>22.2°C</td>
+          <td>0.0</td>
+          <td>18%</td>
+          <td>14.4</td>
+          <td>北 <span class="deg">(10°)</span></td>
+          <td>21.7</td>
           <td>—</td>
         </tr>
         </tbody>
@@ -1536,36 +1557,36 @@ function wgs84togcj02(lng, lat){
         </tr></thead>
         <tbody>
 <tr>
-          <td>2026-09-01</td>
-          <td>多云 / 小雨</td>
-          <td>25.0 ~ <b>31.0</b>°C</td>
-          <td>东北风 1-3 级</td>
-          <td>24.8 ~ <b>30.2</b>°C</td>
-          <td>✅ 一致 (Δ+0.8°C)</td>
-        </tr>
-<tr class="row-warn">
           <td>2026-09-02</td>
           <td>小雨 / 小雨</td>
-          <td>24.0 ~ <b>30.0</b>°C</td>
+          <td>25.0 ~ <b>29.0</b>°C</td>
           <td>东北风 1-3 级</td>
-          <td>24.4 ~ <b>27.4</b>°C</td>
-          <td>⚠️ 偏差 +2.6°C</td>
+          <td>24.2 ~ <b>27.2</b>°C</td>
+          <td>✅ 一致 (Δ+1.8°C)</td>
         </tr>
 <tr>
           <td>2026-09-03</td>
-          <td>多云 / 晴</td>
-          <td>21.0 ~ <b>28.0</b>°C</td>
+          <td>小雨 / 晴</td>
+          <td>22.0 ~ <b>30.0</b>°C</td>
           <td>东北风 1-3 级</td>
-          <td>23.6 ~ <b>27.6</b>°C</td>
-          <td>✅ 一致 (Δ+0.4°C)</td>
+          <td>24.2 ~ <b>28.8</b>°C</td>
+          <td>✅ 一致 (Δ+1.2°C)</td>
         </tr>
 <tr>
           <td>2026-09-04</td>
-          <td>晴 / 多云</td>
-          <td>22.0 ~ <b>28.0</b>°C</td>
+          <td>多云 / 晴</td>
+          <td>23.0 ~ <b>30.0</b>°C</td>
           <td>北风 1-3 级</td>
-          <td>21.8 ~ <b>28.5</b>°C</td>
-          <td>✅ 一致 (Δ-0.5°C)</td>
+          <td>22.8 ~ <b>28.4</b>°C</td>
+          <td>✅ 一致 (Δ+1.6°C)</td>
+        </tr>
+<tr>
+          <td>2026-09-05</td>
+          <td>多云 / 多云</td>
+          <td>22.0 ~ <b>30.0</b>°C</td>
+          <td>北风 1-3 级</td>
+          <td>22.6 ~ <b>29.4</b>°C</td>
+          <td>✅ 一致 (Δ+0.6°C)</td>
         </tr>
         </tbody>
       </table>
@@ -1583,28 +1604,10 @@ function wgs84togcj02(lng, lat){
     </div>
 
     <div class="csub" style="margin-top:10px">
-      ⏱️ 本次抓取时间：<code>2026-09-01 15:19:17</code>　|　数据许可：Open-Meteo CC BY 4.0; data from national weather services
+      ⏱️ 本次抓取时间：<code>2026-09-02 09:09:05</code>　|　数据许可：Open-Meteo CC BY 4.0; data from national weather services
     </div>
   </section>
   <!-- WEATHER_LIVE_END -->
-
-  <!-- VERSION_HISTORY_START -->
-  <section class="version-history" data-page-node-id="VER01HIST0001" style="margin-top:28px;padding:18px 22px;background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(255,126,95,.05));border:1px solid rgba(255,179,71,.25);border-radius:14px;font-size:13px;line-height:1.7">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-      <span style="font-size:18px">🏷️</span>
-      <strong style="font-size:15px;letter-spacing:.5px">本次更新 · v1.0.3（2026-09-01）</strong>
-    </div>
-    <ul style="margin:0;padding-left:22px;color:var(--ink, #1a1f2e)">
-      <li><b>v1.0.3 · 2026-09-01</b> · 科学养鱼 8-31 数据全部替换为最新批发市场报价（鳜鱼×5 / 加州鲈×5 / 团头鲂×1 / 泥鳅×2 / 大黄鱼×1 = 14 条）；a渔业行情 section 新增广东中山发货价/到厂价 + 鲴鱼塘口价 8 条延伸数据；CSS 新增 .tag-other 与 --other 颜色变量</li>
-      <li><b>v1.0.2 · 2026-09-01</b> · 地图改回标准高德配色 — 取消 CSS 反相、修复文字看不清，路名/地名/POI 全部清晰可读，与高德原生观感一致</li>
-      <li>新增 <b>版本号 chip + VERSION.md 变更摘要机制</b>，以后每次更新自动递增版本（v1.0.1 → v1.0.2 → …）并把摘要注入到本区块，彻底解决"本次到底改了什么"的问题。</li>
-      <li>江苏环荟 · 宜兴官林镇数字低碳生态养殖项目：地图（Leaflet + 高德矢量 tile + 深蓝科技感 CSS 反相）可点击任意点作为出发点 → 高德驾车导航；8 项实时气象（气温/风速/风向/辐射/降水/湿度/气压）+ 7 天预报 + 高德 vs Open-Meteo 双源校验 + 分级告警。</li>
-      <li>看板八大板块已对齐编号（不再"两个八"），运营方显示为「江苏环荟」。</li>
-      <li>下次计划：① 版本号 bump 跑入自动化每日任务；② Leaflet 地图升级为高德 Web 端 JS（用户提供 Web 端 Key 后可启用）。</li>
-    </ul>
-    <div style="margin-top:10px;opacity:.75;font-size:12px">完整版本历史见工作区根目录 <code style="background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px">VERSION.md</code></div>
-  </section>
-  <!-- VERSION_HISTORY_END -->
 
 <footer data-page-node-id="cov1XMPvWRKh49TOhEnbjC">
     数据整理：WorkBuddy · 塘头价源自水产前沿/腾氏水产周报 + a渔业行情公众号 OCR；批发价 = moa_fish_crawler.py（农业农村部官方接口 AES 解密）+ public_price_crawler.py（武汉白沙洲/九江/云南华潮分规格）+ 科学养鱼公众号 OCR（用户截图）<br data-page-node-id="jmeOC7Ubh9La6ZZnGj5RPG">
