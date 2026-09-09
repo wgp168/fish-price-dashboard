@@ -11,7 +11,9 @@
 | 本地 git 仓库 | ✅ 有（main 分支） |
 | GitHub 远端 | ✅ `git@github.com:wgp168/fish-price-dashboard.git` |
 | SSH 主机指纹 | ✅ 已核验并加入 `~/.ssh/known_hosts`（三项指纹与 GitHub 官方一致） |
-| SSH 公钥授权 | ⏳ **待用户添加**（本机公钥未授权给 wgp168 账号） |
+| SSH 公钥授权 | ✅ 已通过（`Hi wgp168!` 认证成功） |
+| 代码推送 | ✅ 已推送 main 分支（看板 429,897 bytes / workflow / 气象 JSON 全部 200 可读取） |
+| Pages 启用 | ⏳ **待用户在网页点一次**（`has_pages: false`） |
 | Pages 工作流 | ✅ 已建 `.github/workflows/pages-deploy.yml` |
 | 推送脚本 | ✅ 已建 `push_github.sh` |
 | `.gitignore` | ✅ 已排除密钥（douyin_config / bazhuayu_config / tikhub）与 publish 副本 |
@@ -23,35 +25,32 @@
 
 ---
 
-## 二、仓库已建，还差一步：SSH 公钥授权
+## 二、代码已推送，最后一步：开启 Pages
 
 仓库：https://github.com/wgp168/fish-price-dashboard
-远端已配好，推送时报错 `Permission denied (publickey)` —— 本机公钥还没加进 GitHub 账号。
 
-### 操作（1 分钟，一次性）
+SSH 授权已完成（`Hi wgp168! You've successfully authenticated`），main 分支已推送，
+远端校验：看板 HTML 429,897 bytes、pages-deploy.yml、farm_weather_latest.json 全部 HTTP 200。
 
-1. 登录 GitHub → 右上角头像 → **Settings**
-2. 左侧 **SSH and GPG keys** → **New SSH key**
-3. Title 填 `MacBook-wangganping`
-4. Key type 选 **Authentication Key**
-5. Key 粘贴下面这段**完整一行**：
+**当前 `has_pages: false`，需你在网页点一次**（我没法代劳：开启 Pages 要调 GitHub API，而 SSH 密钥不能用于 API，得用 PAT）。
 
-```
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAIunxeAukZS1CPUmaDQOsovYy+FVONZPSEi6oX0Qj4n75rn5jefX7Io1UdUQnoI8k2f1UE1GpkoREML9St9YJr4+WeT3yDqkW/SNsR4NG+WgIW90lcDjzrd3LpwTQJ73UjhKWi1iiFMNyioD/YwryTSCBKmPzF8vEPQLPKIbsOvPT6aosZ4sYHD1eG8EqAFCFY48hYURitXI6EwEtf2P42pEcNereWXrdLQLk1vX9TFfq4K96KO4qSfL6ESc1e0ytcP8qLPrbXH4LfZQSzgrpJMzr6EwKnx9EtNQbolFU9Q1/8lpYeiX6tjogSP3AWHpoOx6NPJSvBny6I4A42bRAn723F+deXdMOYWYY50n9pgbZ5peJiUIQLPW66RLVOX2OCSI1tUcOZIUXEtdjGtsNaii4hhx3+AeZtGmJszHnTU/h2CSjlRfixeHKq6Yss7krWYokGt5Am1xRPkCFc2reUept/yJupNAVRrnDrSfZ0RiHr0Qou1Vu5YHw/TEgBz0= wangganping@example.com
-```
+### 操作（30 秒，一次性）
 
-6. **Add SSH key**，然后告诉我一声，我立刻推送并开启 Pages。
+1. 打开 https://github.com/wgp168/fish-price-dashboard/settings/pages
+2. **Build and deployment → Source** 选 **GitHub Actions**（不要选 "Deploy from a branch"）
+3. 保存后，进 **Actions** 标签 → 左侧点「部署看板到 GitHub Pages」
+4. 右上角 **Run workflow** → 选 main → 绿色按钮确认（等首次构建；之后每次 push 自动跑）
 
-> 备选：不想配 SSH 的话，也可以给我一个 Personal Access Token（勾选 `repo` 与 `workflow` 权限），我改用 HTTPS 推送。但 SSH 一劳永逸，后续每日自动推送都无需再管。
-
-### 之后：开启 Pages（只需一次）
-推送完成后，在仓库页面：
-**Settings → Pages → Build and deployment → Source 选「GitHub Actions」**
-
-然后进 **Actions** 标签，看「部署看板到 GitHub Pages」是否绿勾。成功后链接为：
+跑完约 1-2 分钟，链接生效：
 ```
 https://wgp168.github.io/fish-price-dashboard/
 ```
+
+> 备注：若你想让我以后也能直接调 API（自动开启、查运行状态、手动触发），
+> 可以给我一个勾选 `repo` + `workflow` 的 Personal Access Token，我配到工作流里。
+
+### 本机公钥（已授权，存档备查）
+`~/.ssh/id_rsa` · 3072 SHA256:QpabR2iuVFotUPcPvw0+sa+r+BEjuEceewdj4llEAGw · wangganping@example.com
 
 ---
 
