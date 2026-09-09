@@ -9,40 +9,48 @@
 | 项 | 状态 |
 |---|---|
 | 本地 git 仓库 | ✅ 有（main 分支） |
-| GitHub 远端 | ❌ **尚未配置**（这是唯一缺的一步） |
+| GitHub 远端 | ✅ `git@github.com:wgp168/fish-price-dashboard.git` |
+| SSH 主机指纹 | ✅ 已核验并加入 `~/.ssh/known_hosts`（三项指纹与 GitHub 官方一致） |
+| SSH 公钥授权 | ⏳ **待用户添加**（本机公钥未授权给 wgp168 账号） |
 | Pages 工作流 | ✅ 已建 `.github/workflows/pages-deploy.yml` |
 | 推送脚本 | ✅ 已建 `push_github.sh` |
 | `.gitignore` | ✅ 已排除密钥（douyin_config / bazhuayu_config / tikhub）与 publish 副本 |
 
 工作区 2.5M，推 GitHub 无压力。
 
+**仓库**：https://github.com/wgp168/fish-price-dashboard
+**Pages 地址（授权后生效）**：https://wgp168.github.io/fish-price-dashboard/
+
 ---
 
-## 二、你需要做的（约 2 分钟）
+## 二、仓库已建，还差一步：SSH 公钥授权
 
-### 1. 在 GitHub 建一个空仓库
-打开 https://github.com/new
-- Repository name 建议：`fish-price-dashboard`
-- 选 **Public**（Pages 免费版要求公开仓库；私有仓库需 Pro）
-- **不要**勾选 Add README / .gitignore / license（保持完全空仓库）
+仓库：https://github.com/wgp168/fish-price-dashboard
+远端已配好，推送时报错 `Permission denied (publickey)` —— 本机公钥还没加进 GitHub 账号。
 
-### 2. 把仓库地址发给我，或自己执行一条命令
+### 操作（1 分钟，一次性）
 
-**方式 A（推荐，最省事）**：把地址发我，例如 `git@github.com:wangganping/fish-price-dashboard.git`，我来完成后续全部步骤。
+1. 登录 GitHub → 右上角头像 → **Settings**
+2. 左侧 **SSH and GPG keys** → **New SSH key**
+3. Title 填 `MacBook-wangganping`
+4. Key type 选 **Authentication Key**
+5. Key 粘贴下面这段**完整一行**：
 
-**方式 B（自己跑）**：在本目录执行
-```bash
-./push_github.sh git@github.com:<用户名>/<仓库名>.git
 ```
-（用 HTTPS 地址也可以；若用 SSH 且未配密钥，改用 `https://github.com/<用户名>/<仓库名>.git`）
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAIunxeAukZS1CPUmaDQOsovYy+FVONZPSEi6oX0Qj4n75rn5jefX7Io1UdUQnoI8k2f1UE1GpkoREML9St9YJr4+WeT3yDqkW/SNsR4NG+WgIW90lcDjzrd3LpwTQJ73UjhKWi1iiFMNyioD/YwryTSCBKmPzF8vEPQLPKIbsOvPT6aosZ4sYHD1eG8EqAFCFY48hYURitXI6EwEtf2P42pEcNereWXrdLQLk1vX9TFfq4K96KO4qSfL6ESc1e0ytcP8qLPrbXH4LfZQSzgrpJMzr6EwKnx9EtNQbolFU9Q1/8lpYeiX6tjogSP3AWHpoOx6NPJSvBny6I4A42bRAn723F+deXdMOYWYY50n9pgbZ5peJiUIQLPW66RLVOX2OCSI1tUcOZIUXEtdjGtsNaii4hhx3+AeZtGmJszHnTU/h2CSjlRfixeHKq6Yss7krWYokGt5Am1xRPkCFc2reUept/yJupNAVRrnDrSfZ0RiHr0Qou1Vu5YHw/TEgBz0= wangganping@example.com
+```
 
-### 3. 开启 Pages（只需一次）
+6. **Add SSH key**，然后告诉我一声，我立刻推送并开启 Pages。
+
+> 备选：不想配 SSH 的话，也可以给我一个 Personal Access Token（勾选 `repo` 与 `workflow` 权限），我改用 HTTPS 推送。但 SSH 一劳永逸，后续每日自动推送都无需再管。
+
+### 之后：开启 Pages（只需一次）
 推送完成后，在仓库页面：
 **Settings → Pages → Build and deployment → Source 选「GitHub Actions」**
 
 然后进 **Actions** 标签，看「部署看板到 GitHub Pages」是否绿勾。成功后链接为：
 ```
-https://<用户名>.github.io/<仓库名>/
+https://wgp168.github.io/fish-price-dashboard/
 ```
 
 ---

@@ -13,3 +13,6 @@ douyin_config.json
 bazhuayu_config.json
 tikhub_last_response.json
 tikhub_test.py
+
+# 发布用副本（源文件是 鳜鱼鲈鱼价格看板.html，发布时 cp 过来）
+publish/
