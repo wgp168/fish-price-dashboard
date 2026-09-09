@@ -1,0 +1,59 @@
+name: 部署看板到 GitHub Pages
+
+# 触发时机：
+# 1) main 分支有提交（本地每日气象刷新 / 价格更新后 git push 即自动触发）
+# 2) 每天 UTC 02:00（北京 10:00）兜底重建一次
+# 3) Actions 页面手动触发
+on:
+  push:
+    branches: [main]
+    paths:
+      - "鳜鱼鲈鱼价格看板.html"
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch: {}
+
+# 防止并发部署互相覆盖
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 准备发布目录
+        run: |
+          mkdir -p _site
+          cp "鳜鱼鲈鱼价格看板.html" _site/index.html
+          # 让 Pages 不要跑 Jekyll（HTML 里含 {{ }} 模板语法时会被误处理）
+          touch _site/.nojekyll
+          ls -la _site
+          echo "---- 校验 ----"
+          test -s _site/index.html || { echo "index.html 为空，终止"; exit 1; }
+          grep -q "WEATHER_LIVE_START" _site/index.html && echo "[OK] 气象区块存在" || echo "[WARN] 未找到气象区块标记"
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
