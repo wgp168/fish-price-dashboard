@@ -278,6 +278,28 @@ def build_map_block(site):
 '''
 
 
+def build_today_farming_tips(cur, day0):
+    """动态今日养殖提示：基于实时+当日预报（雾/溶氧、阴雨、气压趋势）。
+    雾天判定：湿度 ≥85%（清晨辐射雾/高湿天典型表现，Open-Meteo 网格湿度常低于站点实测，
+    如 2026-09-11 实况雾天湿度 100% 而 API 报 86%，故阈值取 85%）；
+    阴雨判定：当日预报降水 ≥0.2mm 或实时降水 >0；
+    气压：24h 变化量趋势由人工判读（脚本无历史气压），此处仅输出当前值提示线。"""
+    tips = []
+    hum = cur.get("humidity_pct") or 0
+    precip_now = cur.get("precipitation_mm") or 0
+    d0_precip = (day0 or {}).get("precip_mm") or 0
+    d0_prob = (day0 or {}).get("precip_prob_pct") or 0
+    if hum >= 85:
+        tips.append(f"🌫️ <b>今日高湿（湿度 {hum}%，近饱和）</b>：清晨大概率有雾/低能见度——雾天光照弱、藻类产氧下降，"
+                    "<b>鱼塘溶氧可能偏低</b>：延迟上午投喂、开启增氧机、加强巡塘观察浮头")
+    if precip_now > 0 or d0_precip >= 0.2:
+        tips.append(f"🌧️ <b>今日有降水（预报 {d0_precip}mm，概率 {d0_prob}%）</b>：阴雨期水温波动+溶氧下降，"
+                    "控制投喂量（减 1–2 成）避免残饵，雨停后及时巡塘")
+    if not tips:
+        return ""
+    return "      <br>".join("• " + t for t in tips) + "<br>\n"
+
+
 def build_block(d):
     site = d["site"]
     cur = d["current"]
@@ -288,6 +310,7 @@ def build_block(d):
     xcheck_html = build_xcheck(d.get("cross_check", []))
     map_block = build_map_block(site)
     site_name_esc = html.escape(site["name"])
+    today_tips = build_today_farming_tips(cur, days[0] if days else None)
 
     # AMap URI Scheme 备用按钮（不点击地图时直接以"当前定位"为起点）
     nav_to_only = f"https://uri.amap.com/navigation?to={site['lon']},{site['lat']},{quote(site['name'], safe='')}&mode=car&src=WorkBuddy&coordinate=gaode&callnative=1"
@@ -352,10 +375,12 @@ def build_block(d):
 {xcheck_html}
     <div class="callout">
       <b>⚙️ 养殖关注阈值（鳜鱼/鲈鱼 · 江苏环荟数字低碳生态养殖项目）：</b><br>
-      • <b>气温</b>：28–30°C 最适 · <b style="color:#dc2626">≥33°C 警戒</b>（增氧/加深水位）· ≥35°C 危险 · ≤8°C 冬季警戒<br>
+      {today_tips}      • <b>气温</b>：28–30°C 最适 · <b style="color:#dc2626">≥33°C 警戒</b>（增氧/加深水位）· ≥35°C 危险 · ≤8°C 冬季警戒<br>
       • <b>风速</b>：≤25 km/h 正常 · 25–38 km/h 关注 · <b style="color:#dc2626">≥38 km/h（6 级）警戒</b>（薄膜/光伏板/围网检查）· ≥50 km/h 危险<br>
       • <b>24h 降水</b>：≤10mm 正常 · 10–25mm 关注 · <b style="color:#dc2626">≥25mm 警戒</b> · ≥50mm 危险<br>
-      • <b>气压</b>：≥1005 hPa 正常 · <b style="color:#dc2626">&lt;1005 hPa 警戒</b>（可能风暴前兆）<br>
+      • <b>气压</b>：≥1005 hPa 正常 · <b style="color:#dc2626">&lt;1005 hPa 警戒</b>（可能风暴前兆）· 24h 变化 <b>≥5 hPa</b> 提示天气转折（提前增氧防应激）；连续缓升属高压稳定控制、风险低；连续下降（哪怕未达标）需关注后续雷暴/对流<br>
+      • <b>雾 / 低能见度</b>（湿度≥90%、清晨微风晴天最典型）：<b style="color:#dc2626">溶氧下降风险</b>——雾天夜间藻类不产氧、呼吸耗氧持续，黎明前后最易浮头；<b>开增氧机、推迟投喂、加强巡塘</b><br>
+      • <b>连阴雨</b>（≥2 天连续降水/寡照）：藻类产氧持续偏低+水温波动 → <b>减料 1–2 成、全天增氧、防应激</b>；雨后转晴防藻类过度增殖（pH 飙升）<br>
       • <b>雷暴</b>（weather_code ≥ 95）：<b style="color:#dc2626">随时警戒</b>（增氧机/光伏/排水/用电）<br>
       • <b>太阳辐射</b>：>900 W/m² 时需关注水温上升（夏季中午可>1000），配合气温阈值判断
     </div>
