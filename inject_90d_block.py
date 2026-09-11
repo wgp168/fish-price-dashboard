@@ -85,6 +85,13 @@ def main():
     print("08-18 快照标签存在:", "08-18" in html)
     print("原 13 条实时区块存在:", "共 13 条" in html)
 
+    # 刷新 Hero 区「看板更新」时间戳
+    try:
+        from dashboard_version import stamp_updated_at
+        print(f"[OK] 看板更新时间戳已刷新：{stamp_updated_at()}")
+    except Exception as e:
+        print(f"[WARN] 看板更新时间戳刷新失败（不影响看板）：{e}")
+
 
 if __name__ == "__main__":
     main()

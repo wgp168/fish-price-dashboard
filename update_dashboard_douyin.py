@@ -109,6 +109,13 @@ def main():
         f.write(s)
     print("OK: 抖音板块已用 AgentKey 实时数据替换，共", len(posts), "条帖子")
 
+    # 刷新 Hero 区「看板更新」时间戳
+    try:
+        from dashboard_version import stamp_updated_at
+        print("[OK] 看板更新时间戳已刷新：", stamp_updated_at())
+    except Exception as e:
+        print("[WARN] 看板更新时间戳刷新失败（不影响看板）：", e)
+
 
 if __name__ == "__main__":
     main()

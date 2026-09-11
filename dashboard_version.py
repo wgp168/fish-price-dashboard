@@ -170,6 +170,66 @@ def _sync_version_md(version: str, date_str: str, summary_line: str) -> None:
 
 
 # ============================================================
+# 「看板更新」时间戳（Hero 区版本行下方单独一行）
+# ============================================================
+UPDATED_START = "<!-- UPDATED_AT_START -->"
+UPDATED_END   = "<!-- UPDATED_AT_END -->"
+
+
+def _cn_datetime(dt: datetime) -> str:
+    """2026-09-11 09:52 → 2026年9月11日 09:52"""
+    return f"{dt.year}年{dt.month}月{dt.day}日 {dt.hour:02d}:{dt.minute:02d}"
+
+
+def stamp_updated_at(dt: datetime | None = None, html_path: str = HTML) -> str:
+    """
+    刷新看板 Hero 区「看板更新：YYYY年M月D日 HH:MM」时间戳（Asia/Shanghai）。
+
+    幂等：只替换 UPDATED_AT_START..END 区块内的 <b> 文本与 data-updated-at 属性；
+    区块不存在则原样返回（不破坏看板）。任何注入脚本跑完都应调用一次，
+    这样打开看板就能知道「什么时候更的、有没有更过」。
+
+    返回: 形如 '2026年9月11日 09:52' 的字符串
+    """
+    try:
+        from zoneinfo import ZoneInfo
+        now = dt or datetime.now(ZoneInfo("Asia/Shanghai"))
+    except Exception:
+        now = dt or datetime.now()
+
+    cn = _cn_datetime(now)
+    iso = now.strftime("%Y-%m-%dT%H:%M:%S") + "+08:00"
+
+    if not os.path.exists(html_path):
+        return cn
+    with open(html_path, encoding="utf-8") as f:
+        text = f.read()
+
+    if UPDATED_START not in text or UPDATED_END not in text:
+        return cn
+
+    s = text.index(UPDATED_START)
+    e = text.index(UPDATED_END) + len(UPDATED_END)
+    block = text[s:e]
+
+    block = re.sub(
+        r"看板更新：\d{4}年\d{1,2}月\d{1,2}日 \d{2}:\d{2}",
+        f"看板更新：{cn}",
+        block,
+    )
+    block = re.sub(
+        r'data-updated-at="[^"]*"',
+        f'data-updated-at="{iso}"',
+        block,
+        count=1,
+    )
+
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(text[:s] + block + text[e:])
+    return cn
+
+
+# ============================================================
 # 公共入口
 # ============================================================
 def bump_dashboard(

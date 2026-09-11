@@ -450,6 +450,13 @@ def main():
     assert LEAFLET_CSS_HERE in html_content and LEAFLET_JS_HERE in html_content
     print(f"[OK] 外部资产：Leaflet CDN + dark filter CSS 已就绪")
 
+    # 刷新 Hero 区「看板更新：YYYY年M月D日 HH:MM」时间戳
+    try:
+        from dashboard_version import stamp_updated_at
+        print(f"[OK] 看板更新时间戳已刷新：{stamp_updated_at()}")
+    except Exception as e:  # 时间戳失败不影响看板本体
+        print(f"[WARN] 看板更新时间戳刷新失败（不影响看板）：{e}")
+
 
 if __name__ == "__main__":
     main()

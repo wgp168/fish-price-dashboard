@@ -243,6 +243,40 @@ function wgs84togcj02(lng, lat){
       <span class="chip chip-version" data-page-node-id="VER01CHIP0001" title="看板版本号 · 完整历史见 VERSION.md">🏷️ 版本 v1.1.0 · 2026-09-11</span>
       <span class="chip" data-page-node-id="4HGb9s5gzmgXv3QvdK82PP">🤖 批发价：农业农村部接口爬虫 + 公开价源爬虫 + 科学养鱼OCR（08-27）+ a渔业行情OCR（08-28）</span>
     </div>
+
+    <!-- UPDATED_AT_START -->
+    <div id="updatedAtBar" data-updated-at="2026-09-11T11:14:53+08:00" style="margin-top:12px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(4px);font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:0 2px 10px -4px rgba(0,0,0,.35)">
+      <span style="font-size:15px">🕒</span>
+      <b style="font-size:13.5px;letter-spacing:.3px">看板更新：2026年9月11日 11:14</b>
+      <span id="updatedAtRel" style="color:#e0f2fe">（刚刚更新）</span>
+      <span style="opacity:.72;font-size:12px">· 气象每日 09:00 自动刷新；价格/社媒数据不定期更新，以本行时间为准</span>
+    </div>
+    <script>
+    (function(){
+      var bar = document.getElementById('updatedAtBar');
+      var rel = document.getElementById('updatedAtRel');
+      if(!bar || !rel) return;
+      var iso = bar.getAttribute('data-updated-at');
+      if(!iso) return;
+      var t = new Date(iso).getTime();
+      if(isNaN(t)) return;
+      var diffH = (Date.now() - t) / 3600000;
+      var txt, color = '#e0f2fe';
+      if(diffH < 0.05){ txt = '（刚刚更新）'; }
+      else if(diffH < 1){ txt = '（' + Math.max(1, Math.round(diffH * 60)) + ' 分钟前）'; }
+      else if(diffH < 24){ txt = '（' + Math.round(diffH) + ' 小时前）'; }
+      else { txt = '（' + Math.floor(diffH / 24) + ' 天前）'; color = '#fde68a'; }
+      if(diffH > 26){
+        txt += ' ⚠️ 距上次更新已超过 26 小时，请检查每日 09:00 自动刷新任务是否正常运行';
+        color = '#fecaca';
+        bar.style.border = '1px solid rgba(254,202,202,.75)';
+        bar.style.background = 'rgba(127,29,29,.32)';
+      }
+      rel.textContent = txt;
+      rel.style.color = color;
+    })();
+    </script>
+    <!-- UPDATED_AT_END -->
   </div>
 
   <!-- KPI -->
@@ -1305,6 +1339,9 @@ function wgs84togcj02(lng, lat){
     <div style="margin-top:10px;opacity:.75;font-size:12px">完整版本历史见工作区根目录 <code style="background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px">VERSION.md</code></div>
   </section>
   <!-- VERSION_HISTORY_END -->
+
+
+  
 
 
   
